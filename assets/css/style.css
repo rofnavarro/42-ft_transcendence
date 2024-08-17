@@ -50,27 +50,41 @@ nav ul li a:hover {
 
 /* Main Content */
 main {
-	padding: 20px;
+	padding: 150px;
 }
 
-#hero {
+#helo {
 	text-align: center;
 	padding: 50px 20px;
-	background-color: #999999; /* Tom de cinza mais claro para a seção hero */
-	border-radius: 10px;
+	background-color: #999999; /* Tom de cinza mais claro para a seção helo */
+	border-radius: 50px;
 }
 
-#hero h1 {
+/* Ajusta o padding para telas menores que 768px (tablets e smartphones) */
+@media (max-width: 768px) {
+    #hero {
+        padding: 30px 15px;
+    }
+}
+
+/* Ajusta o padding para telas muito pequenas (smartphones) */
+@media (max-width: 480px) {
+    #hero {
+        padding: 20px 10px;
+    }
+}
+
+#helo h1 {
 	font-size: 36px;
-	color: white; /* Letras brancas na seção hero */
+	color: white; /* Letras brancas na seção helo */
 }
 
-#hero p {
+#helo p {
 	font-size: 18px;
-	color: white; /* Texto branco na seção hero */
+	color: white; /* Texto branco na seção helo */
 }
 
-#hero .btn {
+#helo .btn {
 	display: inline-block;
 	margin: 15px 10px;
 	padding: 10px 20px;
@@ -80,7 +94,7 @@ main {
 	border-radius: 5px;
 }
 
-#hero .btn:hover {
+#helo .btn:hover {
 	background-color: #666666; /* Mudança de cor no hover */
 }
 
