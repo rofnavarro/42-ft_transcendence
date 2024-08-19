@@ -4,33 +4,28 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>ft_transcendence - bananateam</title>
-
-		<!--  Favicon  -->
 		<link rel="icon" href="../assets/images/favicon.ico" type="image/x-icon">
-
-		<!--  CSS  -->
 		<link rel="stylesheet" href="../assets/css/style.css">
 	</head>
 	<body>
-		<!-- Header -->
-		 <header>
-			<div id="header-container">
-				<!-- Header Javascript -->
+		<div id="content" class="content">
+			<h1>ft_transcendence</h1>
+			<button class="menu-button" id="menu-button">
+				<img src="../assets/images/menu.png" alt="Menu">
+			</button>
+		</div>
+		<div id="menu-modal" id="menu-modal">
+			<div class="modal-content">
+				<span class="close-button" id="close-button">&times;</span>
+				<h2>MENU</h2>
+				<ul>
+					<li><a href="#">Login</a></li>
+					<li><a href="#">Como Jogar</a></li>
+					<li><a href="#">Rank</a></li>
+					<li><a href="#">Time</a></li>
+				</ul>
 			</div>
-		 </header>
-		 <!-- Main NavBar -->
-		  <nav>
-			<div id="navbar-container">
-				<!-- NavBar Javascript -->
-			</div>
-		  </nav>
-		  <main>
-			<section id="helo">
-				<h1>ft_transcendence</h1>
-				<p>Entre para jogar.</p>
-				<a href="login.html" class="btn">Login</a>
-				<a href="register.html" class="btn">Registre-se</a>
-			</section>
-		  </main>
+		</div>
+		<script src="../components/menu.js"></script>
 	</body>
 </html>

@@ -1,111 +1,163 @@
-/* Estilo Global */
-body {
+@font-face {
+	font-family: 'Super Funtime';
+	src: url('../fonts/Super\ Funtime.ttf') format('truetype');
+}
+
+body, html {
 	margin: 0;
 	padding: 0;
-	font-family: Arial, sans-serif;
-	background-color: #222222; /* Fundo cinza claro */
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	font-size: 1.1rem;
+	font-family: 'Super Funtime', sans-serif;
+	background-color: #99c2dc;
 	color: white;
 }
 
-/* Header */
-header {
-	background-color: #333333; /* Tom mais escuro de cinza para o header */
-	padding: 20px;
-	text-align: center;
-}
-
-header h1 {
-	margin: 0;
-	font-size: 24px;
-	color: white; /* Letras brancas no header */
-}
-
-/* Navbar */
-nav {
-	background-color: #444444; /* Tom mais escuro de cinza para a navbar */
-	padding: 10px;
-}
-
-nav ul {
-	list-style-type: none;
-	padding: 0;
-	margin: 0;
+.content {
+	position: relative;
+	width: 100%;
+	height: 100%;
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
+	align-items: flex-start;
+	box-sizing: border-box;
+	padding-top: 20px;
 }
 
-nav ul li {
-	margin: 0 15px;
-}
-
-nav ul li a {
-	text-decoration: none;
-	color: white; /* Letras brancas na navbar */
-	font-weight: bold;
-}
-
-nav ul li a:hover {
-	text-decoration: underline;
-}
-
-/* Main Content */
-main {
-	padding: 150px;
-}
-
-#helo {
-	text-align: center;
-	padding: 50px 20px;
-	background-color: #999999; /* Tom de cinza mais claro para a seção helo */
-	border-radius: 50px;
-}
-
-/* Ajusta o padding para telas menores que 768px (tablets e smartphones) */
-@media (max-width: 768px) {
-    #hero {
-        padding: 30px 15px;
-    }
-}
-
-/* Ajusta o padding para telas muito pequenas (smartphones) */
-@media (max-width: 480px) {
-    #hero {
-        padding: 20px 10px;
-    }
-}
-
-#helo h1 {
-	font-size: 36px;
-	color: white; /* Letras brancas na seção helo */
-}
-
-#helo p {
-	font-size: 18px;
-	color: white; /* Texto branco na seção helo */
-}
-
-#helo .btn {
-	display: inline-block;
-	margin: 15px 10px;
-	padding: 10px 20px;
-	background-color: #555555; /* Botão com tom mais escuro de cinza */
+h1 {
 	color: white;
-	text-decoration: none;
-	border-radius: 5px;
+	background-color: #99c2dc;
+	padding-left: 4%;
+	vertical-align: top;
+	margin: 0;
+	z-index: 1;
 }
 
-#helo .btn:hover {
-	background-color: #666666; /* Mudança de cor no hover */
+.menu-button {
+	color: blue;
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	padding-right: 4%;
+	z-index: 1;
 }
 
-/* Footer */
-footer {
-	background-color: #333333; /* Tom mais escuro de cinza para o footer */
-	padding: 20px;
+.menu-button img {
+	width: 40px;
+	height: 40px;
+	vertical-align: top;
+}
+
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+	background-color: rgba(105, 81, 129, 0.872);
+	padding: 2vh 2vw;
+	border: 1px solid white;
+	width: 15vw;
+	border-radius: 20px;
+	position: fixed;
+	right: 0;
+	top: 5%;
+	margin-right: 9vw;
+	color: white;
+	box-sizing: border-box;
+	max-width: 90vw;
+	max-height: 90vh;
+	overflow-y: auto;
+}
+
+.modal-content h2 {
+	font-size: 2rem;
+	margin: 0;
+	margin-bottom: 3vh;
+	padding: 1vh 0;
+	width: 100%;
 	text-align: center;
 }
 
-footer p {
+.modal-content ul {
+	padding: 0;
 	margin: 0;
-	color: white; /* Letras brancas no footer */
+	list-style: none;
+	text-align: center;
+}
+
+.modal-content li {
+	font-size: 1.5rem;
+	margin-bottom: 2vh;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.modal-content a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.modal-content a:hover,
+.modal-content a:focus {
+	color: blue;
+}
+
+.close-button {
+	position: absolute;
+	top: 1vh;
+	right: 1vw;
+	color: white;
+	font-size: 2rem;
+	font-weight: bold;
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+	color: blue;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+@media (max-width: 768px) {
+	body, html {
+		font-size: 0.9rem;
+	}
+	.modal-content h2 {
+		font-size: 1.5rem;
+	}
+	.modal-content li {
+		font-size: 1.2rem;
+	}
+	.close-button {
+		font-size: 1.5rem;
+	}
+}
+
+@media (max-width: 400px) {
+	body, html {
+		font-size: 0.8rem;
+	}
+	.modal-content h2 {
+		font-size: 1.2rem;
+	}
+	.modal-content li {
+		font-size: 1rem;
+	}
+	.close-button {
+		font-size: 1.2rem;
+	}
 }
