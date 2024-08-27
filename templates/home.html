@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}
+	Transcendencenana
+{% endblock %}
+
+{% block content %}
+	<h1>Welcome to Transcendencenana</h1>
+	<button onclick="signIn()">Sign in with 42</button>
+{% endblock %}
+
+{% block scripts %}
+	<script src="{% static 'js/login.js' %}"></script>
+{% endblock %}

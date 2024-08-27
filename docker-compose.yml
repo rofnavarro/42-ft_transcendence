@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres
+    container_name: postgres
+    networks:
+      - transcendence
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+
+  django:
+    build: .
+    image: django:transcendence
+    container_name: django
+    networks:
+      - transcendence
+    volumes:
+      - static_volume:/ft_transcendece/static
+      - media_volume:/ft_transcendece/media
+    env_file:
+      - .env
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+
+networks:
+  transcendence:
+    name: transcendence
+
+volumes:
+  db_volume:
+    name: db_volume
+  static_volume:
+    name: static_volume
+  media_volume:
+    name: media_volume
