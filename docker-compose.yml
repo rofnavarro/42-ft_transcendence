@@ -15,7 +15,7 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
-      - ${DB_PORT}:${DB_PORT}
+      - "${DB_PORT}:${DB_PORT}"
 
   django:
     build: .
