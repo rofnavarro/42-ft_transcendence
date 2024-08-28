@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+	Top Bananas
+{% endblock %}
+
+{% block undertitle %}
+	<h1>Top Bananas</h1>
+{% endblock %}
+
+{% block content %}
+	<section>
+		{% for user in ranking %}
+		<article class="rank">
+			<p>{{ user.user }} | {{ user.matches }} | {{ user.wins }} | {{ user.loses }} | {{ user.win_rate }}</p>
+		</article>
+		{% endfor %}
+	</section>
+{% endblock %}

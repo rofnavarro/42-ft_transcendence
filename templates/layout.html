@@ -22,10 +22,14 @@
 		<a href="/about">
 			<img src="{% static 'imgs/banana.png' %}" class="nav-icon">
 		</a>|
-		<a href="/">
+		<a href="/ranking">
 			<img src="{% static 'imgs/ranking.png' %}" class="nav-icon">
 		</a>
 	</nav>
+	<undertitle>
+		{% block undertitle %}
+		{% endblock %}
+	</undertitle>
 	<main>		
 		{% block content %}
 		{% endblock %}
