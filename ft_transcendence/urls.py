@@ -7,4 +7,5 @@ urlpatterns = [
 	path('', views.homepage),
 	path('about/', views.aboutpage),
 	path('ranking/', include('ranking.urls')),
+	path('users/', include('users.urls')),
 ]
