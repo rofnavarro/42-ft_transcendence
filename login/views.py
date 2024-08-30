@@ -35,4 +35,4 @@ def callback(request):
 		'user_info': user_info,
 	}
 
-	return render(request, 'login/login.html', context)
+	return render(request, 'users/profile.html', context)

@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+	Perfil de {{ user_info.first_name }} {{ user_info.last_name }}
+{% endblock %}
+
+{% block undertitle %}
+	<p>User: {{ user_info.login }}</p>
+	<p>Email: {{ user_info.email }}</p>
+{% endblock %}
+
+{% block content %}
+
+{% endblock %}
