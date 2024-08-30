@@ -22,7 +22,7 @@ def callback(request):
 	}
 	token_response = requests.post(token_url, data=token_data)
 	if token_response.status_code != 200:
-		return render(request, 'auth42/error.html', {'error': token_response.json()})
+		return render(request, 'login/error.html', {'error': token_response.json()})
 	token_json = token_response.json()
 	access_token = token_json.get('access_token')
 
