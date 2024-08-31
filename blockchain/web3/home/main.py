@@ -1,4 +1,5 @@
 from web3 import Web3
+from jwt import *
 import json
 
 # HardCode do address smart contract
@@ -28,15 +29,15 @@ def web3_init():
 
 	teste1 = deployed_contract.functions.addMatchData("Hello World").call()
 
-	teste1 = deployed_contract.functions.addMatchData("Felpera").call()
+	teste10 = deployed_contract.functions.addMatchData("Felpera").call()
 
-	teste1 = deployed_contract.functions.addMatchData("Felpera Muitos").call()
+	teste11 = deployed_contract.functions.addMatchData("Felpera Muitos").call()
 
 
 
 	teste2 = deployed_contract.functions.getTournments().call()
 
-	print(teste2)
+	# print(teste2)
 
 	# teste3 = deployed_contract.functions.getTournmentAddress(web3Instance.to_hex(teste2[1])).call()
 
@@ -46,6 +47,24 @@ def web3_init():
 
 def main():
 	web3_init()
+
+	my_payload = {
+	"sub": "1234567890",
+	"name": "John Doe",
+	"admin": True
+	}
+
+	my_secret_key = "42TR4NSC3ND3NC3"
+
+	my_jwt = create_jwt(my_payload, my_secret_key)
+
+	print(my_jwt)
+
+	my_decoded_payload = decode_jwt(my_jwt, my_secret_key)
+
+	print(my_decoded_payload)
+
+
 
 
 
