@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.contrib.auth import logout
 import requests
 
 USER_ID = 'u-s4t2ud-b9272d3f2544b1893d54288c9654aef2802f4f7773dc604528c832a6a0fc9b5c'
@@ -20,11 +21,15 @@ def callback(request):
 		'code': code ,
 		'redirect_uri': REDIRECT_URI
 	}
+
 	token_response = requests.post(token_url, data=token_data)
 	if token_response.status_code != 200:
 		return render(request, 'login/error.html', {'error': token_response.json()})
+
 	token_json = token_response.json()
 	access_token = token_json.get('access_token')
+
+	request.session['access_token'] = access_token
 
 	user_url = 'https://api.intra.42.fr/v2/me'
 	headers = {'Authorization': f'Bearer {access_token}'}
@@ -36,3 +41,18 @@ def callback(request):
 	}
 
 	return render(request, 'users/profile.html', context)
+
+def logout_user(request):
+	access_token = request.session.get('access_token')
+	if access_token:
+		revoke_url = 'https://api.intra.42.fr/oauth/revoke'
+		revoke_data = {
+			'token': access_token,
+			'client_id': USER_ID,
+			'client_secret': API_KEY,
+		}
+		requests.post(revoke_url, data=revoke_data)
+	request.session.pop('access_token', None)
+	logout(request)
+	request.session.flush()
+	return redirect('home')

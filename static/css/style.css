@@ -12,24 +12,39 @@ body {
 	flex-direction: column;
 	align-items: center;
 	height: 100vh;
+	margin: 0;
 }
 
 nav {
+	display: flex;
 	padding: 1rem;
 	color: rgb(133, 140, 238);
 	background-size: cover;
+	justify-content: space-between;
+	gap: 50px;
 	align-content: center;
 	align-items: center;
 	font-size: 2rem;
+	width: calc(100% - 10px);
+	margin: 0 auto;
+	box-sizing: border-box;
 }
 nav a {
 	text-decoration: none;
+}
+
+.nav-button {
+	margin-right: auto;
 }
 
 .nav-icon {
 	height: 40px;
 	width: auto;
 	vertical-align: middle;
+}
+
+.nav-logout {
+	margin-left: auto;
 }
 
 main {
@@ -49,9 +64,8 @@ h2 {
 	text-align: center;
 }
 
-button {
+.login-button {
 	font-family: "Space Grotesk", sans-serif;
-	position: relative;
 	background-color: black;
 	border: none;
 	border-radius: 12px;
@@ -67,7 +81,7 @@ button {
 	cursor: pointer;
 }
 
-button:after {
+.login-button:after {
 	content: "";
 	background: #f1f1f1;
 	display: block;
@@ -80,7 +94,46 @@ button:after {
 	transition: all 0.8s;
 }
 
-button:active:after {
+.login-button:active:after {
+	padding: 0;
+	margin: 0;
+	opacity: 1;
+	transition: 0s;
+}
+
+.small-button {
+	font-family: "Space Grotesk", sans-serif;
+	background-color: black;
+	border: none;
+	border-radius: 36px;
+	font-size: 14px;
+	color: white;
+	text-align: center;
+	padding: 8px 12px;
+	position: relative;
+	box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+	transition-duration: 0.3s;
+	cursor: pointer;
+	text-decoration: none;
+	overflow: hidden;
+}
+
+.small-button:after {
+	content: "";
+	background: #f1f1f1;
+	display: block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 120%;
+	height: 120%;
+	transform: translate(-50%, -50%);
+	border-radius: 36px;
+	opacity: 0;
+	transition: all 0.6s;
+}
+
+.small-button:active:after {
 	padding: 0;
 	margin: 0;
 	opacity: 1;

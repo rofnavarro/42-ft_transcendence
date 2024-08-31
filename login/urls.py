@@ -6,4 +6,5 @@ app_name = 'login'
 urlpatterns = [
 	path('', views.login, name="login"),
 	path('callback/', views.callback, name="callback"),
+	path('logout/', views.logout_user, name="logout_user"),
 ]
