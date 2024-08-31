@@ -1,10 +1,14 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth import logout
+from .jwt import *
+import json
 import requests
 
 USER_ID = 'u-s4t2ud-b9272d3f2544b1893d54288c9654aef2802f4f7773dc604528c832a6a0fc9b5c'
 API_KEY = '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'
 REDIRECT_URI = 'http://localhost:8000/login/callback'
+
+SECRET_KEY = '42TR4NSC3ND3NC3'
 
 
 def login(request):
@@ -21,6 +25,8 @@ def callback(request):
 		'code': code ,
 		'redirect_uri': REDIRECT_URI
 	}
+
+	# jwt_token = create_jwt(token_data, SECRET_KEY)
 
 	token_response = requests.post(token_url, data=token_data)
 	if token_response.status_code != 200:
