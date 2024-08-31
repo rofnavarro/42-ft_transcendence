@@ -46,6 +46,8 @@ def callback(request):
 		'user_info': user_info,
 	}
 
+	print(user_info)
+
 	return render(request, 'users/profile.html', context)
 
 def logout_user(request):
