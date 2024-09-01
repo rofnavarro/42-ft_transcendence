@@ -4,18 +4,17 @@ import requests
 from .jwt import *
 from users.models import CustomUser
 
-
 USER_ID = 'u-s4t2ud-a782b48361e73b59a6d5cbec76768c8aafa00b43e48aea014b90da7efb556ce5'
 API_KEY = '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'
 REDIRECT_URI = 'http://localhost:8000/login/callback'
 
 SECRET_KEY = '42TR4NSC3ND3NC3'
 
-def login_user(request):
+def	login_user(request):
 	url = f'https://api.intra.42.fr/oauth/authorize?client_id={USER_ID}&redirect_uri={REDIRECT_URI}&response_type=code'
 	return redirect(url)
 
-def callback(request):
+def	callback(request):
 	code = request.GET.get('code')
 	token_url = 'https://api.intra.42.fr/oauth/token'
 	token_data = {
@@ -46,7 +45,6 @@ def callback(request):
 	username = user_info.get('login')
 	last_name = user_info.get('last_name', '')
 	first_name = user_info.get('usual_first_name', '')
-
 	if not first_name:
 		first_name = user_info.get('first_name', '')
 
@@ -58,7 +56,6 @@ def callback(request):
 			'last_name': last_name,
 		}
 	)
-
 	if not created:
 		user.username = username
 		user.first_name = first_name
@@ -66,16 +63,12 @@ def callback(request):
 		user.save()
 
 	login(request, user)
-
 	context = {
 		'user_info': user,
 	}
-
-	# print(user_info)
-
 	return redirect(f'/users/profile/{username}')
 
-def logout_user(request):
+def	logout_user(request):
 	access_token = request.session.get('access_token')
 	if access_token:
 		revoke_url = 'https://api.intra.42.fr/oauth/revoke'
@@ -85,6 +78,7 @@ def logout_user(request):
 			'client_secret': API_KEY,
 		}
 		requests.post(revoke_url, data=revoke_data)
+
 	request.session.pop('access_token', None)
 	logout(request)
 	request.session.flush()

@@ -8,8 +8,30 @@
 {% endblock %}
 
 {% block content %}
-	<p>User: {{ user_info.username }}</p>
-	<p>Email: {{ user_info.email }}</p>
-	<p>First Name: {{ user_info.first_name }}</p>
-	<p>Last Name: {{ user_info.last_name }}</p>
+<div class="rpg-profile-container">
+	<div class="profile-image-section">
+		<div class="profile-image-placeholder"></div>
+		<div class="username">{{ user_info.username }}</div>
+	</div>
+	<div class="profile-stats-section">
+		<h2>Estatísticas</h2>
+		<div class="stats">
+			<h3>Total de Jogos</h3>
+			<table class="stats-table">
+				<tr>
+					<th>Partidas</th>
+					<th>Vitórias</th>
+					<th>Derrotas</th>
+					<th>% Vitórias</th>
+				</tr>
+				<tr>
+					<td>{{ games_played }}</td>
+					<td>{{ wins }}</td>
+					<td>{{ losses }}</td>
+					<td>{{ win_rate }}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
 {% endblock %}
