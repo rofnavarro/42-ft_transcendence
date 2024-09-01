@@ -1,8 +1,9 @@
 from django.shortcuts import redirect, render
-from django.contrib.auth import logout
-from .jwt import *
-import json
+from django.contrib.auth import logout, login
 import requests
+from .jwt import *
+from users.models import CustomUser
+
 
 USER_ID = 'u-s4t2ud-b9272d3f2544b1893d54288c9654aef2802f4f7773dc604528c832a6a0fc9b5c'
 API_KEY = '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'
@@ -11,7 +12,7 @@ REDIRECT_URI = 'http://localhost:8000/login/callback'
 SECRET_KEY = '42TR4NSC3ND3NC3'
 
 
-def login(request):
+def login_user(request):
 	url = f'https://api.intra.42.fr/oauth/authorize?client_id={USER_ID}&redirect_uri={REDIRECT_URI}&response_type=code'
 	return redirect(url)
 
@@ -42,8 +43,33 @@ def callback(request):
 	user_response = requests.get(user_url, headers=headers)
 	user_info = user_response.json()
 
+	email = user_info.get('email')
+	username = user_info.get('login')
+	last_name = user_info.get('last_name', '')
+	first_name = user_info.get('usual_first_name', '')
+
+	if not first_name:
+		first_name = user_info.get('first_name', '')
+
+	user, created = CustomUser.objects.get_or_create(
+		email=email,
+		defaults={
+			'username': username,
+			'first_name': first_name,
+			'last_name': last_name,
+		}
+	)
+
+	if not created:
+		user.username = username
+		user.first_name = first_name
+		user.last_name = last_name
+		user.save()
+
+	login(request, user)
+
 	context = {
-		'user_info': user_info,
+		'user_info': user,
 	}
 
 	print(user_info)

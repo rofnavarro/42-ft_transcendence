@@ -5,9 +5,11 @@
 {% endblock %}
 
 {% block undertitle %}
-	<p>User: {{ user_info.login }}</p>
-	<p>Email: {{ user_info.email }}</p>
 {% endblock %}
 
 {% block content %}
+	<p>User: {{ user_info.username }}</p>
+	<p>Email: {{ user_info.email }}</p>
+	<p>First Name: {{ user_info.first_name }}</p>
+	<p>Last Name: {{ user_info.last_name }}</p>
 {% endblock %}
