@@ -25,25 +25,38 @@ def web3_init():
 
 	tx_receipt = web3Instance.eth.wait_for_transaction_receipt(tx_hash)
 
+	try:
+		account2 = web3Instance.eth.accounts[1]
+		teste11 = deployed_contract.functions.addMatch("Hello Not Owner").call({'from': account2})
+	except Exception as e:
+		print(e)
+
 	deployed_contract = web3Instance.eth.contract(address=tx_receipt.contractAddress, abi=contract['abi'])
+	
+	str1 = 'Hello World'
+	webText1 = web3Instance.to_hex(text=str1)
+	print(type(webText1), "1")
+	add1 = deployed_contract.functions.addMatch(webText1).transact({'from': account})
+	web3Instance.eth.wait_for_transaction_receipt(tx_hash)
 
-	teste1 = deployed_contract.functions.addMatchData("Hello World").call()
+	str2 = 'Hello Blockchain'
+	webText2 = web3Instance.to_hex(text=str2)
+	print(type(webText2), "2")
+	add2 = deployed_contract.functions.addMatch(webText2).transact({'from': account})
+	web3Instance.eth.wait_for_transaction_receipt(tx_hash)
 
-	teste10 = deployed_contract.functions.addMatchData("Felpera").call()
 
-	teste11 = deployed_contract.functions.addMatchData("Felpera Muitos").call()
+	str3 = 'Hello Darkness'
+	webText3 = web3Instance.to_hex(text=str3)
+	print(type(str3), "3")
+	add3 = deployed_contract.functions.addMatch(webText3).transact({'from': account})
+	web3Instance.eth.wait_for_transaction_receipt(tx_hash)
 
+	for i in range(0, 3):
+		print(type(web3Instance.to_int(i)))
+		teste2 = deployed_contract.functions.getMatchIndex(web3Instance.to_int(i)).call()
+		print(web3Instance.to_text(teste2))
 
-
-	teste2 = deployed_contract.functions.getTournments().call()
-
-	# print(teste2)
-
-	# teste3 = deployed_contract.functions.getTournmentAddress(web3Instance.to_hex(teste2[1])).call()
-
-	# print(teste3)
-
-	# print(web3Instance.eth)
 
 def main():
 	web3_init()
@@ -58,11 +71,11 @@ def main():
 
 	my_jwt = create_jwt(my_payload, my_secret_key)
 
-	print(my_jwt)
+	# print(my_jwt)
 
 	my_decoded_payload = decode_jwt(my_jwt, my_secret_key)
 
-	print(my_decoded_payload)
+	# print(my_decoded_payload)
 
 
 
