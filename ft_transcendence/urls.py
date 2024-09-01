@@ -8,4 +8,5 @@ urlpatterns = [
 	path('about/', views.aboutpage),
 	path('ranking/', include('ranking.urls')),
 	path('login/', include('login.urls')),
+	path('users/', include('users.urls')),
 ]

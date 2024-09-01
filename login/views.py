@@ -5,12 +5,11 @@ from .jwt import *
 from users.models import CustomUser
 
 
-USER_ID = 'u-s4t2ud-b9272d3f2544b1893d54288c9654aef2802f4f7773dc604528c832a6a0fc9b5c'
-API_KEY = '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'
+USER_ID = 'u-s4t2ud-a782b48361e73b59a6d5cbec76768c8aafa00b43e48aea014b90da7efb556ce5'
+API_KEY = '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'
 REDIRECT_URI = 'http://localhost:8000/login/callback'
 
 SECRET_KEY = '42TR4NSC3ND3NC3'
-
 
 def login_user(request):
 	url = f'https://api.intra.42.fr/oauth/authorize?client_id={USER_ID}&redirect_uri={REDIRECT_URI}&response_type=code'
@@ -72,9 +71,9 @@ def callback(request):
 		'user_info': user,
 	}
 
-	print(user_info)
+	# print(user_info)
 
-	return render(request, 'users/profile.html', context)
+	return redirect(f'/users/profile/{username}')
 
 def logout_user(request):
 	access_token = request.session.get('access_token')
