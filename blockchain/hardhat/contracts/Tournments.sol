@@ -1,27 +1,28 @@
-//SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.24;
 
-contract Tournment
-{
+contract Tournment {
+    address private owner;
     string[] public matchData;
 
-	mapping(address => uint256) matchAddress;
-
-	constructor()
-	{
-		matchAddress[msg.sender] = 0;
-	}
-
-    function addMatchData(string memory _matchData) public {
-        matchData.push(_matchData);
+    constructor() {
+        owner = msg.sender;
     }
 
-	function getTournments() public view returns (string[] memory, bytes32) {
-        return (matchData, blockhash(block.number - 1));
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only owner can call this function");
+        _;
     }
 
-	function getTournmentAddress(address _address) public view returns (uint256) {
-		return matchAddress[_address];
-	}
+    function addMatch(string calldata _match) public onlyOwner {
+        matchData.push(_match);
+    }
+
+    function getMatchIndex(uint _index) public view returns (string memory) {
+        if (_index < matchData.length) {
+            return matchData[_index];
+        }
+        return "No match found";
+    }
 }
