@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>
+		{% block title %}
+			Transcendencenana
+		{% endblock %}
+	</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="icon" type="image/x-icon" href="{% static 'imgs/favicon.ico' %}">
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+	<nav>
+		<a href="/">
+			<img src="{% static 'imgs/home.png' %}" class="nav-icon">
+		</a>|
+		<a href="/about">
+			<img src="{% static 'imgs/banana.png' %}" class="nav-icon">
+		</a>|
+		<a href="/ranking">
+			<img src="{% static 'imgs/ranking.png' %}" class="nav-icon">
+		</a>
+	</nav>
+	<undertitle>
+		{% block undertitle %}
+		{% endblock %}
+	</undertitle>
+	<main>		
+		{% block content %}
+		{% endblock %}
+	</main>
+	{% block scripts %}
+	{% endblock %}
+</body>
+</html>
