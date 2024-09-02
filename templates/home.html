@@ -6,9 +6,5 @@
 {% endblock %}
 
 {% block content %}
-	<button onclick="signIn()">Sign in with 42</button>
-{% endblock %}
-
-{% block scripts %}
-	<script src="{% static 'js/login.js' %}"></script>
+	<button class="login-button" onclick="window.location.href='/login/'">Sign in with 42</button>
 {% endblock %}
