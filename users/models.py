@@ -33,6 +33,10 @@ class	CustomUser(AbstractBaseUser, PermissionsMixin):
 	is_staff = models.BooleanField(gettext_lazy('staff status'), default=False)
 	is_superuser = models.BooleanField(gettext_lazy('superuser status'), default=False)
 
+	is_online = models.BooleanField(default=False)
+	last_online = models.DateTimeField(default=timezone.now)
+	friends = models.ManyToManyField('self', symmetrical=False, through='Friendship')
+
 	objects = CustomUserManager()
 
 	USERNAME_FIELD = 'email'
@@ -44,3 +48,14 @@ class	CustomUser(AbstractBaseUser, PermissionsMixin):
 
 	def	__str__(self):
 		return self.email
+
+class Friendship(models.Model):
+	user1 = models.ForeignKey(CustomUser, related_name='friendships', on_delete=models.CASCADE)
+	user2 = models.ForeignKey(CustomUser, related_name='+', on_delete=models.CASCADE)
+	created_at = models.DateTimeField(auto_now_add=True)
+
+	class Meta:
+		unique_together = ('user1', 'user2')
+
+	def __str__(self):
+		return f"{self.user1.username} is friends with {self.user2.username}"

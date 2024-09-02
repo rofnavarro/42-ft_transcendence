@@ -32,6 +32,32 @@
 				</tr>
 			</table>
 		</div>
+	</div>	
+	<!-- Sistema de amigos -->
+	<div class="friends-section">
+		<h2>Amigos</h2>
+		<ul>
+			{% for friend in friends %}
+				<li>
+					<a href="{% url 'users:user_profile' friend.username %}">{{ friend.username }}</a>
+					{% if friend.is_online %}
+						<span style="color: green;">● Online</span>
+					{% else %}
+						<span style="color: red;">● Offline</span>
+					{% endif %}
+					{% comment %} <form method="post" action="{% url 'users:invite_to_game' friend.username %}">
+						{% csrf_token %}
+						<button type="submit">Convidar para Partida</button>
+					</form> {% endcomment %}
+				</li>
+			{% endfor %}
+		</ul>
 	</div>
 </div>
+{% if user_info != request.user and not is_friend %}
+    <form method="post" action="{% url 'users:send_friend_request' user_info.username %}">
+        {% csrf_token %}
+        <button type="submit">Adicionar Amigo</button>
+    </form>
+{% endif %}
 {% endblock %}
