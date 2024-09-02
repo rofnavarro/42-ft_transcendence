@@ -12,8 +12,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-6waaegtj9iw2dh7plax#^2w+e$s(ig$by=v9zdrvavq9u5hf8^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+DEBUG = True
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.0.92']
 
 # Application definition
 
@@ -27,6 +27,7 @@ INSTALLED_APPS = [
 
 	'rest_framework',
 	'rest_framework_simplejwt',
+	'sslserver',
 
 	'login',
 	'ranking',
