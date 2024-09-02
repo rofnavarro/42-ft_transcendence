@@ -27,7 +27,7 @@ def web3_init():
 
 	try:
 		account2 = web3Instance.eth.accounts[1]
-		teste11 = deployed_contract.functions.addMatch("Hello Not Owner").call({'from': account2})
+		teste11 = deployed_contract.functions.addMatch("Hello Not Owner").transact({'from': account2})
 	except Exception as e:
 		print(e)
 
