@@ -16,15 +16,23 @@
 </head>
 <body>
 	<nav>
-		<a href="/">
-			<img src="{% static 'imgs/home.png' %}" class="nav-icon">
-		</a>|
-		<a href="/about">
-			<img src="{% static 'imgs/banana.png' %}" class="nav-icon">
-		</a>|
-		<a href="/ranking">
-			<img src="{% static 'imgs/ranking.png' %}" class="nav-icon">
-		</a>
+		<div class="nav-buttons">
+			<a href="/">
+				<img src="{% static 'imgs/home.png' %}" class="nav-icon">
+			</a>|
+			<a href="/about">
+				<img src="{% static 'imgs/banana.png' %}" class="nav-icon">
+			</a>|
+			<a href="/ranking">
+				<img src="{% static 'imgs/ranking.png' %}" class="nav-icon">
+			</a>
+		</div>
+		<div class="nav-logout">
+			<form action="{% url 'login:logout_user' %}" method="post">
+				{% csrf_token %}
+				<button class="small-button" type="submit">Logout</button>
+			</form>
+		</div>
 	</nav>
 	<undertitle>
 		{% block undertitle %}

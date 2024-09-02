@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}
+	Error
+{% endblock %}
+
+{% block undertitle %}
+	<h1>Error {{ error }}</h1>
+{% endblock %}
+
+{% block content %}
+	<p>{{ error }}</p>
+	<a href="{% url 'login' %}">Return to Login</a>
+{% endblock %}
