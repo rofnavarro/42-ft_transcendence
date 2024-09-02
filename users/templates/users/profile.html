@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+	Perfil de {{ user_info.first_name }} {{ user_info.last_name }}
+{% endblock %}
+
+{% block undertitle %}
+{% endblock %}
+
+{% block content %}
+<div class="rpg-profile-container">
+	<div class="profile-image-section">
+		<div class="profile-image-placeholder"></div>
+		<div class="username">{{ user_info.username }}</div>
+	</div>
+	<div class="profile-stats-section">
+		<h2>Estatísticas</h2>
+		<div class="stats">
+			<h3>Total de Jogos</h3>
+			<table class="stats-table">
+				<tr>
+					<th>Partidas</th>
+					<th>Vitórias</th>
+					<th>Derrotas</th>
+					<th>% Vitórias</th>
+				</tr>
+				<tr>
+					<td>{{ games_played }}</td>
+					<td>{{ wins }}</td>
+					<td>{{ losses }}</td>
+					<td>{{ win_rate }}</td>
+				</tr>
+			</table>
+		</div>
+	</div>	
+	<!-- Sistema de amigos -->
+	<div class="friends-section">
+		<h2>Amigos</h2>
+		<ul>
+			{% for friend in friends %}
+				<li>
+					<a href="{% url 'users:user_profile' friend.username %}">{{ friend.username }}</a>
+					{% if friend.is_online %}
+						<span style="color: green;">● Online</span>
+					{% else %}
+						<span style="color: red;">● Offline</span>
+					{% endif %}
+					{% comment %} <form method="post" action="{% url 'users:invite_to_game' friend.username %}">
+						{% csrf_token %}
+						<button type="submit">Convidar para Partida</button>
+					</form> {% endcomment %}
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+{% if user_info != request.user and not is_friend %}
+    <form method="post" action="{% url 'users:send_friend_request' user_info.username %}">
+        {% csrf_token %}
+        <button type="submit">Adicionar Amigo</button>
+    </form>
+{% endif %}
+{% endblock %}
