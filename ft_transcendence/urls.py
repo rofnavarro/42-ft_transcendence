@@ -7,7 +7,7 @@ urlpatterns = [
 	path('error/', views.errorpage, name='error'),
     path('admin/', admin.site.urls),
 	path('about/', views.aboutpage),
-	path('game/', views.gamepage),
+	path('match/', include('match.urls')),
 	path('ranking/', include('ranking.urls')),
 	path('login/', include('login.urls')),
 	path('users/', include('users.urls')),
