@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}
+	Manual Login
+{% endblock %}
+
+{% block undertitle %}
+	<h1>Entre com o seu usuário e senha</h1>
+{% endblock %}
+
+{% block content %}
+	<h2>Entre</h2>
+	<form method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		{% if error %}
+			<p style="color: red;">{{ error }}</p>
+		{% endif %}
+		<button type="submit">Entrar</button>
+	</form>
+{% endblock %}

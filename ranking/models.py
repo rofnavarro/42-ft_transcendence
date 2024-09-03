@@ -1,7 +1,8 @@
 from django.db import models
+from users.models import CustomUser
 
 class	Ranking(models.Model):
-	user = models.SlugField(max_length=20)
+	user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 	matches = models.IntegerField()
 	wins = models.IntegerField()
 	loses = models.IntegerField()

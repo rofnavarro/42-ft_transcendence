@@ -7,10 +7,12 @@ from django.contrib.auth.models import BaseUserManager
 class	CustomUserManager(BaseUserManager):
 	def create_user(self, email, username, password=None, **extra_fields):
 		if not email:
-			raise ValueError(gettext_lazy('The Email field must be set'))
+			raise ValueError(gettext_lazy('Necessita de um email'))
+		if not username:
+			raise ValueError(gettext_lazy('Necessita de um nome de usuário'))
 		email = self.normalize_email(email)
 		user = self.model(email=email, username=username, **extra_fields)
-		user.set_password(password)
+		user.set_unusable_password()
 		user.save(using=self._db)
 		return user
 
@@ -24,23 +26,26 @@ class	CustomUserManager(BaseUserManager):
 		return self.create_user(email, username, password, **extra_fields)
 
 class	CustomUser(AbstractBaseUser, PermissionsMixin):
-	email = models.EmailField(gettext_lazy('email address'), unique=True)
 	username = models.CharField(max_length=50, unique=True)
+	email = models.EmailField(gettext_lazy('email address'), unique=True)
 	first_name = models.CharField(gettext_lazy('first name'), max_length=30, blank=True)
 	last_name = models.CharField(gettext_lazy('last name'), max_length=30, blank=True)
+	
 	date_joined = models.DateTimeField(gettext_lazy('date joined'), default=timezone.now)
 	is_active = models.BooleanField(gettext_lazy('active'), default=True)
+	
 	is_staff = models.BooleanField(gettext_lazy('staff status'), default=False)
 	is_superuser = models.BooleanField(gettext_lazy('superuser status'), default=False)
 
 	is_online = models.BooleanField(default=False)
 	last_online = models.DateTimeField(default=timezone.now)
+	
 	friends = models.ManyToManyField('self', symmetrical=False, through='Friendship')
 
 	objects = CustomUserManager()
 
-	USERNAME_FIELD = 'email'
-	REQUIRED_FIELDS = ['username']
+	USERNAME_FIELD = 'username'
+	REQUIRED_FIELDS = []
 
 	class	Meta:
 		verbose_name = gettext_lazy('user')
@@ -49,7 +54,7 @@ class	CustomUser(AbstractBaseUser, PermissionsMixin):
 	def	__str__(self):
 		return self.email
 
-class Friendship(models.Model):
+class	Friendship(models.Model):
 	user1 = models.ForeignKey(CustomUser, related_name='friendships', on_delete=models.CASCADE)
 	user2 = models.ForeignKey(CustomUser, related_name='+', on_delete=models.CASCADE)
 	created_at = models.DateTimeField(auto_now_add=True)
