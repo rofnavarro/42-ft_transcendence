@@ -5,3 +5,10 @@ def	homepage(request):
 
 def	aboutpage(request):
 	return render(request, 'about.html')
+
+def	errorpage(request):
+	return render(request, '404.html')
+
+# DEFINIR A CHAMADA DO JOGO PELO APP MATCHES
+def	gamepage(request):
+	return render(request, 'game.html')

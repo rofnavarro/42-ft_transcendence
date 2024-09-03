@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}
+	Pong Game
+{% endblock %}
+
+{% block undertitle %}
+	<h1>Pong Contest</h1>
+{% endblock %}
+
+{% block content %}
+	<canvas>
+	</canvas>
+	<h3><b>Instructions:</b></h3>
+	<p>
+		<b>Player A:</b> Control the left player using the W and S keys<br>
+		<b>Player B:</b> Control the right player using the up and down arrow keys
+	</p>
+{% endblock %}
+
+{% block scripts %}
+	<script src="{% static 'js/game.js' %}"></script>
+{% endblock %}

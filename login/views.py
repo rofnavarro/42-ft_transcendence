@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth import logout, login
+from django.contrib.auth.decorators import login_required
 import requests
 from .jwt import *
 from users.models import CustomUser
@@ -69,6 +70,7 @@ def	callback(request):
 	}
 	return redirect(f'/users/profile/{username}')
 
+@login_required
 def	logout_user(request):
 	access_token = request.session.get('access_token')
 	if access_token:
