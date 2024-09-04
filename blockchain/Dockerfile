@@ -1,7 +1,13 @@
-FROM node:20-alpine
+FROM node:latest
 
-WORKDIR /app
+WORKDIR /app/hardhat
 
+COPY /hardhat .
 
+RUN apt-get update
 
-CMD ["ping", "127.0.0.1"]
+RUN npm install
+
+RUN npx hardhat compile
+
+CMD ["npx", "hardhat", "node"]
