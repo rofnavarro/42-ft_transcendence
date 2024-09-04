@@ -12,7 +12,7 @@
 	<section>
 		{% for user in ranking %}
 		<article class="rank">
-			<p>{{ user.user }} | {{ user.matches }} | {{ user.wins }} | {{ user.loses }} | {{ user.win_rate }}</p>
+			<p>{{ user.user }} | {{ user.matches }} | {{ user.wins }} | {{ user.loses }} | {{ user.formatted_win_rate  }}</p>
 		</article>
 		{% endfor %}
 	</section>

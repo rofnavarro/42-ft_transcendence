@@ -47,12 +47,45 @@ class	CustomUser(AbstractBaseUser, PermissionsMixin):
 	USERNAME_FIELD = 'username'
 	REQUIRED_FIELDS = []
 
+
 	class	Meta:
 		verbose_name = gettext_lazy('user')
 		verbose_name_plural = gettext_lazy('users')
 
 	def	__str__(self):
-		return self.email
+		return self.username
+
+	@property
+	def total_wins(self):
+		from match.models import Match
+		return Match.objects.filter(
+			models.Q(user1=self, score_user1__gt=models.F('score_user2')) |
+			models.Q(user2=self, score_user2__gt=models.F('score_user1'))
+		).count()
+
+	@property
+	def total_loses(self):
+		from match.models import Match
+		return Match.objects.filter(
+			models.Q(user1=self, score_user1__lt=models.F('score_user2')) |
+			models.Q(user2=self, score_user2__lt=models.F('score_user1'))
+		).count()
+
+	@property
+	def total_matches_played(self):
+		from match.models import Match
+		return Match.objects.filter(
+			models.Q(user1=self) |
+			models.Q(user2=self)
+		).count()
+
+	@property
+	def formatted_win_rate(self):
+		total_matches = self.total_matches_played
+		if total_matches > 0:
+			win_rate = (self.total_wins / total_matches) * 100
+			return f"{win_rate:.2f}%"
+		return "N/A"
 
 class	Friendship(models.Model):
 	user1 = models.ForeignKey(CustomUser, related_name='friendships', on_delete=models.CASCADE)
