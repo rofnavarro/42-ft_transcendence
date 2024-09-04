@@ -64,6 +64,13 @@ h2 {
 	text-align: center;
 }
 
+canvas {
+	font-family: "Dosis", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
+}
+
 .login-button {
 	position: relative;
 	font-family: "Space Grotesk", sans-serif;
