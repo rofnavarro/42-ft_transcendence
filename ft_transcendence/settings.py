@@ -32,7 +32,8 @@ INSTALLED_APPS = [
 
 	'login',
 	'ranking',
-	'users'
+	'users',
+	'tournaments'
 ]
 
 REST_FRAMEWORK = {

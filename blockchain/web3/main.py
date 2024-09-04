@@ -7,7 +7,7 @@ import json
 TNM_ADDRESS = '4def4fc111fd970a96b17ebea40b6e8a'
 
 def get_contract():
-	with open('/home/femoyo/Documents/transcendence/blockchain/hardhat/artifacts/contracts/Tournments.sol/Tournment.json') as f:
+	with open('/home/femoyo/Documents/transcendence/blockchain/hardhat/artifacts/contracts/Tournaments.sol/Tournament.json') as f:
 		contract = json.load(f)
 	return contract
 
@@ -17,11 +17,11 @@ def web3_init():
 	web3Instance = Web3(Web3.HTTPProvider('http://localhost:8545/'))
 
 
-	Tournment = web3Instance.eth.contract(abi=contract['abi'], bytecode=contract['bytecode'])
+	Tournament = web3Instance.eth.contract(abi=contract['abi'], bytecode=contract['bytecode'])
 
 	account = web3Instance.eth.accounts[0]
 
-	tx_hash = Tournment.constructor().transact({'from': account})
+	tx_hash = Tournament.constructor().transact({'from': account})
 
 	tx_receipt = web3Instance.eth.wait_for_transaction_receipt(tx_hash)
 

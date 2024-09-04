@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.24;
 
-contract Tournment {
+contract Tournament {
     address private owner;
     string[] public matchData;
 
