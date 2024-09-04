@@ -21,7 +21,7 @@ def update_player_stats(user):
 	# Atualiza estatísticas do usuário como vitórias, derrotas e partidas jogadas
 	from match.models import Match
 
-	total_matches_played = user.total_matches_played()
-	total_wins = user.total_wins()
-	total_loses = user.total_loses()
+	total_matches_played = user.total_matches_played
+	total_wins = user.total_wins
+	total_loses = user.total_loses
 	pass

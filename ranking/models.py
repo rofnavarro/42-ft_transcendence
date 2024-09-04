@@ -13,16 +13,15 @@ class	Ranking(models.Model):
 
 	@property
 	def formatted_win_rate(self):
-		total_matches = self.matches
-		if total_matches > 0:
-			win_rate = (self.wins / total_matches) * 100
+		if self.matches > 0:
+			win_rate = (self.wins / self.matches) * 100
 			return f"{win_rate:.2f}%"
 		return "N/A"
 
 	def update_ranking(self):
-		self.matches = self.user.total_matches_played()
-		self.wins = self.user.total_wins()
-		self.loses = self.user.total_loses()
+		self.matches = self.user.total_matches_played
+		self.wins = self.user.total_wins
+		self.loses = self.user.total_loses
 		self.win_rate = self.wins / self.matches * 100 if self.matches > 0 else 0.0
 		self.save()
 
@@ -30,8 +29,5 @@ class	Ranking(models.Model):
 @receiver(post_delete, sender=Match)
 def update_ranking(sender, instance, **kwargs):
 	for user in [instance.user1, instance.user2]:
-		try:
-			ranking = Ranking.objects.get(user=user)
-			ranking.update_ranking()
-		except Ranking.DoesNotExist:
-			Ranking.objects.create(user=user)
+		ranking = Ranking.objects.get(user=user)
+		ranking.update_ranking()
