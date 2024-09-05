@@ -11,6 +11,7 @@ class	CustomUserManager(BaseUserManager):
 		if not username:
 			raise ValueError(gettext_lazy('Necessita de um nome de usuário'))
 		email = self.normalize_email(email)
+		extra_fields.setdefault('nickname', username)
 		user = self.model(email=email, username=username, **extra_fields)
 		user.set_unusable_password()
 		user.save(using=self._db)
@@ -27,6 +28,7 @@ class	CustomUserManager(BaseUserManager):
 
 class	CustomUser(AbstractBaseUser, PermissionsMixin):
 	username = models.CharField(max_length=50, unique=True)
+	nickname = models.CharField(max_length=50, blank=True, null=True)
 	email = models.EmailField(gettext_lazy('email address'), unique=True)
 	first_name = models.CharField(gettext_lazy('first name'), max_length=30, blank=True)
 	last_name = models.CharField(gettext_lazy('last name'), max_length=30, blank=True)

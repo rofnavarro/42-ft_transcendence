@@ -14,7 +14,6 @@ class	Match(models.Model):
 	score_user2 = models.IntegerField(gettext_lazy('score player 2'), default=0)
 
 	is_tournament = models.BooleanField(default=False)
-	match_number = models.IntegerField(null=True, blank=True)
 
 	@property
 	def winner(self):

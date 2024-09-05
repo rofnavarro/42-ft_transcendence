@@ -6,10 +6,10 @@
 {% endblock %}
 
 {% block undertitle %}
-	<h1>Error {{ error }}</h1>
+	<h1>Error</h1>
 {% endblock %}
 
 {% block content %}
 	<p>{{ error }}</p>
-	<a href="{% url 'login' %}">Return to Login</a>
+	<a href="{% url 'home' %}">Return Home</a>
 {% endblock %}

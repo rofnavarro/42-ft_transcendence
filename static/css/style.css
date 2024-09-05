@@ -146,9 +146,9 @@ canvas {
 	opacity: 1;
 	transition: 0s;
 }
-
 .rpg-profile-container {
 	display: flex;
+	flex-direction: row; /* Alinha a imagem e o texto horizontalmente */
 	align-items: flex-start;
 	border: 2px solid rgba(133, 140, 238, 0.8);
 	padding: 20px;
@@ -160,22 +160,20 @@ canvas {
 	color: rgb(133, 140, 238);
 	z-index: 1;
 	position: relative;
+	gap: 20px; /* Espaço entre a imagem e a área de texto */
 }
 
 .profile-image-section {
-	flex: 1;
+	flex-shrink: 0; /* Impede que a seção da imagem encolha */
 	text-align: center;
-	margin-right: 20px;
-	position: relative;
 }
 
 .profile-image-section .profile-image-placeholder {
 	width: 120px;
 	height: 120px;
-	background-color: #ddd; /* Cor de fundo do espaço reservado */
+	background-color: #ddd;
 	border-radius: 10px;
 	border: 2px solid rgba(133, 140, 238, 0.8);
-	margin: 0 auto; /* Centraliza o quadrado */
 }
 
 .profile-image-section .username {
@@ -184,9 +182,27 @@ canvas {
 	color: rgb(133, 140, 238);
 }
 
+.profile-header {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+.profile-title {
+	font-size: 20px; /* Tamanho maior para o título */
+	color: rgb(133, 140, 238);
+	margin-bottom: 5px;
+}
+
+.profile-undertitle {
+	font-size: 14px; /* Tamanho menor para o subtítulo */
+	color: rgb(133, 140, 238);
+}
+
 .profile-stats-section {
 	flex: 2;
 	color: rgb(133, 140, 238);
+	margin-top: 20px; /* Espaço entre o título e a seção de estatísticas */
 }
 
 .profile-stats-section h2 {
@@ -232,4 +248,64 @@ canvas {
 
 .stats-table tr:last-child td {
 	border-bottom: none;
+}
+
+.friends-section {
+	background-color: white;
+	border: 2px solid rgba(133, 140, 238, 0.8);
+	border-radius: 10px;
+	padding: 20px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+	color: rgb(133, 140, 238);
+	max-width: 300px;
+	margin-left: 20px;
+}
+
+.rank {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+	border-bottom: 1px solid #ddd;
+	text-decoration: none;
+
+}
+
+.rank-item {
+	margin: 0 10px;
+}
+
+.rank a {
+	text-decoration: none;
+	color: rgb(133, 140, 238);
+}
+
+.rank a:hover {
+	text-decoration: none;
+}
+
+.popup {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1000;
+	background-color: white;
+	border: 1px solid #ccc;
+	padding: 20px;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+	width: 300px;
+}
+
+.popup-content {
+	position: relative;
+}
+
+.close-popup {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	font-size: 24px;
+	cursor: pointer;
+	color: #333;
 }
