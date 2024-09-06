@@ -87,11 +87,11 @@ def	callback(request):
 			'last_name': last_name,
 		}
 	)
-	profile_pic_url = user_info.get('image_url')
+	profile_pic_url = user_info.get('image', {}).get('link', '')
 	if profile_pic_url:
 		response = requests.get(profile_pic_url)
 		if response.status_code == 200:
-			ext = os.path.splitext(profile_pic_url)
+			_, ext = os.path.splitext(profile_pic_url)
 			file_name = f'{username}_profile_picture.{ext}'
 			user.profile_picture.save(file_name, ContentFile(response.content))
 			user.save()

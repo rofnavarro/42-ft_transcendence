@@ -45,7 +45,7 @@ class	CustomUser(AbstractBaseUser, PermissionsMixin):
 	email = models.EmailField(gettext_lazy('email address'), unique=True)
 	first_name = models.CharField(gettext_lazy('first name'), max_length=30, blank=True)
 	last_name = models.CharField(gettext_lazy('last name'), max_length=30, blank=True)
-	profile_picture = models.ImageField(upload_to=user_profile_picture_path, blank=True, null=True, default=settings.STATIC_URL + 'imgs/banana.png')
+	profile_picture = models.ImageField(upload_to=user_profile_picture_path, blank=True, null=True, default='imgs/banana.png')
 
 	date_joined = models.DateTimeField(gettext_lazy('date joined'), default=timezone.now)
 	is_active = models.BooleanField(gettext_lazy('active'), default=True)
@@ -84,7 +84,7 @@ class	CustomUser(AbstractBaseUser, PermissionsMixin):
 	def get_profile_picture_url(self):
 		if self.profile_picture and hasattr(self.profile_picture, 'url'):
 			return self.profile_picture.url
-		return settings.STATIC_URL + 'imgs/banana.png'
+		return 'imgs/banana.png'
 
 
 	@property
