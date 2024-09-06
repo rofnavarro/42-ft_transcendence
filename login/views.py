@@ -14,16 +14,13 @@ import os
 
 USER_ID = 'u-s4t2ud-a782b48361e73b59a6d5cbec76768c8aafa00b43e48aea014b90da7efb556ce5'
 API_KEY = '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'
-# REDIRECT_URI = 'http://198.168.0.92:8000/login/callback'
 REDIRECT_URI = 'http://localhost:8000/login/callback'
-
-SECRET_KEY = '42TR4NSC3ND3NC3'
 
 def	login_user(request):
 	url = f'https://api.intra.42.fr/oauth/authorize?client_id={USER_ID}&redirect_uri={REDIRECT_URI}&response_type=code'
 	return redirect(url)
 
-def manual_login(request):
+def	manual_login(request):
 	if request.method == 'POST':
 		form = CustomAuthenticationForm(request, data=request.POST)
 		if form.is_valid():
@@ -55,8 +52,6 @@ def	callback(request):
 		'code': code ,
 		'redirect_uri': REDIRECT_URI
 	}
-
-	# jwt_token = create_jwt(token_data, SECRET_KEY)
 
 	token_response = requests.post(token_url, data=token_data)
 	if token_response.status_code != 200:
@@ -114,7 +109,7 @@ def	callback(request):
 		return render(request, 'login/error.html', {'error': 'Usuário já está logado em outro dispositivo.'})
 
 @login_required
-def set_password(request):
+def	set_password(request):
 	if request.method == 'POST':
 		form = SetPasswordForm(request.user, request.POST)
 		if form.is_valid():
