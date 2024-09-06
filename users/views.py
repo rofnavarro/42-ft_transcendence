@@ -9,7 +9,6 @@ def user_profile(request, username):
     friends = user.friends.all()
     is_friend = request.user.friends.filter(username=user.username).exists()
 
-    # Formulário de nickname
     if request.method == 'POST' and 'nickname' in request.POST:
         form = EditNicknameForm(request.POST, instance=request.user)
         if form.is_valid():
@@ -19,7 +18,6 @@ def user_profile(request, username):
     else:
         form = EditNicknameForm(instance=request.user)
 
-    # Formulário de upload da foto de perfil
     if request.method == 'POST' and 'profile_picture' in request.FILES:
         picture_form = ProfilePictureForm(request.POST, request.FILES, instance=request.user)
         if picture_form.is_valid():
@@ -36,51 +34,6 @@ def user_profile(request, username):
         'picture_form': picture_form,
     }
     return render(request, 'users/profile.html', context)
-
-# @login_required
-# def user_profile(request, username):
-# 	user = get_object_or_404(CustomUser, username=username)
-# 	friends = user.friends.all()
-# 	is_friend = request.user.friends.filter(username=user.username).exists()
-
-# 	is_own_profile = (request.user == user)
-
-# 	form = EditNicknameForm(request.POST, instance=request.user)
-# 	picture_form = ProfilePictureForm(request.POST, request.FILES, instance=request.user)
-# 	if request.method == 'POST' and is_own_profile:
-# 		# Atualização do nickname
-# 		if 'nickname' in request.POST:
-# 			if form.is_valid():
-# 				if 'nickname' in form.cleaned_data and form.cleaned_data['nickname']:
-# 					request.user.nickname = form.cleaned_data['nickname']
-# 				else:
-# 					request.user.nickname = request.user.username
-# 				request.user.save()
-# 				return redirect('users:profile', username=username)
-		
-# 		# Atualização da foto de perfil
-# 		if 'profile_picture' in request.FILES:
-# 			if picture_form.is_valid():
-# 				picture_form.save()
-# 				return redirect('users:profile', username=username)
-
-# 	else:
-# 		if is_own_profile:
-# 			form = EditNicknameForm(instance=request.user)
-# 			picture_form = ProfilePictureForm(instance=request.user)
-# 		else:
-# 			form = None
-# 			picture_form = None
-
-# 	context = {
-# 		'user_info': user,
-# 		'friends': friends,
-# 		'is_friend': is_friend,
-# 		'is_own_profile': is_own_profile,
-# 		'form': form,
-# 		'picture_form': picture_form,
-# 	}
-# 	return render(request, 'users/profile.html', context)
 
 @login_required
 def send_friend_request(request, username):

@@ -13,8 +13,7 @@ import os
 from django.utils.text import slugify
 
 def user_profile_picture_path(instance, filename):
-	ext = os.path.splitext(filename)
-	# Usando o slugify para garantir que o nome de usuário seja um slug válido
+	_, ext = os.path.splitext(filename)
 	return f'profile_pictures/{slugify(instance.username)}_profile_picture{ext}'
 
 class	CustomUserManager(BaseUserManager):
@@ -72,11 +71,9 @@ class	CustomUser(AbstractBaseUser, PermissionsMixin):
 		return self.username
 
 	def save(self, *args, **kwargs):
-		# Verifica se há uma imagem existente
-		if self.pk:  # Se o usuário já existe
+		if self.pk:
 			old_user = CustomUser.objects.get(pk=self.pk)
 			if old_user.profile_picture and old_user.profile_picture != self.profile_picture:
-				# Deleta a imagem anterior do sistema de arquivos
 				old_user.profile_picture.delete(save=False)
 
 		super(CustomUser, self).save(*args, **kwargs)
