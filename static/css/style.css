@@ -146,90 +146,121 @@ canvas {
 	opacity: 1;
 	transition: 0s;
 }
-
 .rpg-profile-container {
-	display: flex;
-	align-items: flex-start;
-	border: 2px solid rgba(133, 140, 238, 0.8);
-	padding: 20px;
-	background-color: white;
-	max-width: 800px;
-	margin: 0 auto;
-	border-radius: 10px;
-	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-	color: rgb(133, 140, 238);
-	z-index: 1;
-	position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .profile-image-section {
-	flex: 1;
-	text-align: center;
-	margin-right: 20px;
-	position: relative;
+	margin-right: 50px;
+	display: flex;
+    flex-direction: column;
+    text-align: center;
 }
 
-.profile-image-section .profile-image-placeholder {
-	width: 120px;
-	height: 120px;
-	background-color: #ddd; /* Cor de fundo do espaço reservado */
-	border-radius: 10px;
-	border: 2px solid rgba(133, 140, 238, 0.8);
-	margin: 0 auto; /* Centraliza o quadrado */
+.profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
 }
 
-.profile-image-section .username {
-	font-size: 18px;
-	margin-top: 10px;
-	color: rgb(133, 140, 238);
-}
-
-.profile-stats-section {
-	flex: 2;
-	color: rgb(133, 140, 238);
-}
-
-.profile-stats-section h2 {
-	font-size: 24px;
-	margin-bottom: 10px;
-}
-
-.profile-stats-section .stats {
-	margin-top: 20px;
-}
-
-.profile-stats-section .stats h3 {
-	font-size: 20px;
-	margin-bottom: 10px;
-}
-
-.profile-stats-section .stats p {
-	font-size: 16px;
-	margin: 5px 0;
+.profile-header, .friends-section {
+    margin: 20px 0;
 }
 
 .stats-table {
-	width: 100%;
-	border-collapse: collapse;
-	background-color: white;
-	border-radius: 8px;
-	overflow: hidden;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    border-collapse: collapse;
 }
 
 .stats-table th, .stats-table td {
-	padding: 12px 15px;
-	text-align: left;
-	color: #333;
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.online-status {
+    font-weight: bold;
+}
+
+.online {
+    color: green;
+}
+
+.offline {
+    color: red;
+}
+
+.btn-action {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-action:hover {
+    background-color: #0056b3;
+}
+
+.friends-section {
+	background-color: white;
+	border: 2px solid rgba(133, 140, 238, 0.8);
+	border-radius: 10px;
+	padding: 20px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+	color: rgb(133, 140, 238);
+	max-width: 300px;
+	margin-left: 20px;
+}
+
+.rank {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
 	border-bottom: 1px solid #ddd;
-	white-space: nowrap;
+	text-decoration: none;
+
 }
 
-.stats-table th {
-	background-color: rgba(133, 140, 238, 0.2);
-	font-weight: bold;
+.rank-item {
+	margin: 0 10px;
 }
 
-.stats-table tr:last-child td {
-	border-bottom: none;
+.rank a {
+	text-decoration: none;
+	color: rgb(133, 140, 238);
 }
+
+.rank a:hover {
+	text-decoration: none;
+}
+
+/* .popup {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1000;
+	background-color: white;
+	border: 1px solid #ccc;
+	padding: 20px;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+	width: 300px;
+}
+
+.popup-content {
+	position: relative;
+}
+
+.close-popup {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	font-size: 24px;
+	cursor: pointer;
+	color: #333;
+} */

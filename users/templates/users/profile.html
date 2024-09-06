@@ -1,63 +1,134 @@
 {% extends 'layout.html' %}
+{% load static %}
 
 {% block title %}
-	Perfil de {{ user_info.first_name }} {{ user_info.last_name }}
+	Perfil de {{ user_info.username }}
 {% endblock %}
 
 {% block undertitle %}
+	<h1>{{ user_info.first_name }} {{ user_info.last_name }}</h1>
+	<h1 id="nickname-display">{{ user_info.nickname }}</h1>
+
+	{% if user_info == request.user %}
+		<!-- Popup de alteração de nickname -->
+		<div id="nickname-popup" class="popup" style="display:none;">
+			<div class="popup-content">
+				<span class="close-popup">&times;</span>
+				<form id="nickname-form" method="POST">
+					{% csrf_token %}
+					{{ form.as_p }}
+					<button type="submit" class="btn-save">Salvar Alterações</button>
+				</form>
+			</div>
+		</div>
+
+		<!-- Popup de alteração de foto de perfil -->
+		<div id="profile-picture-popup" class="popup" style="display:none;">
+			<div class="popup-content">
+				<span class="close-profile-picture-popup">&times;</span>
+				<form id="profile-picture-form" method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+					{{ picture_form.as_p }}
+					<button type="submit" class="btn-save">Atualizar Foto de Perfil</button>
+				</form>
+			</div>
+		</div>
+	{% endif %}
 {% endblock %}
 
 {% block content %}
-<div class="rpg-profile-container">
-	<div class="profile-image-section">
-		<div class="profile-image-placeholder"></div>
-		<div class="username">{{ user_info.username }}</div>
-	</div>
-	<div class="profile-stats-section">
-		<h2>Estatísticas</h2>
-		<div class="stats">
-			<h3>Total de Jogos</h3>
-			<table class="stats-table">
-				<tr>
-					<th>Partidas</th>
-					<th>Vitórias</th>
-					<th>Derrotas</th>
-					<th>% Vitórias</th>
-				</tr>
-				<tr>
-					<td>{{ user.total_matches_played }}</td>
-					<td>{{ user.total_wins }}</td>
-					<td>{{ user.total_loses }}</td>
-					<td>{{ user.formatted_win_rate }}</td>
-				</tr>
-			</table>
+	<div class="rpg-profile-container">
+		
+		<!-- Seção da Imagem de Perfil -->
+		<div class="profile-image-section">
+			{% if user_info.profile_picture %}
+				<img src="{{ user_info.profile_picture.url }}" alt="Profile Picture" class="profile-image">
+			{% else %}
+				<img src="imgs/banana.png" alt="Default Profile Picture" class="profile-image">
+			{% endif %}
+			<div class="username">{{ user_info.username }}</div>
+			{% if user_info == request.user %}
+				<button id="change-picture-button" class="btn-action">Alterar Foto</button>
+			{% endif %}
 		</div>
-	</div>	
-	<!-- Sistema de amigos -->
-	<div class="friends-section">
-		<h2>Amigos</h2>
-		<ul>
-			{% for friend in friends %}
-				<li>
-					<a href="{% url 'users:user_profile' friend.username %}">{{ friend.username }}</a>
-					{% if friend.is_online %}
-						<span style="color: green;">● Online</span>
-					{% else %}
-						<span style="color: red;">● Offline</span>
-					{% endif %}
-					{% comment %} <form method="post" action="{% url 'users:invite_to_game' friend.username %}">
-						{% csrf_token %}
-						<button type="submit">Convidar para Partida</button>
-					</form> {% endcomment %}
-				</li>
-			{% endfor %}
-		</ul>
+
+		<!-- Seção das Estatísticas do Usuário -->
+		<div class="profile-header">
+			<div class="profile-stats-section">
+				<h2>Estatísticas</h2>
+				<div class="stats">
+					<h3>Total de Jogos</h3>
+					<table class="stats-table">
+						<thead>
+							<tr>
+								<th>Partidas</th>
+								<th>Vitórias</th>
+								<th>Derrotas</th>
+								<th>% Vitórias</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>{{ user_info.total_matches_played }}</td>
+								<td>{{ user_info.total_wins }}</td>
+								<td>{{ user_info.total_loses }}</td>
+								<td>{{ user_info.formatted_win_rate }}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<!-- Seção de Amigos -->
+		<div class="friends-section">
+			<h2>Amigos</h2>
+			<ul>
+				{% for friend in friends %}
+					<li>
+						<a href="{% url 'users:profile' friend.username %}">{{ friend.username }}</a>
+						{% if friend.is_online %}
+							<span class="online-status online">● Online</span>
+						{% else %}
+							<span class="online-status offline">● Offline</span>
+						{% endif %}
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
 	</div>
-</div>
-{% if user_info != request.user and not is_friend %}
-    <form method="post" action="{% url 'users:send_friend_request' user_info.username %}">
-        {% csrf_token %}
-        <button type="submit">Adicionar Amigo</button>
-    </form>
-{% endif %}
+
+	<!-- Seção de Ação de Adicionar Amigo -->
+	{% if user_info != request.user and not is_friend %}
+		<form method="post" action="{% url 'users:send_friend_request' user_info.username %}">
+			{% csrf_token %}
+			<button type="submit" class="btn-action">Adicionar Amigo</button>
+		</form>
+	{% endif %}
+{% endblock %}
+
+{% block scripts %}
+	<!-- Script para popups -->
+	<script src="{% static 'js/popup.js' %}"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			const changePictureButton = document.getElementById('change-picture-button');
+			const profilePicturePopup = document.getElementById('profile-picture-popup');
+			const closeProfilePicturePopup = profilePicturePopup.querySelector('.close-profile-picture-popup');
+
+			changePictureButton.addEventListener('click', function() {
+				profilePicturePopup.style.display = 'block';
+			});
+
+			closeProfilePicturePopup.addEventListener('click', function() {
+				profilePicturePopup.style.display = 'none';
+			});
+
+			window.addEventListener('click', function(event) {
+				if (event.target === profilePicturePopup) {
+					profilePicturePopup.style.display = 'none';
+				}
+			});
+		});
+	</script>
 {% endblock %}

@@ -1,8 +1,20 @@
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
-from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 from django.utils import timezone
 from django.utils.translation import gettext_lazy
-from django.contrib.auth.models import BaseUserManager
+from django.conf import settings
+from django.db import models
+from PIL import Image
+import io
+import os
+
+import os
+from django.utils.text import slugify
+
+def user_profile_picture_path(instance, filename):
+	_, ext = os.path.splitext(filename)
+	return f'profile_pictures/{slugify(instance.username)}_profile_picture{ext}'
 
 class	CustomUserManager(BaseUserManager):
 	def create_user(self, email, username, password=None, **extra_fields):
@@ -11,6 +23,7 @@ class	CustomUserManager(BaseUserManager):
 		if not username:
 			raise ValueError(gettext_lazy('Necessita de um nome de usuário'))
 		email = self.normalize_email(email)
+		extra_fields.setdefault('nickname', username)
 		user = self.model(email=email, username=username, **extra_fields)
 		user.set_unusable_password()
 		user.save(using=self._db)
@@ -27,10 +40,12 @@ class	CustomUserManager(BaseUserManager):
 
 class	CustomUser(AbstractBaseUser, PermissionsMixin):
 	username = models.CharField(max_length=50, unique=True)
+	nickname = models.CharField(max_length=50, blank=True, null=True)
 	email = models.EmailField(gettext_lazy('email address'), unique=True)
 	first_name = models.CharField(gettext_lazy('first name'), max_length=30, blank=True)
 	last_name = models.CharField(gettext_lazy('last name'), max_length=30, blank=True)
-	
+	profile_picture = models.ImageField(upload_to=user_profile_picture_path, blank=True, null=True, default='imgs/banana.png')
+
 	date_joined = models.DateTimeField(gettext_lazy('date joined'), default=timezone.now)
 	is_active = models.BooleanField(gettext_lazy('active'), default=True)
 	
@@ -54,6 +69,20 @@ class	CustomUser(AbstractBaseUser, PermissionsMixin):
 
 	def	__str__(self):
 		return self.username
+
+	def save(self, *args, **kwargs):
+		if self.pk:
+			old_user = CustomUser.objects.get(pk=self.pk)
+			if old_user.profile_picture and old_user.profile_picture != self.profile_picture:
+				old_user.profile_picture.delete(save=False)
+
+		super(CustomUser, self).save(*args, **kwargs)
+
+	def get_profile_picture_url(self):
+		if self.profile_picture and hasattr(self.profile_picture, 'url'):
+			return self.profile_picture.url
+		return 'imgs/banana.png'
+
 
 	@property
 	def total_wins(self):

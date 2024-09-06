@@ -4,11 +4,13 @@ from django.contrib.auth.forms import SetPasswordForm, AuthenticationForm
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from django.core.files.base import ContentFile
 
 from .forms import CustomAuthenticationForm
 from users.models import CustomUser
 
 import requests
+import os
 
 USER_ID = 'u-s4t2ud-a782b48361e73b59a6d5cbec76768c8aafa00b43e48aea014b90da7efb556ce5'
 API_KEY = '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'
@@ -85,7 +87,16 @@ def	callback(request):
 			'last_name': last_name,
 		}
 	)
-	if created or not user.has_usable_password():
+	profile_pic_url = user_info.get('image', {}).get('link', '')
+	if profile_pic_url:
+		response = requests.get(profile_pic_url)
+		if response.status_code == 200:
+			_, ext = os.path.splitext(profile_pic_url)
+			file_name = f'{username}_profile_picture.{ext}'
+			user.profile_picture.save(file_name, ContentFile(response.content))
+			user.save()
+
+	if not user.has_usable_password():
 		if not user.is_online:
 			user.is_online = True
 			user.save()
@@ -93,19 +104,6 @@ def	callback(request):
 			return redirect(reverse('login:set_password'))
 		else:
 			return render(request, 'login/error.html', {'error': 'Usuário já está logado em outro dispositivo.'})
-
-	if not request.user.is_authenticated and request.method == 'POST':
-		password = request.POST.get('password')
-		if check_password(password, user.password):
-			if not user.is_online:
-				user.is_online = True
-				user.save()
-				login(request, user)
-				return redirect(reverse('users:profile', kwargs={'username': username}))
-			else:
-				return render(request, 'login/error.html', {'error': 'Usuário já está logado em outro dispositivo.'})
-		else:
-			return render(request, 'login/error.html', {'error': 'Senha Incorreta.'})
 
 	if not user.is_online:
 		user.is_online = True
