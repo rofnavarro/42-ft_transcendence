@@ -91,13 +91,13 @@ def	callback(request):
 			user.profile_picture.save(file_name, ContentFile(response.content))
 			user.save()
 
-	if not user.has_usable_password():
+	if not user.password:
 		if not user.is_online:
-			user.is_online = True
 			user.save()
 			login(request, user)
 			return redirect(reverse('login:set_password'))
 		else:
+			print(f"User {username} is already online.")
 			return render(request, 'login/error.html', {'error': 'Usuário já está logado em outro dispositivo.'})
 
 	if not user.is_online:
