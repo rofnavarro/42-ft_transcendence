@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from users.models import CustomUser
 from django.utils.translation import gettext_lazy
@@ -16,24 +17,26 @@ class	Match(models.Model):
 	is_tournament = models.BooleanField(default=False)
 
 	@property
-	def winner(self):
+	def	winner(self):
 		if self.score_user1 > self.score_user2:
 			return self.user1
 		elif self.score_user2 > self.score_user1:
 			return self.user2
 		return None
 
-	def save(self, *args, **kwargs):
-		if not self.date_ended:
-			if self.score_user1 is not None and self.score_user2 is not None:
-				self.date_ended = timezone.now()
-		
-		if not self.is_tournament:
-			self.match_number = None
-		
+	def	clean(self):
+		if self.user1 == self.user2:
+			raise ValidationError("Jogador 1 e jogador 2 precisam ser usuários diferentes.")
+
+	def	save(self, *args, **kwargs):
+		self.clean()
+
+		if not self.date_ended and self.score_user1 is not None and self.score_user2 is not None:
+			self.date_ended = timezone.now()
+
 		super().save(*args, **kwargs)
 
-	class Meta:
+	class	Meta:
 		constraints = [
 			models.UniqueConstraint(fields=['user1', 'user2', 'date_started'], name='unique_match'),
 		]

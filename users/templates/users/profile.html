@@ -44,7 +44,7 @@
 			{% if user_info.profile_picture %}
 				<img src="{{ user_info.profile_picture.url }}" alt="Profile Picture" class="profile-image">
 			{% else %}
-				<img src="imgs/banana.png" alt="Default Profile Picture" class="profile-image">
+				<img src={% static 'imgs/banana.png' %} alt="Default Profile Picture" class="profile-image">
 			{% endif %}
 			<div class="username">{{ user_info.username }}</div>
 			{% if user_info == request.user %}

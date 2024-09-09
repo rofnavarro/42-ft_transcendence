@@ -4,7 +4,7 @@ from .models import CustomUser, Friendship
 from .forms import EditNicknameForm, ProfilePictureForm
 
 @login_required
-def user_profile(request, username):
+def	user_profile(request, username):
     user = get_object_or_404(CustomUser, username=username)
     friends = user.friends.all()
     is_friend = request.user.friends.filter(username=user.username).exists()
@@ -36,7 +36,7 @@ def user_profile(request, username):
     return render(request, 'users/profile.html', context)
 
 @login_required
-def send_friend_request(request, username):
+def	send_friend_request(request, username):
 	to_user = get_object_or_404(CustomUser, username=username)
 		
 	if request.user != to_user:
@@ -46,6 +46,6 @@ def send_friend_request(request, username):
 	return redirect('users:profile', username=username)
 
 @login_required
-def view_friends(request):
+def	view_friends(request):
 	friends = request.user.friends.all()
 	return render(request, 'users/friends_list.html', {'friends': friends})

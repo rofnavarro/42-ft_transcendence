@@ -1,7 +1,6 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth import logout, login, authenticate
-from django.contrib.auth.forms import SetPasswordForm, AuthenticationForm
-from django.contrib.auth.hashers import check_password
+from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.core.files.base import ContentFile
@@ -14,16 +13,13 @@ import os
 
 USER_ID = 'u-s4t2ud-a782b48361e73b59a6d5cbec76768c8aafa00b43e48aea014b90da7efb556ce5'
 API_KEY = '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'
-# REDIRECT_URI = 'http://198.168.0.92:8000/login/callback'
 REDIRECT_URI = 'http://localhost:8000/login/callback'
-
-SECRET_KEY = '42TR4NSC3ND3NC3'
 
 def	login_user(request):
 	url = f'https://api.intra.42.fr/oauth/authorize?client_id={USER_ID}&redirect_uri={REDIRECT_URI}&response_type=code'
 	return redirect(url)
 
-def manual_login(request):
+def	manual_login(request):
 	if request.method == 'POST':
 		form = CustomAuthenticationForm(request, data=request.POST)
 		if form.is_valid():
@@ -56,8 +52,6 @@ def	callback(request):
 		'redirect_uri': REDIRECT_URI
 	}
 
-	# jwt_token = create_jwt(token_data, SECRET_KEY)
-
 	token_response = requests.post(token_url, data=token_data)
 	if token_response.status_code != 200:
 		return render(request, 'login/error.html', {'error': token_response.json()})
@@ -76,6 +70,7 @@ def	callback(request):
 
 	email = user_info.get('email')
 	username = user_info.get('login')
+	nickname = username
 	last_name = user_info.get('last_name', '')
 	first_name = user_info.get('usual_first_name', '') or user_info.get('first_name', '')
 
@@ -83,26 +78,29 @@ def	callback(request):
 		email=email,
 		defaults={
 			'username': username,
+			'nickname': nickname,
 			'first_name': first_name,
 			'last_name': last_name,
 		}
 	)
-	profile_pic_url = user_info.get('image', {}).get('link', '')
-	if profile_pic_url:
-		response = requests.get(profile_pic_url)
-		if response.status_code == 200:
-			_, ext = os.path.splitext(profile_pic_url)
-			file_name = f'{username}_profile_picture.{ext}'
-			user.profile_picture.save(file_name, ContentFile(response.content))
-			user.save()
 
-	if not user.has_usable_password():
+	if not user.profile_picture:
+		profile_pic_url = user_info.get('image', {}).get('link', '')
+		if profile_pic_url:
+			response = requests.get(profile_pic_url)
+			if response.status_code == 200:
+				_, ext = os.path.splitext(profile_pic_url)
+				file_name = f'{username}_profile_picture{ext}'
+				user.profile_picture.save(file_name, ContentFile(response.content))
+				user.save()
+
+	if not user.password:
 		if not user.is_online:
-			user.is_online = True
 			user.save()
 			login(request, user)
 			return redirect(reverse('login:set_password'))
 		else:
+			print(f"User {username} is already online.")
 			return render(request, 'login/error.html', {'error': 'Usuário já está logado em outro dispositivo.'})
 
 	if not user.is_online:
@@ -114,7 +112,7 @@ def	callback(request):
 		return render(request, 'login/error.html', {'error': 'Usuário já está logado em outro dispositivo.'})
 
 @login_required
-def set_password(request):
+def	set_password(request):
 	if request.method == 'POST':
 		form = SetPasswordForm(request.user, request.POST)
 		if form.is_valid():
