@@ -1,7 +1,6 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth import logout, login, authenticate
-from django.contrib.auth.forms import SetPasswordForm, AuthenticationForm
-from django.contrib.auth.hashers import check_password
+from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.core.files.base import ContentFile
@@ -71,6 +70,7 @@ def	callback(request):
 
 	email = user_info.get('email')
 	username = user_info.get('login')
+	nickname = username
 	last_name = user_info.get('last_name', '')
 	first_name = user_info.get('usual_first_name', '') or user_info.get('first_name', '')
 
@@ -78,18 +78,21 @@ def	callback(request):
 		email=email,
 		defaults={
 			'username': username,
+			'nickname': nickname,
 			'first_name': first_name,
 			'last_name': last_name,
 		}
 	)
-	profile_pic_url = user_info.get('image', {}).get('link', '')
-	if profile_pic_url:
-		response = requests.get(profile_pic_url)
-		if response.status_code == 200:
-			_, ext = os.path.splitext(profile_pic_url)
-			file_name = f'{username}_profile_picture.{ext}'
-			user.profile_picture.save(file_name, ContentFile(response.content))
-			user.save()
+
+	if not user.profile_picture:
+		profile_pic_url = user_info.get('image', {}).get('link', '')
+		if profile_pic_url:
+			response = requests.get(profile_pic_url)
+			if response.status_code == 200:
+				_, ext = os.path.splitext(profile_pic_url)
+				file_name = f'{username}_profile_picture{ext}'
+				user.profile_picture.save(file_name, ContentFile(response.content))
+				user.save()
 
 	if not user.password:
 		if not user.is_online:
