@@ -126,12 +126,6 @@ def	set_email(request):
 		form = SetEmailForm(request.POST, instance=request.user)
 		if form.is_valid():
 			form.save()
-			request.user.save()
-			print(request.user)
-			print(request.user)
-			print(request.user)
-			print(request.user)
-			print(request.user)
 			send_2fa_code_email(request)
 			return redirect(reverse('login:verify2fa'))
 		else:
