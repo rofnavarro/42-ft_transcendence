@@ -104,9 +104,7 @@ def	callback(request):
 		return redirect(reverse('login:set_email'))
 
 	login(request, user)
-	user.is_verified == False
-	user.save()
-	send_2fa_code_email(user)
+	send_2fa_code_email(request)
 	return redirect(reverse('login:verify2fa'))
 
 @login_required
