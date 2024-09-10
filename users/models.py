@@ -1,16 +1,10 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
-from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
-from django.utils import timezone
-from django.utils.translation import gettext_lazy
-from django.conf import settings
 from django.db import models
-from PIL import Image
-import io
-import os
+from django.utils import timezone
+from django.utils.text import slugify
+from django.utils.translation import gettext_lazy
 
 import os
-from django.utils.text import slugify
 
 def	user_profile_picture_path(instance, filename):
 	_, ext = os.path.splitext(filename)
@@ -18,8 +12,6 @@ def	user_profile_picture_path(instance, filename):
 
 class	CustomUserManager(BaseUserManager):
 	def	create_user(self, email, username, password=None, **extra_fields):
-		if not email:
-			raise ValueError(gettext_lazy('Necessita de um email'))
 		if not username:
 			raise ValueError(gettext_lazy('Necessita de um nome de usuário'))
 		email = self.normalize_email(email)
@@ -42,9 +34,13 @@ class	CustomUser(AbstractBaseUser, PermissionsMixin):
 	username = models.CharField(max_length=50, unique=True)
 	nickname = models.CharField(max_length=50,unique=True, blank=True, null=True)
 	email = models.EmailField(gettext_lazy('email address'), unique=True)
+
 	first_name = models.CharField(gettext_lazy('first name'), max_length=30, blank=True)
 	last_name = models.CharField(gettext_lazy('last name'), max_length=30, blank=True)
 	profile_picture = models.ImageField(upload_to=user_profile_picture_path, blank=True, null=True)
+
+	verification_code = models.IntegerField(gettext_lazy('2fa_code'), blank=True, null=True)
+	is_verified = models.BooleanField(gettext_lazy('verified status'), default=False)
 
 	date_joined = models.DateTimeField(gettext_lazy('date joined'), default=timezone.now)
 	is_active = models.BooleanField(gettext_lazy('active'), default=True)

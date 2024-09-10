@@ -4,10 +4,13 @@ from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.core.files.base import ContentFile
+from django.core.mail import send_mail
+from django.conf import settings
 
-from .forms import CustomAuthenticationForm
+from .forms import CustomAuthenticationForm, SetEmailForm
 from users.models import CustomUser
 
+import random
 import requests
 import os
 
@@ -26,10 +29,9 @@ def	manual_login(request):
 			user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
 			if user:
 				if not user.is_online:
-					user.is_online = True
-					user.save()
 					login(request, user)
-					return redirect('/users/profile/' + user.username)
+					send_2fa_code_email(request)
+					return redirect('login:verify2fa')
 				else:
 					return render(request, 'login/manual_login.html', {'form': form, 'error': 'Usuário já está logado em outro dispositivo.'})
 			else:
@@ -68,14 +70,13 @@ def	callback(request):
 	user_response = requests.get(user_url, headers=headers)
 	user_info = user_response.json()
 
-	email = user_info.get('email')
 	username = user_info.get('login')
 	nickname = username
 	last_name = user_info.get('last_name', '')
 	first_name = user_info.get('usual_first_name', '') or user_info.get('first_name', '')
 
 	user, created = CustomUser.objects.get_or_create(
-		email=email,
+		username=username,
 		defaults={
 			'username': username,
 			'nickname': nickname,
@@ -95,21 +96,18 @@ def	callback(request):
 				user.save()
 
 	if not user.password:
-		if not user.is_online:
-			user.save()
-			login(request, user)
-			return redirect(reverse('login:set_password'))
-		else:
-			print(f"User {username} is already online.")
-			return render(request, 'login/error.html', {'error': 'Usuário já está logado em outro dispositivo.'})
-
-	if not user.is_online:
-		user.is_online = True
-		user.save()
 		login(request, user)
-		return redirect(reverse('users:profile', kwargs={'username': username}))
-	else:
-		return render(request, 'login/error.html', {'error': 'Usuário já está logado em outro dispositivo.'})
+		return redirect(reverse('login:set_password'))
+
+	if not user.email:
+		login(request, user)
+		return redirect(reverse('login:set_email'))
+
+	login(request, user)
+	user.is_verified == False
+	user.save()
+	send_2fa_code_email(user)
+	return redirect(reverse('login:verify2fa'))
 
 @login_required
 def	set_password(request):
@@ -117,18 +115,73 @@ def	set_password(request):
 		form = SetPasswordForm(request.user, request.POST)
 		if form.is_valid():
 			form.save()
-			return redirect(reverse('users:profile', kwargs={'username': request.user.username}))
+			return redirect(reverse('login:set_email'))
+		else:
+			return render(request, 'login/set_password.html', {'form': form, 'error': 'Erro ao definir a senha.'})
 	else:
 		form = SetPasswordForm(request.user)
-		
 	return render(request, 'login/set_password.html', {'form': form})
+
+@login_required
+def	set_email(request):
+	if request.method == 'POST':
+		form = SetEmailForm(request.POST, instance=request.user)
+		if form.is_valid():
+			form.save()
+			request.user.save()
+			print(request.user)
+			print(request.user)
+			print(request.user)
+			print(request.user)
+			print(request.user)
+			send_2fa_code_email(request)
+			return redirect(reverse('login:verify2fa'))
+		else:
+			return render(request, 'login/set_email.html', {'form': form, 'error': 'Erro ao definir o email.'})
+
+	else:
+		form = SetEmailForm(instance=request.user)
+	return render(request, 'login/set_email.html', {'form': form})
 
 @login_required
 def	logout_user(request):
 	user = request.user
 	user.is_online = False
+	user.is_verified = False
 	user.save()
 
 	logout(request)
 	request.session.flush()
 	return redirect('home')
+
+@login_required
+def	send_2fa_code_email(user):
+	code = random.randint(100000, 999999)
+
+	user.user.verification_code = code
+	user.user.save()
+
+	subject = 'Seu código de verificação 2FA'
+	message = f'Olá {user.user.first_name}, \n\nSeu código de verificação é {code}.'
+	recipient = [user.user.email]
+	send_mail(subject, message, "MS_pQT7zb@trial-v69oxl5kv5rl785k.mlsender.net", recipient)
+	return redirect(reverse('login:verify2fa'))
+
+def	verify_2fa_code_email(request):
+	if request.method == 'POST':
+		code = request.POST.get('code')
+		if not code:
+			return render(request, 'login/2fa.html', {'error': 'Por favor, inserir o código 2fa.'})
+		try:
+			if int(code) == request.user.verification_code:
+				request.user.is_online = True
+				request.user.is_verified = True
+				request.user.verification_code = None
+				request.user.save()
+				login(request, request.user)
+				return redirect('users:profile', username=request.user.username)
+			else:
+				return render(request, 'login/2fa.html', {'error': 'Código incorreto.'})
+		except ValueError:
+			return render(request, 'login/2fa.html', {'error': 'Código incorreto.'})
+	return render(request, 'login/2fa.html')
