@@ -123,7 +123,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'fenoland@gmail.com'
-EMAIL_HOST_PASSWORD = 'gcmy nzsw wjyu mcyv'
+EMAIL_HOST_USER = 'transcendencenana@gmail.com'
+EMAIL_HOST_PASSWORD = 'iwpl clet ncyl ycpk'
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
