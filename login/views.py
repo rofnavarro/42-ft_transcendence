@@ -156,7 +156,7 @@ def	send_2fa_code_email(user):
 	subject = 'Seu código de verificação 2FA'
 	message = f'Olá {user.user.first_name}, \n\nSeu código de verificação é {code}.'
 	recipient = [user.user.email]
-	send_mail(subject, message, "MS_pQT7zb@trial-v69oxl5kv5rl785k.mlsender.net", recipient)
+	send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient)
 	return redirect(reverse('login:verify2fa'))
 
 def	verify_2fa_code_email(request):
