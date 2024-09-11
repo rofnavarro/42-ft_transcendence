@@ -70,7 +70,6 @@ def	callback(request):
 
 	email = user_info.get('email')
 	username = user_info.get('login')
-	nickname = username
 	last_name = user_info.get('last_name', '')
 	first_name = user_info.get('usual_first_name', '') or user_info.get('first_name', '')
 
@@ -78,7 +77,6 @@ def	callback(request):
 		email=email,
 		defaults={
 			'username': username,
-			'nickname': nickname,
 			'first_name': first_name,
 			'last_name': last_name,
 		}
@@ -125,10 +123,11 @@ def	set_password(request):
 
 @login_required
 def	logout_user(request):
-	user = request.user
-	user.is_online = False
-	user.save()
+	if request.method == 'POST':
+		user = request.user
+		user.is_online = False
+		user.save()
 
-	logout(request)
 	request.session.flush()
+	logout(request)
 	return redirect('home')

@@ -34,6 +34,9 @@
 			</div>
 		</div>
 	{% endif %}
+	<div>
+		<a href="/tournament/">Torneio</a>
+	</div>
 {% endblock %}
 
 {% block content %}
@@ -86,7 +89,7 @@
 			<ul>
 				{% for friend in friends %}
 					<li>
-						<a href="{% url 'users:profile' friend.username %}">{{ friend.username }}</a>
+						<a href="{% url 'users:profile' friend.username %}">{{ friend.nickname }}</a>
 						{% if friend.is_online %}
 							<span class="online-status online">● Online</span>
 						{% else %}
