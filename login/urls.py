@@ -1,11 +1,10 @@
 from django.urls import path
-from ft_transcendence.views import homepage
 from . import views
 
 app_name = 'login'
 
 urlpatterns = [
-	path('', homepage, name="login"),
+	path('', views.login_user, name="login"),
 	path('manual_login/', views.manual_login, name="manual_login"),
 	path('callback/', views.callback, name="callback"),
 	path('logout/', views.logout_user, name="logout_user"),
