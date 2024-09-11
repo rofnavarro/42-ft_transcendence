@@ -6,7 +6,7 @@ var DIRECTION = {
 	RIGHT: 4
 };
 
-var rounds = [5, 5, 5];
+var rounds = [3, 3, 3];
 
 var Ball = {
 	new: function (incrementSpeed) {
@@ -150,7 +150,7 @@ var Game = {
 		const angle = collideRatio * (Math.PI / 4);
 
 		this.ball.moveX = newMoveX;
-		this.ball.moveY = (angle > 0) ? DIRECTION.UP : DIRECTION.DOWN;
+		this.ball.moveY = (angle > 0) ? DIRECTION.DOWN : DIRECTION.UP;
 		this.ball.speed += 0.25;
 
 		if (newMoveX === DIRECTION.RIGHT) {
