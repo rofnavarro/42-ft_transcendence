@@ -142,6 +142,7 @@ var Game = {
 		if (this.detectCollision(this.ball, this.playerB)) {
 			this.handlePlayerCollision(this.playerB, DIRECTION.LEFT);
 		}
+		console.log(this.ball.speed)
 	},
 
 	handlePlayerCollision: function (player, newMoveX) {
@@ -181,6 +182,7 @@ var Game = {
 		if (this.playerA.score === rounds[this.round]) {
 			if (!rounds[this.round + 1]) {
 				this.over = true;
+				this.resetBall();
 				setTimeout(() => { this.endGameMenu('Player A wins!'); }, 1000);
 			} else {
 				this.playerA.score = this.playerB.score = 0;
@@ -194,6 +196,7 @@ var Game = {
 		else if (this.playerB.score === rounds[this.round]) {
 			if (!rounds[this.round + 1]) {
 				this.over = true;
+				this.resetBall();
 				setTimeout(() => { this.endGameMenu('Player B wins!'); }, 1000);
 			} else {
 				this.playerA.score = this.playerB.score = 0;
@@ -216,6 +219,7 @@ var Game = {
 		this.ball = Ball.new.call(this);
 		this.ball.moveX = Math.random() > 0.5 ? DIRECTION.RIGHT : DIRECTION.LEFT;
 		this.ball.moveY = Math.random() > 0.5 ? DIRECTION.DOWN : DIRECTION.UP;
+		this.ball.speed = 7;
 	},
 
 	render: function () {

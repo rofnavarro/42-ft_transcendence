@@ -56,6 +56,22 @@ main {
 	height: 100%;
 }
 
+/* TODO: classe feia */
+.play {
+	display: flex;
+	justify-content: space-between;
+	gap: 50px;
+	padding: 3px;
+	background-color: chartreuse;
+	flex-direction: row;
+}
+
+.btn-submit {
+	margin-top: 10px;
+}
+
+/* FIM */
+
 h1 {
 	text-align: center;
 }

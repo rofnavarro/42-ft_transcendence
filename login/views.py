@@ -171,7 +171,8 @@ def	verify_2fa_code_email(request):
 				request.user.verification_code = None
 				request.user.save()
 				login(request, request.user)
-				return redirect('users:profile', username=request.user.username)
+				# HERE
+				return redirect('users:wanna_play', username=request.user.username)
 			else:
 				return render(request, 'login/2fa.html', {'error': 'Código incorreto.'})
 		except ValueError:

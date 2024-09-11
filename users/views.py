@@ -49,3 +49,13 @@ def	send_friend_request(request, username):
 def	view_friends(request):
 	friends = request.user.friends.all()
 	return render(request, 'users/friends_list.html', {'friends': friends})
+
+@login_required
+def wanna_play(request, username):
+    user = get_object_or_404(CustomUser, username=username)
+    return render(request, 'users/wanna_play.html', {'user': user})
+
+@login_required
+def local_play(request, username):
+    user = get_object_or_404(CustomUser, username=username)
+    return render(request, 'users/local_play.html', {'user': user})

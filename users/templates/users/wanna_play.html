@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+	Jogar
+{% endblock %}
+
+{% block undertitle %}
+	<h1>Jogar</h1>
+{% endblock %}
+
+{% block content %}
+	<div class="play">
+		<div id="play-casual" >
+			<h2>Casual</h2>
+			<div class="play">
+				<a href="{% url 'users:local_play' user.username %}" class="btn-play">Local</a>
+				<a href="" class="btn-play">Aleatorio</a>
+			</div>
+		</div>
+		<div id="play-torneio">
+			<h2>Torneio</h2>
+			<div class="play">
+				<a href="" class="btn-play">Criar</a>
+				<a href="" class="btn-play">Entrar com codigo</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
