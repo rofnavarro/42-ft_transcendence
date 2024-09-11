@@ -117,11 +117,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+# SMTP
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.mailersend.net'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'MS_pQT7zb@trial-v69oxl5kv5rl785k.mlsender.net'
-EMAIL_HOST_PASSWORD = 'dlsztoI3suVnTcq1'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'fenoland@gmail.com'
+EMAIL_HOST_PASSWORD = 'gcmy nzsw wjyu mcyv'
+
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

@@ -15,8 +15,8 @@ var Ball = {
 			height: 18,
 			x: (this.canvas.width / 2) - 9,
 			y: (this.canvas.height / 2) - 9,
-			moveX: DIRECTION.IDLE,
-			moveY: DIRECTION.IDLE,
+			moveX: Math.random() > 0.5 ? DIRECTION.RIGHT : DIRECTION.LEFT,
+			moveY: Math.random() > 0.5 ? DIRECTION.DOWN : DIRECTION.UP,
 			speed: incrementSpeed || 7
 		};
 	}
@@ -41,7 +41,7 @@ var Game = {
 		this.canvas = document.querySelector('canvas');
 		this.context = this.canvas.getContext('2d');
 
-		this.canvas.width = 1400;
+		this.canvas.width = 2800;
 		this.canvas.height = 1000;
 
 		this.canvas.style.width = (this.canvas.width / 2) + 'px';
@@ -56,212 +56,188 @@ var Game = {
 		this.timer = this.round = 0;
 		this.color = '#0a0a0a';
 
-		Pong.menu();
-		Pong.listen();
+		this.drawMenu();
+		this.addEventListeners();
+	},
+
+	drawMenu: function () {
+		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+	
+		this.context.fillStyle = this.color;
+		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+		this.context.font = '50px Dosis';
+		this.context.textAlign = 'center';
+		this.context.fillStyle = '#858cee';
+		this.context.fillText('Press any key to begin', this.canvas.width / 2, this.canvas.height / 2 + 15);
 	},
 
 	endGameMenu: function (text) {
-		Pong.context.font = '45px Dosis';
-		Pong.context.fillStyle = this.color;
+		this.context.font = '45px Dosis';
+		this.context.fillStyle = this.color;
+		this.context.fillRect(this.canvas.width / 2 - 350, this.canvas.height / 2 - 48, 700, 100);
+		this.context.fillStyle = '#858cee';
+		this.context.fillText(text, this.canvas.width / 2, this.canvas.height / 2 + 15);
 
-		Pong.context.fillRect(
-			Pong.canvas.width / 2 - 350,
-			Pong.canvas.height / 2 - 48,
-			700,
-			100
-		);
-
-		Pong.context.fillStyle = '#858cee';
-
-		Pong.context.fillText(text,
-			Pong.canvas.width / 2,
-			Pong.canvas.height / 2 + 15
-		);
-
-		setTimeout(function () {
-			Pong = Object.assign({}, Game);
-			Pong.initialize();
+		setTimeout(() => {
+			this.initialize();
 		}, 3000);
 	},
 
-	menu: function () {
-		Pong.draw();
+	addEventListeners: function () {
+		document.addEventListener('keydown', (event) => {
+			if (event.key === 'ArrowUp') this.playerB.move = DIRECTION.UP;
+			if (event.key === 'ArrowDown') this.playerB.move = DIRECTION.DOWN;
+			if (event.key === 'w') this.playerA.move = DIRECTION.UP;
+			if (event.key === 's') this.playerA.move = DIRECTION.DOWN;
 
-		this.context.font = '50px Dosis';
-		this.context.fillStyle = this.color;
+			if (!this.running && !this.over) {
+				this.running = true;
+				this.startGame();
+			}
+		});
 
-		this.context.fillRect(
-			this.canvas.width / 2 - 350,
-			this.canvas.height / 2 - 48,
-			700,
-			100
-		);
+		document.addEventListener('keyup', (event) => {
+			if (event.key === 'ArrowUp' || event.key === 'ArrowDown') this.playerB.move = DIRECTION.IDLE;
+			if (event.key === 'w' || event.key === 's') this.playerA.move = DIRECTION.IDLE;
+		});
+	},
 
-		this.context.fillStyle = '#858cee';
-
-		this.context.fillText('Press any key to begin',
-			this.canvas.width / 2,
-			this.canvas.height / 2 + 15
-		);
+	startGame: function () {
+		this.timer = setInterval(() => {
+			this.update();
+			this.render();
+		}, 1000 / 90);
 	},
 
 	update: function () {
 		if (!this.over) {
-			if (this.ball.x <= 0) Pong._resetTurn.call(this, this.playerB, this.playerA);
-			if (this.ball.x >= this.canvas.width - this.ball.width) Pong._resetTurn.call(this, this.playerA, this.playerB);
-			if (this.ball.y <= 0) this.ball.moveY = DIRECTION.DOWN;
-			if (this.ball.y >= this.canvas.height - this.ball.height) this.ball.moveY = DIRECTION.UP;
+			this.handleBallCollisions();
+			this.handlePlayerMovements();
+			this.handleBallMovement();
+			this.checkRoundEnd();
+		}
+	},
+	
+	detectCollision: function (ball, player) {
+		const nextBallX = ball.x + (ball.moveX === DIRECTION.RIGHT ? ball.speed : (ball.moveX === DIRECTION.LEFT ? -ball.speed : 0));
+		const nextBallY = ball.y + (ball.moveY === DIRECTION.DOWN ? ball.speed : (ball.moveY === DIRECTION.UP ? -ball.speed : 0));
 
-			if (this.playerA.move == DIRECTION.UP) this.playerA.y -= this.playerA.speed;
-			else if (this.playerA.move == DIRECTION.DOWN) this.playerA.y += this.playerA.speed;
+		return (nextBallX < player.x + player.width &&
+				nextBallX + ball.width > player.x &&
+				nextBallY < player.y + player.height &&
+				nextBallY + ball.height > player.y);
+	},
 
-			if (this.playerB.move == DIRECTION.UP) this.playerB.y -= this.playerB.speed;
-			else if (this.playerB.move == DIRECTION.DOWN) this.playerB.y += this.playerB.speed;
+	handleBallCollisions: function () {
+		if (this.ball.x - (this.ball.width / 2) <= 0) this.resetTurn(this.playerB, this.playerA);
+		if (this.ball.x + (this.ball.width / 2) >= this.canvas.width) this.resetTurn(this.playerA, this.playerB);
+		if (this.ball.y - (this.ball.height / 2) <= 0) this.ball.moveY = DIRECTION.DOWN;
+		if (this.ball.y + (this.ball.height / 2) >= this.canvas.height) this.ball.moveY = DIRECTION.UP;
 
-			if (Pong._turnDelayIsOver.call(this) && this.turn) {
-				this.ball.moveX = this.turn === this.playerA ? DIRECTION.LEFT : DIRECTION.RIGHT;
-				this.ball.moveY = [DIRECTION.UP, DIRECTION.DOWN][Math.floor(Math.random() * 2)];
-				this.ball.y = Math.floor(Math.random() * (this.canvas.height - 200)) + 100;
-				this.turn = null;
-			}
-
-			if (this.playerA.y <= 0) this.playerA.y = 0;
-			else if (this.playerA.y >= (this.canvas.height - this.playerA.height)) this.playerA.y = (this.canvas.height - this.playerA.height);
-
-			if (this.playerB.y <= 0) this.playerB.y = 0;
-			else if (this.playerB.y >= (this.canvas.height - this.playerB.height)) this.playerB.y = (this.canvas.height - this.playerB.height);
-
-			if (this.ball.moveY === DIRECTION.UP) this.ball.y -= (this.ball.speed / 1.5);
-			else if (this.ball.moveY === DIRECTION.DOWN) this.ball.y += (this.ball.speed / 1.5);
-
-			if (this.ball.moveX === DIRECTION.LEFT) this.ball.x -= this.ball.speed;
-			else if (this.ball.moveX === DIRECTION.RIGHT) this.ball.x += this.ball.speed;
-
-			if (this.ball.x - this.ball.width <= this.playerA.x + this.playerA.width &&
-				this.ball.y + this.ball.height >= this.playerA.y &&
-				this.ball.y <= this.playerA.y + this.playerA.height) {
-
-					var collideY = (this.ball.y + this.ball.height / 2) - (this.playerA.y + this.playerA.height / 2);
-					var collideRatio = collideY / (this.playerA.height / 2);
-					var angle = collideRatio * (Math.PI / 4);
-
-					this.ball.moveX = DIRECTION.RIGHT;
-					this.ball.moveY = (angle > 0) ? DIRECTION.DOWN : DIRECTION.UP;
-					this.ball.x = this.playerA.x + this.playerA.width;
-					this.ball.speed += 0.25;
-				}
-
-			if (this.ball.x + this.ball.width >= this.playerB.x &&
-				this.ball.y + this.ball.height >= this.playerB.y &&
-				this.ball.y <= this.playerB.y + this.playerB.height) {
-
-					var collideY = (this.ball.y + this.ball.height / 2) - (this.playerB.y + this.playerB.height / 2);
-					var collideRatio = collideY / (this.playerB.height / 2);
-					var angle = collideRatio * (Math.PI / 4);
-
-					this.ball.moveX = DIRECTION.LEFT;
-					this.ball.moveY = (angle > 0) ? DIRECTION.DOWN : DIRECTION.UP;
-					this.ball.x = this.playerB.x - this.ball.width;
-					this.ball.speed += 0.25;
-				}
+		if (this.detectCollision(this.ball, this.playerA)) {
+			this.handlePlayerCollision(this.playerA, DIRECTION.RIGHT);
 		}
 
-			if (this.playerA.score === rounds[this.round]) {
-				if (!rounds[this.round + 1]) {
-					this.over = true;
-					setTimeout(function () { Pong.endGameMenu('PlayerA wins!'); }, 1000 );
-				} else {
-					this.playerA.score = this.playerB.score = 0;
-					this.playerA.speed += 1;
-					this.playerB.speed += 1;
-					this.ball.speed += 0.5;
-					this.round += 1;
-				}
-			}
-			else if (this.playerB.score === rounds[this.round]) {
+		if (this.detectCollision(this.ball, this.playerB)) {
+			this.handlePlayerCollision(this.playerB, DIRECTION.LEFT);
+		}
+	},
+
+	handlePlayerCollision: function (player, newMoveX) {
+		const collideY = (this.ball.y + this.ball.height / 2) - (player.y + player.height / 2);
+		const collideRatio = collideY / (player.height / 2);
+		const angle = collideRatio * (Math.PI / 4);
+
+		this.ball.moveX = newMoveX;
+		this.ball.moveY = (angle > 0) ? DIRECTION.UP : DIRECTION.DOWN;
+		this.ball.speed += 0.25;
+
+		if (newMoveX === DIRECTION.RIGHT) {
+			this.ball.x = player.x + player.width;
+		} else {
+			this.ball.x = player.x - this.ball.width;
+		}
+	},
+
+	handlePlayerMovements: function () {
+		if (this.playerA.move === DIRECTION.UP) this.playerA.y -= this.playerA.speed;
+		if (this.playerA.move === DIRECTION.DOWN) this.playerA.y += this.playerA.speed;
+		if (this.playerB.move === DIRECTION.UP) this.playerB.y -= this.playerB.speed;
+		if (this.playerB.move === DIRECTION.DOWN) this.playerB.y += this.playerB.speed;
+
+		this.playerA.y = Math.max(0, Math.min(this.canvas.height - this.playerA.height, this.playerA.y));
+		this.playerB.y = Math.max(0, Math.min(this.canvas.height - this.playerB.height, this.playerB.y));
+	},
+
+	handleBallMovement: function () {
+		if (this.ball.moveY === DIRECTION.UP) this.ball.y -= this.ball.speed;
+		if (this.ball.moveY === DIRECTION.DOWN) this.ball.y += this.ball.speed;
+		if (this.ball.moveX === DIRECTION.LEFT) this.ball.x -= this.ball.speed;
+		if (this.ball.moveX === DIRECTION.RIGHT) this.ball.x += this.ball.speed;
+	},
+
+	checkRoundEnd: function () {
+		if (this.playerA.score === rounds[this.round]) {
+			if (!rounds[this.round + 1]) {
 				this.over = true;
-				setTimeout(function () { Pong.endGameMenu('PlayerB wins!'); }, 1000);
+				setTimeout(() => { this.endGameMenu('Player A wins!'); }, 1000);
+			} else {
+				this.playerA.score = this.playerB.score = 0;
+				this.playerA.speed += 1;
+				this.playerB.speed += 1;
+				this.round++;
+				this.resetBall();
+				this.turn = this.playerB;
 			}
-		},
-
-		draw: function () {
-			this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-			this.context.fillStyle = this.color;
-			this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
-			this.context.fillStyle = '#858cee';
-			this.context.fillRect(this.playerA.x, this.playerA.y, this.playerA.width, this.playerA.height);
-			this.context.fillRect(this.playerB.x, this.playerB.y, this.playerB.width, this.playerB.height);
-
-			if (Pong._turnDelayIsOver.call(this)) {
-				this.context.beginPath();
-				this.context.arc(this.ball.x + this.ball.width / 2, this.ball.y + this.ball.height / 2, this.ball.width / 2, 0, 2 * Math.PI);
-				this.context.fillStyle = '#858cee';
-				this.context.fill();
+		}
+		else if (this.playerB.score === rounds[this.round]) {
+			if (!rounds[this.round + 1]) {
+				this.over = true;
+				setTimeout(() => { this.endGameMenu('Player B wins!'); }, 1000);
+			} else {
+				this.playerA.score = this.playerB.score = 0;
+				this.playerA.speed += 1;
+				this.playerB.speed += 1;
+				this.round++;
+				this.resetBall();
+				this.turn = this.playerA;
 			}
+		}
+	},
 
-			this.context.beginPath();
-			this.context.setLineDash([7, 15]);
-			this.context.moveTo(this.canvas.width / 2, this.canvas.height - 140);
-			this.context.lineTo(this.canvas.width / 2, 140);
-			this.context.lineWidth = 10;
-			this.context.strokeStyle = '#858cee';
-			this.context.stroke();
+	resetTurn: function (scoringPlayer, nextPlayer) {
+		scoringPlayer.score++;
+		this.resetBall();
+		this.turn = nextPlayer;
+	},
 
-			this.context.font = '100px Dosis';
-			this.context.textAlign = 'center';
+	resetBall: function () {
+		this.ball = Ball.new.call(this);
+		this.ball.moveX = Math.random() > 0.5 ? DIRECTION.RIGHT : DIRECTION.LEFT;
+		this.ball.moveY = Math.random() > 0.5 ? DIRECTION.DOWN : DIRECTION.UP;
+	},
 
-			this.context.fillText(this.playerA.score.toString(), (this.canvas.width / 2) - 300, 200);
-			this.context.fillText(this.playerB.score.toString(), (this.canvas.width / 2) + 300, 200);
+	render: function () {
+		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+	
+		this.context.fillStyle = this.color;
+		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-			this.context.font = '40px Dosis';
-			this.context.fillText('Round ' + (Pong.round + 1), (this.canvas.width / 2), 35);
-			this.context.fillText(rounds[Pong.round] ? rounds[Pong.round] : rounds[Pong.round - 1], (this.canvas.width / 2), 100);
-		},
+		this.context.fillStyle = '#858cee';
+		this.context.fillRect(this.playerA.x, this.playerA.y, this.playerA.width, this.playerA.height);
+		this.context.fillRect(this.playerB.x, this.playerB.y, this.playerB.width, this.playerB.height);
 
-		loop: function () {
-			Pong.update();
-			Pong.draw();
+		this.context.fillStyle = '#ffffff';
+		this.context.fillRect(this.ball.x, this.ball.y, this.ball.width, this.ball.height);
 
-			if (!Pong.over) requestAnimationFrame(Pong.loop);
-		},
+		this.context.font = '40px Dosis';
+		this.context.fillStyle = '#858cee';
+		this.context.fillText(this.playerA.score, this.canvas.width / 2 - 80, 50);
+		this.context.fillText(this.playerB.score, this.canvas.width / 2 + 50, 50);
+	}
+};
 
-		listen: function () {
-			document.addEventListener('keydown', function(key) {
-				if (Pong.running === false) {
-					Pong.running = true;
-					window.requestAnimationFrame(Pong.loop);
-				}
-
-				if (key.keyCode === 87) Pong.playerA.move = DIRECTION.UP;
-				if (key.keyCode === 38) Pong.playerB.move = DIRECTION.UP;
-				if (key.keyCode === 83) Pong.playerA.move = DIRECTION.DOWN;
-				if (key.keyCode === 40) Pong.playerB.move = DIRECTION.DOWN;
-
-				event.preventDefault();
-			});
-
-			document.addEventListener('keyup', function(key) {
-				if (key.keyCode === 38 || key.keyCode === 40) {
-					Pong.playerB.move = DIRECTION.IDLE;
-				}
-				Pong.playerA.move = DIRECTION.IDLE;
-			});
-		},
-
-		_resetTurn: function(winner, loser) {
-			this.ball = Ball.new.call(this, this.ball.speed);
-			this.turn = loser;
-			this.timer = (new Date()).getTime();
-
-			winner.score++;
-		},
-
-		_turnDelayIsOver: function() {
-			return ((new Date()).getTime() - this.timer >= 1000);
-		},
-	};
-
-	var Pong = Object.assign({}, Game);
-	Pong.initialize();
+document.addEventListener('DOMContentLoaded', () => {
+	Game.initialize();
+});
