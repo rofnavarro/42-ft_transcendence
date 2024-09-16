@@ -59,15 +59,52 @@ main {
 /* TODO: classe feia */
 .play {
 	display: flex;
-	justify-content: space-between;
-	gap: 50px;
+	flex-direction: column;
 	padding: 3px;
-	background-color: chartreuse;
+	gap: 10%;
+	background-color: white;
 	flex-direction: row;
 }
 
-.btn-submit {
-	margin-top: 10px;
+#qtd-turnos {
+	white-space: nowrap;
+}
+
+.local-play {
+	display: flex;
+	flex-direction: row;
+	gap: 10%;
+}
+
+.players{
+	display: flex;
+	flex-direction: row;
+	gap: 10%;
+	text-align: center;
+}
+
+.submit-button {
+	margin-top: 30%;
+	display: inline-flex;
+	align-items: center ;
+	font-family: "Space Grotesk", sans-serif;
+	background-color: black;
+	border: none;
+	border-radius: 12px;
+	font-size: 20px;
+	color: white;
+	text-align: center;
+	padding: 10%;
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	transition-duration: 0.4s;
+	text-decoration: none;
+	overflow: hidden;
+	cursor: pointer;
+}
+.player {
+	display: flex;
+	flex-direction: column;
+
 }
 
 /* FIM */
@@ -272,29 +309,3 @@ li {
 .rank a:hover {
 	text-decoration: none;
 }
-
-/* .popup {
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	z-index: 1000;
-	background-color: white;
-	border: 1px solid #ccc;
-	padding: 20px;
-	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-	width: 300px;
-}
-
-.popup-content {
-	position: relative;
-}
-
-.close-popup {
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	font-size: 24px;
-	cursor: pointer;
-	color: #333;
-} */

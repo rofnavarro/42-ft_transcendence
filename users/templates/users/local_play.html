@@ -13,36 +13,31 @@
 		<!-- qtd jogadores -->
 		<div id="qtd-jogadores" >
 			<h2>Jogadores</h2>
-			<div class="local-play">
 				<input type="radio" name="qtd_jogadores" value="2_jogadores" checked>
 				<label>2</label>
 				<input type="radio" name="qtd_jogadores" value="4_jogadores">
 				<label>4</label>
-			</div>
 		</div>
 
 		<!-- qtd-turnos -->
 		<div id="qtd-turnos" >
 			<h2>Turnos</h2>
-			<div class="local-play">
 				<input type="radio" name="qtd-turnos" value="1" checked>
 				<label>1</label>
 				<input type="radio" name="qtd-turnos" value="3">
 				<label>3</label>
 				<input type="radio" name="qtd-turnos" value="5">
 				<label>5</label>
-			</div>
 		</div>
-		<div>
-			<button id="submit" class="btn-submit">Finalizar</button>
-		</div>
-		
+	</div>
+	<div>
+		<button class="submit-button">Finalizar</button>
 	</div>
 
 	<!-- TODO: criar um script para colocar o nick dos players locais inteligente para compreender se é 2 ou 4 jogadores -->
 	<div id="local-players">
 		<h2>Jogadores</h2>
-		<div class="local-play">
+		<div class="players">
 			<div id="player1" class="player">
 				<h3>Jogador 1</h3>
 				<input type="text" name="player1" placeholder="Nome do Jogador 1">
@@ -51,16 +46,17 @@
 				<h3>Jogador 2</h3>
 				<input type="text" name="player2" placeholder="Nome do Jogador 2">
 			</div>
-			<div id="player3" class="player" style="display:none;">
+		</div>
+		<div class="players" >
+			<div id="player3" class="player" >
 				<h3>Jogador 3</h3>
 				<input type="text" name="player3" placeholder="Nome do Jogador 3">
 			</div>
-			<div id="player4" class="player" style="display:none;">
+			<div id="player4" class="player">
 				<h3>Jogador 4</h3>
 				<input type="text" name="player4" placeholder="Nome do Jogador 4">
 			</div>
 		</div>
-
 	</div>
 {% endblock %}
 
