@@ -17,15 +17,23 @@
 <body>
 	<nav>
 		<div class="nav-buttons">
-			{% if user.is_authenticated %}
-				<a href="{% url 'users:profile' user.username %}">
+		{% if user.is_authenticated %}
+			{% url 'users:wanna_play' user.username as wanna_play_url %}
+			{% url 'users:profile' user.username as profile_url %}
+			{% if request.path == wanna_play_url %}
+				<a href="{{ profile_url }}">
 					<img src="{% static 'imgs/home.png' %}" class="nav-icon">
 				</a>|
 			{% else %}
-				<a href="/">
+				<a href="{{ wanna_play_url }}">
 					<img src="{% static 'imgs/home.png' %}" class="nav-icon">
 				</a>|
 			{% endif %}
+		{% else %}
+			<a href="/">
+				<img src="{% static 'imgs/home.png' %}" class="nav-icon">
+			</a>|
+		{% endif %}
 			<a href="/about">
 				<img src="{% static 'imgs/banana.png' %}" class="nav-icon">
 			</a>|

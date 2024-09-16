@@ -12,7 +12,7 @@
 	<section>
 		{% for user in ranking %}
 		<article class="rank">
-			<div class="rank-item">
+			<div class="rank-item-name">
 				<a href="{% url 'users:profile' user.user %}">{{ user.user.nickname }}</a>
 			</div>
 			<div class="rank-item">{{ user.matches }}</div>
