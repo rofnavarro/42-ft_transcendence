@@ -22,7 +22,8 @@ def web3_init():
 	account = web3Instance.eth.accounts[0]
 
 	tx_hash = Tournament.constructor().transact({'from': account})
-
+	# tx_hash = b'\xcf\xc6\xafO\xfat\xf3\x90\x98\xf9,R\x05\x0f\xd2\x13\xa2\x9c\xaeg]\x8d\x03\xf9\nBq\xbf\x03\x9d\x8e='
+	tx_hash = b'=\x16>y\xcc\xc3\x90\xa9\xf5^fTQ@_\xa5L\x81j\xb3xSr\xc0\x06\x9e\xc0!R\xea\x10-'
 	tx_receipt = web3Instance.eth.wait_for_transaction_receipt(tx_hash)
 
 	# try:
@@ -51,11 +52,20 @@ def web3_init():
 	# print(type(str3), "3")
 	# add3 = deployed_contract.functions.addMatch(webText3).transact({'from': account})
 	# web3Instance.eth.wait_for_transaction_receipt(tx_hash)
+	values = []
+	i = 0
+	while True:
+		try:
+			value_get = deployed_contract.functions.getMatchIndex(web3Instance.to_int(i)).call()
+			if value_get == "No match found":
+				break
+			values.append(json.loads(value_get.replace("'", "\"")))
+			i += 1
+		except Exception as e:
+			print("Get Exception:", i, e)
+			break
 
-	for i in range(0, 4):
-		print(type(web3Instance.to_int(i)))
-		teste2 = deployed_contract.functions.getMatchIndex(web3Instance.to_int(i)).call()
-		print("teste:", teste2)
+	print(values)
 
 
 def main():

@@ -9,7 +9,9 @@ import json
 from web3 import Web3
 import json
 
+#TIPS: TX_HASH contem o hash da conta e é usado para instanciar novos contratos
 TX_HASH = ""
+#TIPS: TX_RECEIPT contem o endereço do contrato e é usado interagir com o contrato, aqui esta sendo usado para guardar os "recibos"
 TX_RECEIPT = []
 
 def get_contract():
@@ -33,6 +35,7 @@ def web3_init():
 		TX_HASH = (Tournament.constructor().transact({'from': account}))
 		TX_RECEIPT.append(web3Instance.eth.wait_for_transaction_receipt(TX_HASH))
 	except Exception as e:
+		print("ITS WORK")
 		pass
 
 	return (web3Instance)
@@ -85,18 +88,25 @@ def serialize_queryset(queryset: QuerySet) -> dict:
 
 
 def tournament(request):
+	global TX_HASH
+	global TX_RECEIPT
 	querySet_obj = Tournament.objects.all().order_by('-start_date')
 	tournaments = serialize_queryset(querySet_obj.values())
 
-	#TODO: por as var web3 e deployed_contract em um models para salvar o hash e o address
-	web3 = web3_init()
-	deployed_contract = deploy_contract(web3)
+	try:
+		#TODO: por as var web3 e deployed_contract em um models para salvar o hash e o address
+		web3 = web3_init()
+		deployed_contract = deploy_contract(web3)
 
-	#TODO: set precisa ser feito ao final de um torneio
-	for i in range(len(tournaments)):
-		set_tournament(web3, deployed_contract, str(tournaments[i]))
+		#TODO: set precisa ser feito ao final de um torneio
+		for i in range(len(tournaments)):
+			set_tournament(web3, deployed_contract, str(tournaments[i]))
 
-	#TIPS: GET pode ser feito nas visualizações dos torneios
-	values = get_tournament(web3, deployed_contract)
+		#TIPS: GET pode ser feito nas visualizações dos torneios desde que haja um TX_HASH
+		values = get_tournament(web3, deployed_contract)
 
-	return render(request, 'tournaments/tournaments.html', {'tournament': values})
+		return render(request, 'tournaments/tournaments.html', {'tournament': values})
+	except Exception as e:
+		print("WEB3 Fail:", e)
+		#TODO: dar um render em uma pagina de erro caso o container da blockchain nao suba
+		return render(request, 'tournaments/tournaments.html', {'tournament': tournaments})
