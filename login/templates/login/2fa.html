@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}
+	2FA
+{% endblock %}
+
+{% block undertitle %}
+	<h1>2FA</h1>
+{% endblock %}
+
+{% block content %}
+	<h2>Digite seu código 2FA</h2>
+	<form method="post" action="{% url 'login:verify2fa' %}" >
+		{% csrf_token %}
+		<label for="code">Digite o código de verificação enviado para seu email:</label>
+		<input type="text" name="code" id="code" required>
+		<button type="submit">Verificar</button>
+		{% if error %}
+			<p style="color: red;">{{ error }}</p>
+		{% endif %}
+	</form>
+{% endblock %}

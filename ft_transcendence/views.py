@@ -5,3 +5,6 @@ def	homepage(request):
 
 def	aboutpage(request):
 	return render(request, 'about.html')
+
+def	errorpage(request):
+	return render(request, '404.html')

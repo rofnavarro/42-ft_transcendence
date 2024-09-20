@@ -56,12 +56,72 @@ main {
 	height: 100%;
 }
 
+/* TODO: classe feia */
+.play {
+	display: flex;
+	flex-direction: column;
+	padding: 3px;
+	gap: 10%;
+	background-color: white;
+	flex-direction: row;
+}
+
+#qtd-turnos {
+	white-space: nowrap;
+}
+
+.local-play {
+	display: flex;
+	flex-direction: row;
+	gap: 10%;
+}
+
+.players{
+	display: flex;
+	flex-direction: row;
+	gap: 10%;
+	text-align: center;
+}
+
+.submit-button {
+	margin-top: 30%;
+	display: inline-flex;
+	align-items: center ;
+	font-family: "Space Grotesk", sans-serif;
+	background-color: black;
+	border: none;
+	border-radius: 12px;
+	font-size: 20px;
+	color: white;
+	text-align: center;
+	padding: 10%;
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	transition-duration: 0.4s;
+	text-decoration: none;
+	overflow: hidden;
+	cursor: pointer;
+}
+.player {
+	display: flex;
+	flex-direction: column;
+
+}
+
+/* FIM */
+
 h1 {
 	text-align: center;
 }
 
 h2 {
 	text-align: center;
+}
+
+canvas {
+	font-family: "Dosis", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
 }
 
 .login-button {
@@ -139,90 +199,113 @@ h2 {
 	opacity: 1;
 	transition: 0s;
 }
-
 .rpg-profile-container {
-	display: flex;
-	align-items: flex-start;
-	border: 2px solid rgba(133, 140, 238, 0.8);
-	padding: 20px;
-	background-color: white;
-	max-width: 800px;
-	margin: 0 auto;
-	border-radius: 10px;
-	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-	color: rgb(133, 140, 238);
-	z-index: 1;
-	position: relative;
+	align-self: center;
+	margin-left: 150px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+	justify-content: space-between;
 }
 
 .profile-image-section {
-	flex: 1;
-	text-align: center;
-	margin-right: 20px;
-	position: relative;
+	margin-right: 50px;
+	display: flex;
+    flex-direction: column;
+    text-align: center;
 }
 
-.profile-image-section .profile-image-placeholder {
-	width: 120px;
-	height: 120px;
-	background-color: #ddd; /* Cor de fundo do espaço reservado */
-	border-radius: 10px;
-	border: 2px solid rgba(133, 140, 238, 0.8);
-	margin: 0 auto; /* Centraliza o quadrado */
+.profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    margin-left: 10px;
 }
 
-.profile-image-section .username {
-	font-size: 18px;
-	margin-top: 10px;
-	color: rgb(133, 140, 238);
-}
-
-.profile-stats-section {
-	flex: 2;
-	color: rgb(133, 140, 238);
-}
-
-.profile-stats-section h2 {
-	font-size: 24px;
-	margin-bottom: 10px;
-}
-
-.profile-stats-section .stats {
-	margin-top: 20px;
-}
-
-.profile-stats-section .stats h3 {
-	font-size: 20px;
-	margin-bottom: 10px;
-}
-
-.profile-stats-section .stats p {
-	font-size: 16px;
-	margin: 5px 0;
-}
+.profile-header {
+	margin-left: 100px;
+} 
 
 .stats-table {
-	width: 100%;
-	border-collapse: collapse;
-	background-color: white;
-	border-radius: 8px;
-	overflow: hidden;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    border-collapse: collapse;
 }
 
 .stats-table th, .stats-table td {
-	padding: 12px 15px;
-	text-align: left;
-	color: #333;
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.online-status {
+    font-weight: bold;
+}
+
+.online {
+    color: green;
+}
+
+.offline {
+    color: red;
+}
+
+.btn-action {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-action:hover {
+    background-color: #0056b3;
+}
+
+.friends-section {
+	background-color: white;
+	border: 2px solid rgba(133, 140, 238, 0.8);
+	border-radius: 10px;
+	padding: 10px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+	color: rgb(133, 140, 238);
+	size: 0cap;
+	max-width: 300px;
+	min-width: 300px;
+	min-height: 300px;
+	max-height: 500px;
+	margin-left: 100px;
+	align-items: center;
+}
+li {
+	align-items: center;
+	margin-right: 25px;
+}
+
+.rank {
+	display: flex;
+	justify-content: right;
+	align-items: center;
+	padding: 10px;
 	border-bottom: 1px solid #ddd;
-	white-space: nowrap;
+	text-decoration: none;
+	text-align: right;
+
 }
 
-.stats-table th {
-	background-color: rgba(133, 140, 238, 0.2);
-	font-weight: bold;
+.rank-item {
+	margin: 0 10px;
 }
 
-.stats-table tr:last-child td {
-	border-bottom: none;
+.rank-item-name{
+	text-align: left;
+}
+
+.rank a {
+	text-decoration: none;
+	color: rgb(133, 140, 238);
+}
+
+.rank a:hover {
+	text-decoration: none;
 }
