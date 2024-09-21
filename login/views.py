@@ -14,6 +14,7 @@ import os
 USER_ID = 'u-s4t2ud-a782b48361e73b59a6d5cbec76768c8aafa00b43e48aea014b90da7efb556ce5'
 API_KEY = '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'
 REDIRECT_URI = 'http://localhost:8000/login/callback'
+SECRET_KEY =  'f57a6e57ae'
 
 def	login_user(request):
 	url = f'https://api.intra.42.fr/oauth/authorize?client_id={USER_ID}&redirect_uri={REDIRECT_URI}&response_type=code'
@@ -64,6 +65,7 @@ def	callback(request):
 	request.session['access_token'] = access_token
 
 	user_url = 'https://api.intra.42.fr/v2/me'
+
 	headers = {'Authorization': f'Bearer {access_token}'}
 	user_response = requests.get(user_url, headers=headers)
 	user_info = user_response.json()
@@ -123,11 +125,11 @@ def	set_password(request):
 
 @login_required
 def	logout_user(request):
-	if request.method == 'POST':
+	if request.method == 'POST' and request.user.is_online == True:
 		user = request.user
 		user.is_online = False
 		user.save()
-
-	request.session.flush()
-	logout(request)
+		request.session.flush()
+		logout(request)
+	
 	return redirect('home')

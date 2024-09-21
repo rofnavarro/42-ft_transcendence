@@ -16,7 +16,7 @@ SESSION_COOKIE_SECURE = True
 SECRET_KEY = 'django-insecure-6waaegtj9iw2dh7plax#^2w+e$s(ig$by=v9zdrvavq9u5hf8^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# Trocar para o ip da maquina que vai rodar o servidor e mudar o DEBUG para False
+# TODO: trocar para o ip da maquina que vai rodar o servidor e mudar o DEBUG para False
 DEBUG = True
 ALLOWED_HOSTS = ['*']
 
