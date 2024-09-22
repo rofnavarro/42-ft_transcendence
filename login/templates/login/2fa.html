@@ -2,20 +2,20 @@
 {% load static %}
 
 {% block title %}
-	2FA
+	Two-Factor Authentication
 {% endblock %}
 
 {% block undertitle %}
-	<h1>2FA</h1>
+	<h2><b>Two-Factor Authentication</b></h2>
 {% endblock %}
 
 {% block content %}
-	<h2>Digite seu código 2FA</h2>
+	<h2>Inform your 2FA code</h2>
 	<form method="post" action="{% url 'login:verify2fa' %}" >
 		{% csrf_token %}
-		<label for="code">Digite o código de verificação enviado para seu email:</label>
+		<label for="code">Type the verification code sent to your e-mail address: </label>
 		<input type="text" name="code" id="code" required>
-		<button type="submit">Verificar</button>
+		<button class="small-button" type="submit">Verify</button>
 		{% if error %}
 			<p style="color: red;">{{ error }}</p>
 		{% endif %}

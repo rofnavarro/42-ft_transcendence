@@ -5,15 +5,11 @@
 	Set Email
 {% endblock %}
 
-{% block undertitle %}
-	<h1>Defina seu email</h1>
-{% endblock %}
-
 {% block content %}
-	<h2>Defina seu email</h2>
+	<h2><b>Define your e-mail address</b></h2>
 	<form method="post">
 		{% csrf_token %}
 		{{ form.as_p }}
-		<button type="submit">Salvar novo email</button>
+		<button class="small-button" type="submit">Save new email</button>
 	</form>
 {% endblock %}

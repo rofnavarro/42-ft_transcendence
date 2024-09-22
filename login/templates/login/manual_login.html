@@ -6,17 +6,17 @@
 {% endblock %}
 
 {% block undertitle %}
-	<h1>Entre com o seu usuário e senha</h1>
+	<h2>Enter with your username and password</h2>
 {% endblock %}
 
 {% block content %}
-	<h2>Entre</h2>
+	<h2>Enter</h2>
 	<form method="post">
 		{% csrf_token %}
 		{{ form.as_p }}
 		{% if error %}
 			<p style="color: red;">{{ error }}</p>
 		{% endif %}
-		<button type="submit">Entrar</button>
+		<button class="small-button" type="submit">Login</button>
 	</form>
 {% endblock %}

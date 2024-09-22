@@ -3,12 +3,13 @@ header {
 	font-optical-sizing: auto;
 	font-weight: 600;
 	font-style: normal;
-	color: rgb(133, 140, 238);
+	/* color: rgb(133, 140, 238); */
 	text-align: center;
 	justify-content: center;
 	display: fixed;
 	flex-direction: column;
 	align-items: center;
+	position: sticky;
 }
 
 body {
@@ -18,7 +19,8 @@ body {
 	font-style: normal;
 	color: rgb(133, 140, 238);
 	font-size: 20px;
-	background-image: repeating-linear-gradient(145deg, #03021d 0%, #050e3b 55%, #4d267d 100%);
+	/* background-image: linear-gradient(145deg, #03021d 0%, #050e3b 55%, #4d267d 100%); */
+	background-color: #040c30;
 	background-size: cover;
 	text-align: center;
 	justify-content: center;
@@ -27,6 +29,14 @@ body {
 	align-items: center;
 	height: 100vh;
 	margin: 0;
+}
+
+.gradient-text {
+	background: linear-gradient(to right, #4d267d, #858cee);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	text-fill-color: transparent;
 }
 
 nav {
@@ -38,7 +48,7 @@ nav {
 	display: flex;
 	padding: 1rem;
 	background-size: cover;
-	position: center;
+	position: sticky;
 	justify-content: space-between;
 	gap: 50px;
 	align-content: center;
@@ -57,12 +67,13 @@ ul {
 	overflow: hidden;
 }
 
-li {
+.navbar {
 	float: left;
 	border-right: 1px solid rgb(133, 140, 238);
+	margin-right: 0;
 }
 
-li a {
+.navbar a {
 	display: block;
 	color: rgb(133, 140, 238);
 	text-align: center;
@@ -70,7 +81,7 @@ li a {
 	text-decoration: none;
 }
 
-li:last-child {
+.navbar:last-child {
 	border-right: none;
 }
 
@@ -129,16 +140,14 @@ main {
 	margin-top: 30%;
 	display: inline-flex;
 	align-items: center ;
-	font-family: "Space Grotesk", sans-serif;
-	background-color: black;
+	font-family: "Dosis", sans-serif;
+	background-color: #4285F4;
 	border: none;
 	border-radius: 12px;
-	font-size: 20px;
+	font-size: 18px;
 	color: white;
 	text-align: center;
 	padding: 10%;
-	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-	transition-duration: 0.4s;
 	text-decoration: none;
 	overflow: hidden;
 	cursor: pointer;
@@ -174,6 +183,7 @@ canvas {
 	font-optical-sizing: auto;
 	font-weight: 400;
 	font-style: normal;
+	color: white;
 }
 
 .login-button {
@@ -199,43 +209,20 @@ canvas {
 }
 
 .small-button {
-	font-family: "Space Grotesk", sans-serif;
-	background-color: black;
+	font-family: "Dosis", sans-serif;
+	background-color: #4285F4;
 	border: none;
 	border-radius: 36px;
-	font-size: 14px;
+	font-size: 16px;
 	color: white;
 	text-align: center;
 	padding: 8px 12px;
 	position: relative;
-	box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-	transition-duration: 0.3s;
 	cursor: pointer;
 	text-decoration: none;
 	overflow: hidden;
 }
 
-.small-button:after {
-	content: "";
-	background: #f1f1f1;
-	display: block;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 120%;
-	height: 120%;
-	transform: translate(-50%, -50%);
-	border-radius: 36px;
-	opacity: 0;
-	transition: all 0.6s;
-}
-
-.small-button:active:after {
-	padding: 0;
-	margin: 0;
-	opacity: 1;
-	transition: 0s;
-}
 .rpg-profile-container {
 	align-self: center;
 	margin-left: 150px;
@@ -314,10 +301,10 @@ canvas {
 	margin-left: 100px;
 	align-items: center;
 }
-/* li {
-	align-items: center;
+li {
+	align-items: left;
 	margin-right: 25px;
-} */
+}
 
 .rank {
 	display: flex;
@@ -345,4 +332,40 @@ canvas {
 
 .rank a:hover {
 	text-decoration: none;
+}
+
+.container {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.container b {
+	color: #4d267d;
+}
+
+.row {
+	width: 100%;
+	display: flex;
+}
+
+.column {
+	flex: 50%;
+	padding: 10px;
+	text-align: center;
+	justify-content: center;
+}
+
+.avatar {
+	width: 100px;
+	border-radius: 50%;
+	filter: grayscale(100%);
+}
+
+.story {
+	text-align: justify;
+	justify-content: center;
+}
+
+.story b {
+	color: #4d267d;
 }
