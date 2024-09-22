@@ -1,10 +1,24 @@
-body {
+header {
 	font-family: "Space Grotesk", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 600;
+	font-style: normal;
+	color: rgb(133, 140, 238);
+	text-align: center;
+	justify-content: center;
+	display: fixed;
+	flex-direction: column;
+	align-items: center;
+}
+
+body {
+	font-family: "Dosis", sans-serif;
 	font-optical-sizing: auto;
 	font-weight: 400;
 	font-style: normal;
 	color: rgb(133, 140, 238);
-	background-image: linear-gradient(145deg, #03021d 0%, #050e3b 55%, #4d267d 100%);
+	font-size: 20px;
+	background-image: repeating-linear-gradient(145deg, #03021d 0%, #050e3b 55%, #4d267d 100%);
 	background-size: cover;
 	text-align: center;
 	justify-content: center;
@@ -16,21 +30,53 @@ body {
 }
 
 nav {
+	font-family: "Dosis", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 450;
+	font-style: normal;
+	color: rgb(133, 140, 238);
 	display: flex;
 	padding: 1rem;
-	color: rgb(133, 140, 238);
 	background-size: cover;
+	position: center;
 	justify-content: space-between;
 	gap: 50px;
 	align-content: center;
 	align-items: center;
-	font-size: 2rem;
+	font-size: 20px;
 	width: calc(100% - 10px);
 	margin: 0 auto;
+	border-right: rgb(133, 140, 238);
 	box-sizing: border-box;
 }
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+li {
+	float: left;
+	border-right: 1px solid rgb(133, 140, 238);
+}
+
+li a {
+	display: block;
+	color: rgb(133, 140, 238);
+	text-align: center;
+	padding: 10px 10px;
+	text-decoration: none;
+}
+
+li:last-child {
+	border-right: none;
+}
+
 nav a {
 	text-decoration: none;
+	color: rgb(133, 140, 238);
 }
 
 .nav-button {
@@ -38,13 +84,9 @@ nav a {
 }
 
 .nav-icon {
-	height: 40px;
+	height: 30px;
 	width: auto;
 	vertical-align: middle;
-}
-
-.nav-logout {
-	margin-left: auto;
 }
 
 main {
@@ -110,10 +152,20 @@ main {
 /* FIM */
 
 h1 {
+	font-family: "Space Grotesk", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
+	color: rgb(133, 140, 238);
 	text-align: center;
 }
 
 h2 {
+	font-family: "Space Grotesk", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
+	color: rgb(133, 140, 238);
 	text-align: center;
 }
 
@@ -126,39 +178,24 @@ canvas {
 
 .login-button {
 	position: relative;
-	font-family: "Space Grotesk", sans-serif;
-	background-color: black;
+	font-family: "Dosis", sans-serif;
+	background-color: #4285F4;
+	color: white;
 	border: none;
 	border-radius: 12px;
-	font-size: 20px;
-	color: white;
+	padding: 15px 32px;
 	text-align: center;
-	padding: 20px;
-	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-	transition-duration: 0.4s;
 	text-decoration: none;
-	overflow: hidden;
+	display: inline-block;
+	font-size: 20px;
+	margin: 4px 2px;
 	cursor: pointer;
 }
 
-.login-button:after {
-	content: "";
-	background: #f1f1f1;
-	display: block;
-	position: absolute;
-	padding-top: 300%;
-	padding-left: 350%;
-	margin-left: -20px !important;
-	margin-top: -120%;
-	opacity: 0;
-	transition: all 0.8s;
-}
-
-.login-button:active:after {
-	padding: 0;
-	margin: 0;
-	opacity: 1;
-	transition: 0s;
+.button-icon {
+	height: 20px;
+	width: auto;
+	vertical-align: middle;
 }
 
 .small-button {
@@ -277,10 +314,10 @@ canvas {
 	margin-left: 100px;
 	align-items: center;
 }
-li {
+/* li {
 	align-items: center;
 	margin-right: 25px;
-}
+} */
 
 .rank {
 	display: flex;
