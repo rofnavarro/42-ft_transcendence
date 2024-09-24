@@ -17,7 +17,7 @@
 <body>
 	<nav>
 		<div class="nav-buttons">
-		{% if user.is_authenticated %}
+		{% if user.is_authenticated and user.is_verified %}
 			{% url 'users:wanna_play' user.username as wanna_play_url %}
 			{% url 'users:profile' user.username as profile_url %}
 			{% if request.path == wanna_play_url %}
@@ -41,7 +41,7 @@
 				<img src="{% static 'imgs/ranking.png' %}" class="nav-icon">
 			</a>
 		</div>
-		{% if user.is_authenticated %}
+		{% if user.is_authenticated and request.user.is_verified == True  %}
 			<div class="nav-logout">
 				<form action="{% url 'login:logout_user' %}" method="post">
 					{% csrf_token %}
