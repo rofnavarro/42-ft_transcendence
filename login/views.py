@@ -30,6 +30,7 @@ def	manual_login(request):
 			user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
 			if user:
 				if not user.is_online:
+					# LOGIN
 					login(request, user)
 					send_2fa_code_email(request)
 					return redirect('login:verify2fa')
@@ -96,13 +97,16 @@ def	callback(request):
 				user.save()
 
 	if not user.password:
+		# LOGIN
 		login(request, user)
 		return redirect(reverse('login:set_password'))
 
 	if not user.email:
+		# LOGIN
 		login(request, user)
 		return redirect(reverse('login:set_email'))
 
+	# LOGIN
 	login(request, user)
 	send_2fa_code_email(request)
 	return redirect(reverse('login:verify2fa'))
@@ -140,6 +144,7 @@ def	logout_user(request):
 		if request.method == 'POST':
 			user = request.user
 			user.is_online = False
+			user.is_verified = False
 			user.save()
 			request.session.flush()
 			logout(request)
@@ -148,19 +153,21 @@ def	logout_user(request):
 	
 	return redirect('home')
 
-def	send_2fa_code_email(user):
+def	send_2fa_code_email(request):
 	code = random.randint(100000, 999999)
 
-	user.user.verification_code = code
-	user.user.save()
+	request.user.verification_code = code
+	request.user.save()
 
 	subject = 'Seu código de verificação 2FA'
-	message = f'Olá {user.user.first_name}, \n\nSeu código de verificação é {code}.'
-	recipient = [user.user.email]
+	message = f'Olá {request.user.first_name}, \n\nSeu código de verificação é {code}.'
+	recipient = [request.user.email]
 	send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient)
-	return redirect(reverse('login:verify2fa'))
+	print('\n\nFINAL CODE EMAIL\n\n')
+	return
 
 def	verify_2fa_code_email(request):
+	print('\n\n2FA\n\n')
 	if request.method == 'POST':
 		code = request.POST.get('code')
 		if not code:

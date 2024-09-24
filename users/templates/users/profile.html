@@ -9,7 +9,7 @@
 	<h1>{{ user_info.first_name }} {{ user_info.last_name }}</h1>
 	<h1 id="nickname-display">{{ user_info.nickname }}</h1>
 
-	{% if user_info == request.user %}
+	{% if user_info == request.user and request.user.is_verified == True  %}
 		<!-- Popup de alteração de nickname -->
 		<div id="nickname-popup" class="popup" style="display:none;">
 			<div class="popup-content">
@@ -33,11 +33,10 @@
 				</form>
 			</div>
 		</div>
-	{% endif %}
-	{% if user_info == request.user %}
-	<div>
-		<a href="/tournament/">Torneio</a>
-	</div>
+
+		<div>
+			<a href="/tournament/">Torneio</a>
+		</div>
 	{% endif %}
 {% endblock %}
 
@@ -52,7 +51,7 @@
 				<img src={% static 'imgs/banana.png' %} alt="Default Profile Picture" class="profile-image">
 			{% endif %}
 			<div class="username">{{ user_info.username }}</div>
-			{% if user_info == request.user %}
+			{% if user_info == request.user and request.user.is_verified == True  %}
 				<button id="change-picture-button" class="btn-action">Alterar Foto</button>
 			{% endif %}
 		</div>
@@ -86,7 +85,7 @@
 		</div>
 
 		<!-- Seção de Amigos -->
-		{% if annonymous == False %}
+		{% if annonymous == False and request.user.is_verified %}
 			<div class="friends-section">
 				<h2>Amigos</h2>
 				<ul>
@@ -106,7 +105,7 @@
 	</div>
 
 	<!-- Seção de Ação de Adicionar Amigo -->
-	{% if user_info != request.user and not is_friend and annonymous == False %}
+	{% if user_info != request.user and not is_friend and annonymous == False and request.user.is_verified %}
 		<form method="post" action="{% url 'users:send_friend_request' user_info.username %}">
 			{% csrf_token %}
 				<button type="submit" class="btn-action" disabled>Adicionar Amigo</button>
