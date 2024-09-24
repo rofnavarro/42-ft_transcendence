@@ -41,12 +41,14 @@
 				<img src="{% static 'imgs/ranking.png' %}" class="nav-icon">
 			</a>
 		</div>
-		<div class="nav-logout">
-			<form action="{% url 'login:logout_user' %}" method="post">
-				{% csrf_token %}
-				<button class="small-button" type="submit">Logout</button>
-			</form>
-		</div>
+		{% if user.is_authenticated %}
+			<div class="nav-logout">
+				<form action="{% url 'login:logout_user' %}" method="post">
+					{% csrf_token %}
+					<button class="small-button" type="submit">Logout</button>
+				</form>
+			</div>
+		{% endif %}
 	</nav>
 	<undertitle>
 		{% block undertitle %}

@@ -135,18 +135,19 @@ def	set_email(request):
 		form = SetEmailForm(instance=request.user)
 	return render(request, 'login/set_email.html', {'form': form})
 
-@login_required
 def	logout_user(request):
-	if request.method == 'POST' and request.user.is_online == True:
-		user = request.user
-		user.is_online = False
-		user.save()
-		request.session.flush()
-		logout(request)
+	try:
+		if request.method == 'POST':
+			user = request.user
+			user.is_online = False
+			user.save()
+			request.session.flush()
+			logout(request)
+	except Exception as e:
+		return redirect('home')
 	
 	return redirect('home')
 
-@login_required
 def	send_2fa_code_email(user):
 	code = random.randint(100000, 999999)
 

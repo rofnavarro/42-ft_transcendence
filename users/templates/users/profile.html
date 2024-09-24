@@ -34,9 +34,11 @@
 			</div>
 		</div>
 	{% endif %}
+	{% if user_info == request.user %}
 	<div>
 		<a href="/tournament/">Torneio</a>
 	</div>
+	{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -84,28 +86,30 @@
 		</div>
 
 		<!-- Seção de Amigos -->
-		<div class="friends-section">
-			<h2>Amigos</h2>
-			<ul>
-				{% for friend in friends %}
-					<li>
-						<a href="{% url 'users:profile' friend.username %}">{{ friend.nickname }}</a>
-						{% if friend.is_online %}
-							<span class="online-status online">● Online</span>
-						{% else %}
-							<span class="online-status offline">● Offline</span>
-						{% endif %}
-					</li>
-				{% endfor %}
-			</ul>
-		</div>
+		{% if annonymous == False %}
+			<div class="friends-section">
+				<h2>Amigos</h2>
+				<ul>
+					{% for friend in friends %}
+						<li>
+							<a href="{% url 'users:profile' friend.username %}">{{ friend.nickname }}</a>
+							{% if friend.is_online %}
+								<span class="online-status online">● Online</span>
+							{% else %}
+								<span class="online-status offline">● Offline</span>
+							{% endif %}
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		{% endif %}
 	</div>
 
 	<!-- Seção de Ação de Adicionar Amigo -->
-	{% if user_info != request.user and not is_friend %}
+	{% if user_info != request.user and not is_friend and annonymous == False %}
 		<form method="post" action="{% url 'users:send_friend_request' user_info.username %}">
 			{% csrf_token %}
-			<button type="submit" class="btn-action">Adicionar Amigo</button>
+				<button type="submit" class="btn-action" disabled>Adicionar Amigo</button>
 		</form>
 	{% endif %}
 {% endblock %}
