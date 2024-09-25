@@ -131,6 +131,20 @@ nav a {
 	text-decoration: none;
 }
 
+.button-logout {
+	height: 30px;
+	width: auto;
+	vertical-align: middle;
+	background: none;
+	border: none;
+	color: #858cee;
+	font-family: "Dosis", sans-serif;
+	font-size: 20px;
+	cursor: pointer;
+	margin-bottom: 5px;
+}
+
+
 main {
 	flex-grow: 1;
 	display: flex;
