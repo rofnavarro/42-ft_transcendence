@@ -108,7 +108,7 @@
 	{% if user_info != request.user and not is_friend and annonymous == False and request.user.is_verified %}
 		<form method="post" action="{% url 'users:send_friend_request' user_info.username %}">
 			{% csrf_token %}
-				<button type="submit" class="btn-action" disabled>Adicionar Amigo</button>
+				<button type="submit" class="btn-action" >Adicionar Amigo</button>
 		</form>
 	{% endif %}
 {% endblock %}

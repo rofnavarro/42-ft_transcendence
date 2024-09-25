@@ -67,4 +67,5 @@ def wanna_play(request, username):
 @login_required
 def local_play(request, username):
     user = get_object_or_404(CustomUser, username=username)
-    return render(request, 'users/local_play.html', {'user': user})
+    friends = user.friends.all()
+    return render(request, 'users/local_play.html', {'user': user, 'friends': friends})

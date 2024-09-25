@@ -6,7 +6,7 @@ var DIRECTION = {
 	RIGHT: 4
 };
 
-var rounds = [3, 3, 3];
+var rounds = [3];
 
 var Ball = {
 	new: function (incrementSpeed) {
@@ -23,8 +23,9 @@ var Ball = {
 };
 
 var Computer = {
-	new: function (side) {
+	new: function (side, player_name) {
 		return {
+			name: player_name,
 			width: 18,
 			height: 180,
 			x: side === 'left' ? 150 : this.canvas.width - 150,
@@ -37,7 +38,7 @@ var Computer = {
 };
 
 var Game = {
-	initialize: function () {
+	initialize: function (players) {
 		this.canvas = document.querySelector('canvas');
 		this.context = this.canvas.getContext('2d');
 
@@ -47,8 +48,8 @@ var Game = {
 		this.canvas.style.width = (this.canvas.width / 2) + 'px';
 		this.canvas.style.height = (this.canvas.height / 2) + 'px';
 
-		this.playerA = Computer.new.call(this, 'left');
-		this.playerB = Computer.new.call(this, 'right');
+		this.playerA = Computer.new.call(this, 'left', players[0]);
+		this.playerB = Computer.new.call(this, 'right', players[1]);
 		this.ball = Ball.new.call(this);
 
 		this.running = this.over = false;
@@ -243,5 +244,8 @@ var Game = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-	Game.initialize();
+
+	console.log("Player:", players);
+
+	Game.initialize(players);
 });

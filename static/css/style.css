@@ -263,7 +263,7 @@ canvas {
 }
 
 .friends-section {
-	background-color: white;
+	background-color: red;
 	border: 2px solid rgba(133, 140, 238, 0.8);
 	border-radius: 10px;
 	padding: 10px;
@@ -308,4 +308,16 @@ li {
 
 .rank a:hover {
 	text-decoration: none;
+}
+
+#friend-modal {
+	background-color: white;
+	border: 2px solid rgba(133, 140, 238, 0.8);
+	border-radius: 10px;
+	padding: 10px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+	color: rgb(133, 140, 238);
+	size: 0cap;
+	position: absolute;
+	left: 10%;
 }

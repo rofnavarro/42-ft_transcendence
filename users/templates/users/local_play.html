@@ -9,54 +9,130 @@
 {% endblock %}
 
 {% block content %}
-	<div class="local-play">
-		<!-- qtd jogadores -->
-		<div id="qtd-jogadores" >
-			<h2>Jogadores</h2>
-				<input type="radio" name="qtd_jogadores" value="2_jogadores" checked>
+	<form id="game-form" method="POST" action="{% url 'match:match' %}">
+		{% csrf_token %}
+		<div class="local-play">
+			<div id="qtd-jogadores">
+				<h2>Jogadores</h2>
+				<input type="radio" name="qtd_jogadores" value="2_jogadores" checked onclick="togglePlayers(2)">
 				<label>2</label>
-				<input type="radio" name="qtd_jogadores" value="4_jogadores">
+				<input type="radio" name="qtd_jogadores" value="4_jogadores" onclick="togglePlayers(4)">
 				<label>4</label>
-		</div>
-
-		<!-- qtd-turnos -->
-		<div id="qtd-turnos" >
-			<h2>Turnos</h2>
+			</div>
+			<div id="qtd-turnos">
+				<h2>Turnos</h2>
 				<input type="radio" name="qtd-turnos" value="1" checked>
 				<label>1</label>
 				<input type="radio" name="qtd-turnos" value="3">
 				<label>3</label>
 				<input type="radio" name="qtd-turnos" value="5">
 				<label>5</label>
+			</div>
 		</div>
-	</div>
-	<div>
-		<button class="submit-button">Finalizar</button>
-	</div> 
 
-	<!-- TODO: criar um script para colocar o nick dos players locais inteligente para compreender se é 2 ou 4 jogadores -->
-	<div id="local-players">
-		<h2>Jogadores</h2>
-		<div class="players">
-			<div id="player1" class="player">
-				<h3>Jogador 1</h3>
-				<input type="text" name="player1" placeholder="Nome do Jogador 1">
+		<div id="local-players">
+			<h2>Jogadores</h2>
+			<div class="players">
+				<div id="player1" class="player">
+					<h3>Jogador 1</h3>
+					<button type="button" id="invite-btn-1" onclick="openFriendModal(1)">Convidar Amigo</button>
+					<input type="hidden" id="player1-name" name="player1">
+					<span id="player1-label"></span>
+				</div>
+				<div id="player2" class="player">
+					<h3>Jogador 2</h3>
+					<button type="button" id="invite-btn-2" onclick="openFriendModal(2)">Convidar Amigo</button>
+					<input type="hidden" id="player2-name" name="player2">
+					<span id="player2-label"></span>
+				</div>
 			</div>
-			<div id="player2" class="player">
-				<h3>Jogador 2</h3>
-				<input type="text" name="player2" placeholder="Nome do Jogador 2">
+			<div class="players">
+				<div id="player3" class="player" style="display: none;">
+					<h3>Jogador 3</h3>
+					<button type="button" id="invite-btn-3" onclick="openFriendModal(3)">Convidar Amigo</button>
+					<input type="hidden" id="player3-name" name="player3">
+					<span id="player3-label"></span>
+				</div>
+				<div id="player4" class="player" style="display: none;">
+					<h3>Jogador 4</h3>
+					<button type="button" id="invite-btn-4" onclick="openFriendModal(4)">Convidar Amigo</button>
+					<input type="hidden" id="player4-name" name="player4">
+					<span id="player4-label"></span>
+				</div>
 			</div>
 		</div>
-		<div class="players" >
-			<div id="player3" class="player" >
-				<h3>Jogador 3</h3>
-				<input type="text" name="player3" placeholder="Nome do Jogador 3">
-			</div>
-			<div id="player4" class="player">
-				<h3>Jogador 4</h3>
-				<input type="text" name="player4" placeholder="Nome do Jogador 4">
-			</div>
+
+		<div>
+			<button type="submit" class="submit-button" onclick="prepareForm()">Finalizar</button>
+		</div>
+	</form>
+
+	<div id="friend-modal" style="display:none;">
+		<div class="modal-content">
+			<h2>Selecione um amigo</h2>
+			<ul id="friends-list">
+				{% for friend in friends %}
+					<li><a href="#" onclick="selectFriend('{{ friend.username }}', '{{ friend.nickname }}', currentPlayer)"> {{ friend.nickname }} </a></li>
+				{% empty %}
+					<li>Você não tem amigos.</li>
+				{% endfor %}
+			</ul>
+			<button onclick="closeFriendModal()">Fechar</button>
 		</div>
 	</div>
+
 {% endblock %}
 
+{% block scripts %}
+	<script>
+		let currentPlayer;
+
+		function togglePlayers(qtd) {
+			if (qtd === 2) {
+				document.getElementById('player3').style.display = 'none';
+				document.getElementById('player4').style.display = 'none';
+			} else {
+				document.getElementById('player3').style.display = 'block';
+				document.getElementById('player4').style.display = 'block';
+			}
+		}
+
+		window.onload = function() {
+			togglePlayers(2);
+		}
+
+		function openFriendModal(playerId) {
+			currentPlayer = playerId;
+			document.getElementById('friend-modal').style.display = 'block';
+		}
+
+		function closeFriendModal() {
+			document.getElementById('friend-modal').style.display = 'none';
+		}
+
+		function selectFriend(username, nickname, playerId) {
+			document.getElementById(`player${playerId}-name`).value = username;
+			document.getElementById(`player${playerId}-label`).innerText = nickname;
+			document.getElementById(`invite-btn-${playerId}`).style.display = 'none';
+			closeFriendModal();
+		}
+
+		function prepareForm() {
+			const player1 = document.getElementById('player1-name').value;
+			const player2 = document.getElementById('player2-name').value;
+			const player3 = document.getElementById('player3-name').value;
+			const player4 = document.getElementById('player4-name').value;
+
+			const players = [player1, player2];
+			if (document.getElementById('player3').style.display !== 'none') players.push(player3);
+			if (document.getElementById('player4').style.display !== 'none') players.push(player4);
+
+			const validPlayers = players.filter(player => player !== '');
+
+			if (validPlayers.length < 2) {
+				alert('Selecione ao menos dois jogadores.');
+				event.preventDefault();
+			}
+		}
+	</script>
+{% endblock %}
