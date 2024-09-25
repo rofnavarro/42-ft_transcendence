@@ -34,10 +34,9 @@
 			<h2>Jogadores</h2>
 			<div class="players">
 				<div id="player1" class="player">
-					<h3>Jogador 1</h3>
-					<button type="button" id="invite-btn-1" onclick="openFriendModal(1)">Convidar Amigo</button>
-					<input type="hidden" id="player1-name" name="player1">
-					<span id="player1-label"></span>
+					<h3>Jogador 1 (Você)</h3>
+					<input type="hidden" id="player1-name" name="player1" value="{{ request.user.username }}">
+					<span id="player1-label">{{ request.user.nickname }}</span>
 				</div>
 				<div id="player2" class="player">
 					<h3>Jogador 2</h3>
@@ -85,8 +84,6 @@
 
 {% block scripts %}
 	<script>
-		let currentPlayer;
-
 		function togglePlayers(qtd) {
 			if (qtd === 2) {
 				document.getElementById('player3').style.display = 'none';
@@ -122,6 +119,8 @@
 			const player2 = document.getElementById('player2-name').value;
 			const player3 = document.getElementById('player3-name').value;
 			const player4 = document.getElementById('player4-name').value;
+
+			const turns = document.getElementById('qtd-turnos').value;
 
 			const players = [player1, player2];
 			if (document.getElementById('player3').style.display !== 'none') players.push(player3);

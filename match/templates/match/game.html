@@ -18,7 +18,7 @@
 		<b>{{ players.1 }}:</b> Control the right player using the up and down arrow keys<br>
 		{% if players|length > 2 %}
 		<b>{{ players.2 }}:</b> Control the left player using the Q and A keys<br>
-		<b>{{ players.3 }}:</b> Control the right player using the PGUP and PGDN keys<br>
+		<b>{{ players.3 }}:</b> Control the right player using the I and K keys<br>
 		{% endif %}
 	</p>
 {% endblock %}
@@ -33,6 +33,11 @@
 			'{{ players.3|default:"" }}'
 			{% endif %}
 		];
+		const turns = {{ turns }}
 	</script>
-	<script src="{% static 'js/game.js' %}"></script>
+	{% if players|length == 2 %}
+		<script src="{% static 'js/game.js' %}"></script>
+	{% elif players|length == 4 %}
+		<script src="{% static 'js/game2x2.js' %}"></script>
+	{% endif %}
 {% endblock %}

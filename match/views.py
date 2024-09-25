@@ -8,6 +8,8 @@ def	gamepage(request):
 			request.POST.get('player3'),
 			request.POST.get('player4'),
 		]
+
+		turns = request.POST.get('qtd-turnos')
 		players = [player for player in players if player]
-		return render(request, 'match/game.html', {'players': players})
+		return render(request, 'match/game.html', {'players': players, 'turns': turns})
 	return render(request, 'match/game.html')

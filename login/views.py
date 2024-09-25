@@ -163,11 +163,9 @@ def	send_2fa_code_email(request):
 	message = f'Olá {request.user.first_name}, \n\nSeu código de verificação é {code}.'
 	recipient = [request.user.email]
 	send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient)
-	print('\n\nFINAL CODE EMAIL\n\n')
 	return
 
 def	verify_2fa_code_email(request):
-	print('\n\n2FA\n\n')
 	if request.method == 'POST':
 		code = request.POST.get('code')
 		if not code:
