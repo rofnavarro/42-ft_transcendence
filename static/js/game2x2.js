@@ -28,8 +28,8 @@ var Computer = {
 			name: player_name,
 			width: 18,
 			height: 180,
-			x: side === 'left' ? 150 : this.canvas.width - 150,
-			y: (this.canvas.height / 2) - 35,
+			x: side === 'left' ? 10 : this.canvas.width - 30,
+			y: (this.canvas.height / 2) - 90,
 			score: 0,
 			move: DIRECTION.IDLE,
 			speed: 8
@@ -43,13 +43,22 @@ var Game = {
 		this.context = this.canvas.getContext('2d');
 
 		this.canvas.width = 2800;
-		this.canvas.height = 1200;
+		this.canvas.height = 1000;
 
 		this.canvas.style.width = (this.canvas.width / 2) + 'px';
 		this.canvas.style.height = (this.canvas.height / 2) + 'px';
 
 		this.playerA = Computer.new.call(this, 'left', players[0]);
 		this.playerB = Computer.new.call(this, 'right', players[1]);
+		this.playerC = Computer.new.call(this, 'left', players[2]);
+		this.playerD = Computer.new.call(this, 'right', players[3]);
+
+
+		this.playerA.y = (this.canvas.height / 2) - 180;
+		this.playerC.y = (this.canvas.height / 2) + 100;
+		this.playerB.y = (this.canvas.height / 2) - 180;
+		this.playerD.y = (this.canvas.height / 2) + 100;
+
 		this.ball = Ball.new.call(this);
 
 		this.running = this.over = false;
@@ -91,8 +100,12 @@ var Game = {
 		document.addEventListener('keydown', (event) => {
 			if (event.key === 'ArrowUp') this.playerB.move = DIRECTION.UP;
 			if (event.key === 'ArrowDown') this.playerB.move = DIRECTION.DOWN;
+			if (event.key === 'i') this.playerD.move = DIRECTION.UP;
+			if (event.key === 'k') this.playerD.move = DIRECTION.DOWN;
 			if (event.key === 'w') this.playerA.move = DIRECTION.UP;
 			if (event.key === 's') this.playerA.move = DIRECTION.DOWN;
+			if (event.key === 'q') this.playerC.move = DIRECTION.UP;
+			if (event.key === 'a') this.playerC.move = DIRECTION.DOWN;
 
 			if (!this.running && !this.over) {
 				this.running = true;
@@ -102,7 +115,9 @@ var Game = {
 
 		document.addEventListener('keyup', (event) => {
 			if (event.key === 'ArrowUp' || event.key === 'ArrowDown') this.playerB.move = DIRECTION.IDLE;
+			if (event.key === 'i' || event.key === 'k') this.playerD.move = DIRECTION.IDLE;
 			if (event.key === 'w' || event.key === 's') this.playerA.move = DIRECTION.IDLE;
+			if (event.key === 'q' || event.key === 'a') this.playerC.move = DIRECTION.IDLE;
 		});
 	},
 
@@ -118,11 +133,12 @@ var Game = {
 			this.handleBallCollisions();
 			this.handlePlayerMovements();
 			this.handleBallMovement();
+
 			this.checkRoundEnd();
 		}
 	},
 	
-	detectCollision: function (ball, player) {
+		detectCollision: function (ball, player) {
 		const nextBallX = ball.x + (ball.moveX === DIRECTION.RIGHT ? ball.speed : (ball.moveX === DIRECTION.LEFT ? -ball.speed : 0));
 		const nextBallY = ball.y + (ball.moveY === DIRECTION.DOWN ? ball.speed : (ball.moveY === DIRECTION.UP ? -ball.speed : 0));
 
@@ -131,6 +147,11 @@ var Game = {
 				nextBallY < player.y + player.height &&
 				nextBallY + ball.height > player.y);
 	},
+
+	detectPlayerCollision: function (player1, player2) {
+		return (player1.y < player2.y + player2.height && player1.y + player1.height > player2.y); 
+	},
+	
 
 	handleBallCollisions: function () {
 		if (this.ball.x - (this.ball.width / 2) <= 0) this.resetTurn(this.playerB, this.playerA);
@@ -144,6 +165,13 @@ var Game = {
 
 		if (this.detectCollision(this.ball, this.playerB)) {
 			this.handlePlayerCollision(this.playerB, DIRECTION.LEFT);
+		}
+		if (this.detectCollision(this.ball, this.playerC)) {
+			this.handlePlayerCollision(this.playerC, DIRECTION.RIGHT);
+		}
+
+		if (this.detectCollision(this.ball, this.playerD)) {
+			this.handlePlayerCollision(this.playerD, DIRECTION.LEFT);
 		}
 		console.log(this.ball.speed)
 	},
@@ -165,13 +193,47 @@ var Game = {
 	},
 
 	handlePlayerMovements: function () {
-		if (this.playerA.move === DIRECTION.UP) this.playerA.y -= this.playerA.speed;
-		if (this.playerA.move === DIRECTION.DOWN) this.playerA.y += this.playerA.speed;
-		if (this.playerB.move === DIRECTION.UP) this.playerB.y -= this.playerB.speed;
-		if (this.playerB.move === DIRECTION.DOWN) this.playerB.y += this.playerB.speed;
+		if (this.playerA.move === DIRECTION.DOWN) {
+			this.playerA.y += this.playerA.speed;
+			if (this.detectPlayerCollision(this.playerA, this.playerC)) {
+				this.playerA.y = this.playerC.y - this.playerC.height;
+			}
+		}
+		if (this.playerA.move === DIRECTION.UP) {
+			this.playerA.y -= this.playerA.speed;
+		}
+		if (this.playerB.move === DIRECTION.DOWN) {
+			this.playerB.y += this.playerB.speed;
+			if (this.detectPlayerCollision(this.playerB, this.playerD)) {
+				this.playerB.y = this.playerD.y - this.playerD.height;
+			}
+		}
+		if (this.playerB.move === DIRECTION.UP) {
+			this.playerB.y -= this.playerB.speed;
+		}
+		if (this.playerC.move === DIRECTION.DOWN) {
+			this.playerC.y += this.playerC.speed;
+		}
+		if (this.playerC.move === DIRECTION.UP) {
+			this.playerC.y -= this.playerC.speed;
+			if (this.detectPlayerCollision(this.playerC, this.playerA)) {
+				this.playerC.y = this.playerA.y + this.playerA.height;
+			}
+		}
+		if (this.playerD.move === DIRECTION.DOWN) {
+			this.playerD.y += this.playerD.speed;
+		}
+		if (this.playerD.move === DIRECTION.UP) {
+			this.playerD.y -= this.playerD.speed;
+			if (this.detectPlayerCollision(this.playerD, this.playerB)) {
+				this.playerD.y = this.playerB.y + this.playerB.height;
+			}
+		}
 
 		this.playerA.y = Math.max(0, Math.min(this.canvas.height - this.playerA.height, this.playerA.y));
 		this.playerB.y = Math.max(0, Math.min(this.canvas.height - this.playerB.height, this.playerB.y));
+		this.playerC.y = Math.max(0, Math.min(this.canvas.height - this.playerC.height, this.playerC.y));
+		this.playerD.y = Math.max(0, Math.min(this.canvas.height - this.playerD.height, this.playerD.y));
 	},
 
 	handleBallMovement: function () {
@@ -236,6 +298,8 @@ var Game = {
 		this.context.fillStyle = '#858cee';
 		this.context.fillRect(this.playerA.x, this.playerA.y, this.playerA.width, this.playerA.height);
 		this.context.fillRect(this.playerB.x, this.playerB.y, this.playerB.width, this.playerB.height);
+		this.context.fillRect(this.playerC.x, this.playerC.y, this.playerC.width, this.playerC.height);
+		this.context.fillRect(this.playerD.x, this.playerD.y, this.playerD.width, this.playerD.height);
 
 		this.context.fillStyle = '#ffffff';
 		this.context.fillRect(this.ball.x, this.ball.y, this.ball.width, this.ball.height);
@@ -251,14 +315,15 @@ var Game = {
 	
 	    this.context.fillText(`${this.playerA.name}: ${this.roundsWonA}`, 0 + 200, 50);
     	this.context.fillText(`${this.playerB.name}: ${this.roundsWonB}`, this.canvas.width - 200, 50);
+	    this.context.fillText(`${this.playerC.name}: ${this.roundsWonA}`, 0 + 200, this.canvas.height - 50);
+    	this.context.fillText(`${this.playerD.name}: ${this.roundsWonB}`, this.canvas.width - 200, this.canvas.height - 50);
 
 	}
 };
 
 document.addEventListener('DOMContentLoaded', () => {
 
-	console.log("Player:", players);
-	console.log("Turns:", turns);
-
+	// console.log("Player:", players);
+	// console.log("Turns:", turns);
 	Game.initialize(players, turns);
 });

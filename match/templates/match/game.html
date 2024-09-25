@@ -14,11 +14,30 @@
 	</canvas>
 	<h3><strong>Instructions:</strong></h3>
 	<p>
-		<b>Player A:</b> Control the left player using the W and S keys<br>
-		<b>Player B:</b> Control the right player using the up and down arrow keys
+		<b>{{ players.0 }}:</b> Control the left player using the W and S keys<br>
+		<b>{{ players.1 }}:</b> Control the right player using the up and down arrow keys<br>
+		{% if players|length > 2 %}
+		<b>{{ players.2 }}:</b> Control the left player using the Q and A keys<br>
+		<b>{{ players.3 }}:</b> Control the right player using the I and K keys<br>
+		{% endif %}
 	</p>
 {% endblock %}
 
 {% block scripts %}
-	<script src="{% static 'js/game.js' %}"></script>
+	<script>
+		const players = [
+			'{{ players.0|default:"" }}',
+			'{{ players.1|default:"" }}',
+			{% if players|length > 2 %}
+			'{{ players.2|default:"" }}',
+			'{{ players.3|default:"" }}'
+			{% endif %}
+		];
+		const turns = {{ turns }}
+	</script>
+	{% if players|length == 2 %}
+		<script src="{% static 'js/game.js' %}"></script>
+	{% elif players|length == 4 %}
+		<script src="{% static 'js/game2x2.js' %}"></script>
+	{% endif %}
 {% endblock %}
