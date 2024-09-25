@@ -100,8 +100,14 @@ nav a {
 	height: 30px;
 	width: auto;
 	vertical-align: middle;
+	background: none;
+	/* background-color: #040c30; */
+	border: none;
+	color: #858cee;
+	font-family: "Dosis", sans-serif;
+	font-size: 20px;
+	cursor: pointer;
 }
-
 .nav-logout {
 	float: right;
 	align-items: center;
