@@ -43,7 +43,7 @@ var Game = {
 		this.context = this.canvas.getContext('2d');
 
 		this.canvas.width = 2800;
-		this.canvas.height = 1000;
+		this.canvas.height = 1200;
 
 		this.canvas.style.width = (this.canvas.width / 2) + 'px';
 		this.canvas.style.height = (this.canvas.height / 2) + 'px';

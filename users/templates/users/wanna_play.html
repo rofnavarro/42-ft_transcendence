@@ -1,27 +1,26 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-	Jogar
+	Play
 {% endblock %}
 
 {% block undertitle %}
-	<h1>Jogar</h1>
+	<h2><span class="gradient-text"><b>Play</b></span></h2>
 {% endblock %}
 
 {% block content %}
 	<div class="play">
-		<div id="play-casual" >
+		<div id="play-casual">
 			<h2>Casual</h2>
 			<div class="play">
 				<a href="{% url 'users:local_play' user.username %}" class="btn-play">Local</a>
 			</div>
 		</div>
 		<div id="play-torneio">
-			<h2>Torneio</h2>
+			<h2>Tournament</h2>
 			<div class="play">
 				<a href="" class="btn-play">Criar</a>
 			</div>
 		</div>
 	</div>
 {% endblock %}
-
