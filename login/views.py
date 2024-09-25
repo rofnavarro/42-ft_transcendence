@@ -17,6 +17,7 @@ import os
 USER_ID = 'u-s4t2ud-a782b48361e73b59a6d5cbec76768c8aafa00b43e48aea014b90da7efb556ce5'
 API_KEY = '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'
 REDIRECT_URI = 'http://localhost:8000/login/callback'
+SECRET_KEY =  'f57a6e57ae'
 
 def	login_user(request):
 	url = f'https://api.intra.42.fr/oauth/authorize?client_id={USER_ID}&redirect_uri={REDIRECT_URI}&response_type=code'
@@ -29,13 +30,14 @@ def	manual_login(request):
 			user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
 			if user:
 				if not user.is_online:
+					# LOGIN
 					login(request, user)
 					send_2fa_code_email(request)
 					return redirect('login:verify2fa')
 				else:
-					return render(request, 'login/manual_login.html', {'form': form, 'error': 'This user is already logged in another device.'})
+					return render(request, 'login/manual_login.html', {'form': form, 'error': 'Usuário já está logado em outro dispositivo.'})
 			else:
-				return render(request, 'login/manual_login.html', {'form': form, 'error': 'Username or password is invalid.'})			
+				return render(request, 'login/manual_login.html', {'form': form, 'error': 'Usuário ou senha inválido(a).'})			
 	else:
 		form = CustomAuthenticationForm()
 	return render(request, 'login/manual_login.html', {'form': form})
@@ -43,7 +45,7 @@ def	manual_login(request):
 def	callback(request):
 	code = request.GET.get('code')
 	if not code:
-		return render(request, 'login/error.html', {'error': 'Authentication code not received.'})
+		return render(request, 'login/error.html', {'error': 'Código de autorização não recebido.'})
 
 	token_url = 'https://api.intra.42.fr/oauth/token'
 	token_data = {
@@ -61,17 +63,17 @@ def	callback(request):
 	token_json = token_response.json()
 	access_token = token_json.get('access_token')
 	if not access_token:
-		return render(request, 'login/error.html', {'error': 'It was not possible to access token.'})
+		return render(request, 'login/error.html', {'error': 'Não foi possível acessar o token.'})
 
 	request.session['access_token'] = access_token
 
 	user_url = 'https://api.intra.42.fr/v2/me'
+
 	headers = {'Authorization': f'Bearer {access_token}'}
 	user_response = requests.get(user_url, headers=headers)
 	user_info = user_response.json()
 
 	username = user_info.get('login')
-	nickname = username
 	last_name = user_info.get('last_name', '')
 	first_name = user_info.get('usual_first_name', '') or user_info.get('first_name', '')
 
@@ -79,7 +81,6 @@ def	callback(request):
 		username=username,
 		defaults={
 			'username': username,
-			'nickname': nickname,
 			'first_name': first_name,
 			'last_name': last_name,
 		}
@@ -96,13 +97,16 @@ def	callback(request):
 				user.save()
 
 	if not user.password:
+		# LOGIN
 		login(request, user)
 		return redirect(reverse('login:set_password'))
 
 	if not user.email:
+		# LOGIN
 		login(request, user)
 		return redirect(reverse('login:set_email'))
 
+	# LOGIN
 	login(request, user)
 	send_2fa_code_email(request)
 	return redirect(reverse('login:verify2fa'))
@@ -115,7 +119,7 @@ def	set_password(request):
 			form.save()
 			return redirect(reverse('login:set_email'))
 		else:
-			return render(request, 'login/set_password.html', {'form': form, 'error': 'Error defining password'})
+			return render(request, 'login/set_password.html', {'form': form, 'error': 'Erro ao definir a senha.'})
 	else:
 		form = SetPasswordForm(request.user)
 	return render(request, 'login/set_password.html', {'form': form})
@@ -129,41 +133,45 @@ def	set_email(request):
 			send_2fa_code_email(request)
 			return redirect(reverse('login:verify2fa'))
 		else:
-			return render(request, 'login/set_email.html', {'form': form, 'error': 'Error defining e-mail address.'})
+			return render(request, 'login/set_email.html', {'form': form, 'error': 'Erro ao definir o email.'})
 
 	else:
 		form = SetEmailForm(instance=request.user)
 	return render(request, 'login/set_email.html', {'form': form})
 
-@login_required
 def	logout_user(request):
-	user = request.user
-	user.is_online = False
-	user.is_verified = False
-	user.save()
-
-	logout(request)
-	request.session.flush()
+	try:
+		if request.method == 'POST':
+			user = request.user
+			user.is_online = False
+			user.is_verified = False
+			user.save()
+			request.session.flush()
+			logout(request)
+	except Exception as e:
+		return redirect('home')
+	
 	return redirect('home')
 
-@login_required
-def	send_2fa_code_email(user):
+def	send_2fa_code_email(request):
 	code = random.randint(100000, 999999)
 
-	user.user.verification_code = code
-	user.user.save()
+	request.user.verification_code = code
+	request.user.save()
 
-	subject = 'Transcendencenana | Your 2FA verification code'
-	message = f'Hello {user.user.first_name}, \n\nYour verification code is: {code}.'
-	recipient = [user.user.email]
+	subject = 'Seu código de verificação 2FA'
+	message = f'Olá {request.user.first_name}, \n\nSeu código de verificação é {code}.'
+	recipient = [request.user.email]
 	send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient)
-	return redirect(reverse('login:verify2fa'))
+	print('\n\nFINAL CODE EMAIL\n\n')
+	return
 
 def	verify_2fa_code_email(request):
+	print('\n\n2FA\n\n')
 	if request.method == 'POST':
 		code = request.POST.get('code')
 		if not code:
-			return render(request, 'login/2fa.html', {'error': 'Please insert your 2FA code:'})
+			return render(request, 'login/2fa.html', {'error': 'Por favor, inserir o código 2fa.'})
 		try:
 			if int(code) == request.user.verification_code:
 				request.user.is_online = True
@@ -174,7 +182,7 @@ def	verify_2fa_code_email(request):
 				# HERE
 				return redirect('users:wanna_play', username=request.user.username)
 			else:
-				return render(request, 'login/2fa.html', {'error': 'Incorrect code.'})
+				return render(request, 'login/2fa.html', {'error': 'Código incorreto.'})
 		except ValueError:
-			return render(request, 'login/2fa.html', {'error': 'Incorrect code.'})
+			return render(request, 'login/2fa.html', {'error': 'Código incorreto.'})
 	return render(request, 'login/2fa.html')
