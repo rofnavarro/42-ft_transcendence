@@ -1,18 +1,18 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-	Jogar
+	Play
 {% endblock %}
 
 {% block undertitle %}
-	<h1>Configuração de Partida Local</h1>
+	<h1>Local Match Settings</h1>
 {% endblock %}
 
 {% block content %}
 	<div class="local-play">
 		<!-- qtd jogadores -->
 		<div id="qtd-jogadores" >
-			<h2>Jogadores</h2>
+			<h2>Players</h2>
 				<input type="radio" name="qtd_jogadores" value="2_jogadores" checked>
 				<label>2</label>
 				<input type="radio" name="qtd_jogadores" value="4_jogadores">
@@ -21,7 +21,7 @@
 
 		<!-- qtd-turnos -->
 		<div id="qtd-turnos" >
-			<h2>Turnos</h2>
+			<h2>Rounds</h2>
 				<input type="radio" name="qtd-turnos" value="1" checked>
 				<label>1</label>
 				<input type="radio" name="qtd-turnos" value="3">
@@ -31,30 +31,30 @@
 		</div>
 	</div>
 	<div>
-		<button class="submit-button">Finalizar</button>
-	</div> 
+		<button class="submit-button">Finish</button>
+	</div>
 
 	<!-- TODO: criar um script para colocar o nick dos players locais inteligente para compreender se é 2 ou 4 jogadores -->
 	<div id="local-players">
-		<h2>Jogadores</h2>
+		<h2>Players</h2>
 		<div class="players">
 			<div id="player1" class="player">
-				<h3>Jogador 1</h3>
-				<input type="text" name="player1" placeholder="Nome do Jogador 1">
+				<h3>Player 1</h3>
+				<input type="text" name="player1" placeholder="Player 1 Name">
 			</div>
 			<div id="player2" class="player">
-				<h3>Jogador 2</h3>
-				<input type="text" name="player2" placeholder="Nome do Jogador 2">
+				<h3>Player 2</h3>
+				<input type="text" name="player2" placeholder="Player 2 Name">
 			</div>
 		</div>
 		<div class="players" >
 			<div id="player3" class="player" >
-				<h3>Jogador 3</h3>
-				<input type="text" name="player3" placeholder="Nome do Jogador 3">
+				<h3>Player 3</h3>
+				<input type="text" name="player3" placeholder="Player 3 Name">
 			</div>
 			<div id="player4" class="player">
-				<h3>Jogador 4</h3>
-				<input type="text" name="player4" placeholder="Nome do Jogador 4">
+				<h3>Player 4</h3>
+				<input type="text" name="player4" placeholder="Player 4 Name">
 			</div>
 		</div>
 	</div>

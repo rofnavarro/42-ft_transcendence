@@ -1,13 +1,14 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-	Erro 404 - Página não encontrada
+	Error 404 - Page not found
 {% endblock %}
 
 {% block content %}
 	<div class="not-found-container">
-		<h2>404 - Página não encontrada</h2>
-		<p>A página que você está tentando acessar não existe.</p>
-		<a href="{% url 'home' %}">Voltar para a página inicial</a>
+		<h2><b>404 - Page not found</b></h2>
+		<img src="../static/imgs/error-404.png" width="200" height="200">
+		<p>The page you are trying to access does not exist.</p>
+		<a href="{% url 'home' %}">Return Home</a>
 	</div>
 {% endblock %}

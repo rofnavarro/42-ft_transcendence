@@ -2,34 +2,38 @@
 {% load static %}
 
 {% block title %}
-	Perfil de {{ user_info.username }}
+	{{ user_info.username }}'s Profile
 {% endblock %}
 
 {% block undertitle %}
-	<h1>{{ user_info.first_name }} {{ user_info.last_name }}</h1>
-	<h1 id="nickname-display">{{ user_info.nickname }}</h1>
+	<h2><strong class="gradient-text">{{ user_info.first_name }} {{ user_info.last_name }}</strong></h2>
+	<h2><strong>{{ user_info.nickname }}</strong></h2>
+	{% if user_info == request.user %}
+	<button id="change-nickname-button" class="small-button">Change Nickname</button>
+	{% endif %}
 
 	{% if user_info == request.user and request.user.is_verified == True  %}
 		<!-- Popup de alteração de nickname -->
 		<div id="nickname-popup" class="popup" style="display:none;">
 			<div class="popup-content">
-				<span class="close-popup">&times;</span>
+				<span class="close-button">&times;</span>
 				<form id="nickname-form" method="POST">
 					{% csrf_token %}
 					{{ form.as_p }}
-					<button type="submit" class="btn-save">Salvar Alterações</button>
+					<button type="submit" class="small-button">Save Changes</button>
 				</form>
 			</div>
 		</div>
 
+
 		<!-- Popup de alteração de foto de perfil -->
 		<div id="profile-picture-popup" class="popup" style="display:none;">
 			<div class="popup-content">
-				<span class="close-profile-picture-popup">&times;</span>
+				<span class="close-button">&times;</span>
 				<form id="profile-picture-form" method="POST" enctype="multipart/form-data">
 					{% csrf_token %}
 					{{ picture_form.as_p }}
-					<button type="submit" class="btn-save">Atualizar Foto de Perfil</button>
+					<button type="submit" class="small-button">Update Profile Photo</button>
 				</form>
 			</div>
 		</div>
@@ -50,25 +54,24 @@
 			{% else %}
 				<img src={% static 'imgs/banana.png' %} alt="Default Profile Picture" class="profile-image">
 			{% endif %}
-			<div class="username">{{ user_info.username }}</div>
-			{% if user_info == request.user and request.user.is_verified == True  %}
-				<button id="change-picture-button" class="btn-action">Alterar Foto</button>
+			<div class="username"><b>{{ user_info.username }}</b></div>
+			{% if user_info == request.user %}
+				<button id="change-picture-button" class="small-button">Change Photo</button>
 			{% endif %}
 		</div>
 
 		<!-- Seção das Estatísticas do Usuário -->
 		<div class="profile-header">
 			<div class="profile-stats-section">
-				<h2>Estatísticas</h2>
+				<h2><b>Statistics</b></h2>
 				<div class="stats">
-					<h3>Total de Jogos</h3>
 					<table class="stats-table">
 						<thead>
 							<tr>
-								<th>Partidas</th>
-								<th>Vitórias</th>
-								<th>Derrotas</th>
-								<th>% Vitórias</th>
+								<th>Matches</th>
+								<th>Wins</th>
+								<th>Losses</th>
+								<th>% Wins</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -87,7 +90,7 @@
 		<!-- Seção de Amigos -->
 		{% if annonymous == False and request.user.is_verified %}
 			<div class="friends-section">
-				<h2>Amigos</h2>
+        <h2><strong>Friends</strong></h2>
 				<ul>
 					{% for friend in friends %}
 						<li>
@@ -108,19 +111,32 @@
 	{% if user_info != request.user and not is_friend and annonymous == False and request.user.is_verified %}
 		<form method="post" action="{% url 'users:send_friend_request' user_info.username %}">
 			{% csrf_token %}
-				<button type="submit" class="btn-action" disabled>Adicionar Amigo</button>
+			<button type="submit" class="small-button">Add Friend</button>
 		</form>
 	{% endif %}
 {% endblock %}
 
 {% block scripts %}
 	<!-- Script para popups --> 
-	<script src="{% static 'js/popup.js' %}"></script>
+	<!-- <script src="{% static 'js/popup.js' %}"></script> -->
+	<script>
+		const changeNicknameButton = document.getElementById('change-nickname-button');
+		const nicknamePopup = document.getElementById('nickname-popup');
+		const closeButton = document.querySelector('.close-button');
+
+		changeNicknameButton.addEventListener('click', () => {
+		nicknamePopup.style.display = 'block';
+		});
+
+		closeButton.addEventListener('click', () => {
+		nicknamePopup.style.display = 'none';
+		});
+	</script>
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {
 			const changePictureButton = document.getElementById('change-picture-button');
 			const profilePicturePopup = document.getElementById('profile-picture-popup');
-			const closeProfilePicturePopup = profilePicturePopup.querySelector('.close-profile-picture-popup');
+			const closeProfilePicturePopup = profilePicturePopup.querySelector('.close-button');
 
 			changePictureButton.addEventListener('click', function() {
 				profilePicturePopup.style.display = 'block';
