@@ -32,3 +32,4 @@ def decode_jwt(jwt_token, secret_key, algorithm='HS256'):
     except Exception as e:
         print(f"Erro ao decodificar o token: {e}")
         return None
+
