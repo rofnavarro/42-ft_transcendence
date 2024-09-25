@@ -40,7 +40,7 @@
 
 			<div class="nav-logout">
 			<ul class="nav-logout">
-			{% if user.is_verified %}
+			{% if user.is_verified and user.is_authenticated == True %}
 			{% url 'users:profile' user.username as profile_url %}
 			<li class="nav-logout"><a href="{{ profile_url }}">
 			<img src="{% static 'imgs/user.png' %}" class="nav-icon"> Profile
