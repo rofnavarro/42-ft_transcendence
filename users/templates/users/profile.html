@@ -2,12 +2,12 @@
 {% load static %}
 
 {% block title %}
-	Perfil de {{ user_info.username }}
+	{{ user_info.username }}'s Profile
 {% endblock %}
 
 {% block undertitle %}
-	<h1>{{ user_info.first_name }} {{ user_info.last_name }}</h1>
-	<h1 id="nickname-display">{{ user_info.nickname }}</h1>
+	<h1><strong class="gradient-text">{{ user_info.first_name }} {{ user_info.last_name }}</strong></h1>
+	<h2 id="nickname-display" class="nickname"><strong>{{ user_info.nickname }}</strong></h2>
 
 	{% if user_info == request.user %}
 		<!-- Popup de alteração de nickname -->
@@ -17,7 +17,7 @@
 				<form id="nickname-form" method="POST">
 					{% csrf_token %}
 					{{ form.as_p }}
-					<button type="submit" class="btn-save">Salvar Alterações</button>
+					<button type="submit" class="small-button">Save Changes</button>
 				</form>
 			</div>
 		</div>
@@ -29,7 +29,7 @@
 				<form id="profile-picture-form" method="POST" enctype="multipart/form-data">
 					{% csrf_token %}
 					{{ picture_form.as_p }}
-					<button type="submit" class="btn-save">Atualizar Foto de Perfil</button>
+					<button type="submit" class="small-button">Update Profile Photo</button>
 				</form>
 			</div>
 		</div>
@@ -46,25 +46,25 @@
 			{% else %}
 				<img src={% static 'imgs/banana.png' %} alt="Default Profile Picture" class="profile-image">
 			{% endif %}
-			<div class="username">{{ user_info.username }}</div>
+			<div class="username"><b>{{ user_info.username }}</b></div>
 			{% if user_info == request.user %}
-				<button id="change-picture-button" class="btn-action">Alterar Foto</button>
+				<button id="change-picture-button" class="small-button">Change Photo</button>
 			{% endif %}
 		</div>
 
 		<!-- Seção das Estatísticas do Usuário -->
 		<div class="profile-header">
 			<div class="profile-stats-section">
-				<h2>Estatísticas</h2>
+				<h2>Statistics</h2>
 				<div class="stats">
-					<h3>Total de Jogos</h3>
+					<h3>Total Matches</h3>
 					<table class="stats-table">
 						<thead>
 							<tr>
-								<th>Partidas</th>
-								<th>Vitórias</th>
-								<th>Derrotas</th>
-								<th>% Vitórias</th>
+								<th>Matches</th>
+								<th>Wins</th>
+								<th>Losses</th>
+								<th>% Wins</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -82,7 +82,7 @@
 
 		<!-- Seção de Amigos -->
 		<div class="friends-section">
-			<h2>Amigos</h2>
+			<h2>Friends</h2>
 			<ul>
 				{% for friend in friends %}
 					<li>
@@ -102,7 +102,7 @@
 	{% if user_info != request.user and not is_friend %}
 		<form method="post" action="{% url 'users:send_friend_request' user_info.username %}">
 			{% csrf_token %}
-			<button type="submit" class="btn-action">Adicionar Amigo</button>
+			<button type="submit" class="small-button">Add Friend</button>
 		</form>
 	{% endif %}
 {% endblock %}

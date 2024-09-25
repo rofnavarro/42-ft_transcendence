@@ -13,7 +13,7 @@ def	user_profile_picture_path(instance, filename):
 class	CustomUserManager(BaseUserManager):
 	def	create_user(self, email, username, password=None, **extra_fields):
 		if not username:
-			raise ValueError(gettext_lazy('Necessita de um nome de usuário'))
+			raise ValueError(gettext_lazy('A username is needed.'))
 		email = self.normalize_email(email)
 		extra_fields.setdefault('nickname', username)
 		user = self.model(email=email, username=username, **extra_fields)

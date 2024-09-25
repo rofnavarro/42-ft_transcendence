@@ -10,14 +10,14 @@
 {% endblock %}
 
 {% block content %}
-	<h2>Inform your 2FA code</h2>
+	<h2><b>Inform your 2FA code</b></h2>
 	<form method="post" action="{% url 'login:verify2fa' %}" >
 		{% csrf_token %}
 		<label for="code">Type the verification code sent to your e-mail address: </label>
 		<input type="text" name="code" id="code" required>
 		<button class="small-button" type="submit">Verify</button>
 		{% if error %}
-			<p style="color: red;">{{ error }}</p>
+			<p style="color: #4d267d;">{{ error }}</p>
 		{% endif %}
 	</form>
 {% endblock %}

@@ -17,44 +17,46 @@
 <body>
 	<header>
 		<h1><span class="gradient-text"><b>TRANSCENDENCENANA</b></span></h1>
-	</header>
 	<nav>
 		<div class="nav-buttons">
 			<ul>
-		{% if user.is_authenticated %}
-			{% url 'users:wanna_play' user.username as wanna_play_url %}
-			{% url 'users:profile' user.username as profile_url %}
-			{% if request.path == wanna_play_url %}
-				<li class="navbar"><a href="{{ profile_url }}">
-					<img src="{% static 'imgs/house.png' %}" class="nav-icon"> Home
-				</a></li>
-			{% else %}
-				<li class="navbar"><a href="{{ wanna_play_url }}">
-					<img src="{% static 'imgs/house.png' %}" class="nav-icon"> Home
-				</a></li>
-			{% endif %}
-		{% else %}
 			<li class="navbar"><a href="/">
 				<img src="{% static 'imgs/house.png' %}" class="nav-icon"> Home
 			</a></li>
-		{% endif %}
 			<li class="navbar"><a href="/about">
 				<img src="{% static 'imgs/banana1.png' %}" class="nav-icon"> About
 			</a></li>
+		{% if user.is_verified %}
+		{% url 'users:wanna_play' user.username as wanna_play_url %}
+			<li class="navbar"><a href="{{ wanna_play_url }}">
+				<img src="{% static 'imgs/joystick.png' %}" class="nav-icon"> Play
+			</a></li>
+		{% endif %}
 			<li class="navbar"><a href="/ranking">
 				<img src="{% static 'imgs/champion.png' %}" class="nav-icon"> Ranking
 			</a></li>
 		</ul>
 		</div>
+		
 		<div class="nav-logout">
-			<a href="{% url 'login:logout_user' %}">
+			<ul class="nav-logout">
+			{% if user.is_verified %}
+			{% url 'users:profile' user.username as profile_url %}
+			<li class="nav-logout"><a href="{{ profile_url }}">
+			<img src="{% static 'imgs/user.png' %}" class="nav-icon"> Profile
+			</a></li>
+			<li class="nav-logout"><a href="{% url 'login:logout_user' %}">
 			<form action="{% url 'login:logout_user' %}" method="post">
 				{% csrf_token %}
 				<img src="{% static 'imgs/logout.png' %}" class="nav-icon"> Logout</i>
 			</form>
-			</a>
+			</a></li>
+			</ul>
+			{% endif %}
 		</div>
 	</nav>
+	</header>
+
 	<undertitle>
 		{% block undertitle %}
 		{% endblock %}

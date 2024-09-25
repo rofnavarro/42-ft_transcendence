@@ -33,9 +33,9 @@ def	manual_login(request):
 					send_2fa_code_email(request)
 					return redirect('login:verify2fa')
 				else:
-					return render(request, 'login/manual_login.html', {'form': form, 'error': 'Usuário já está logado em outro dispositivo.'})
+					return render(request, 'login/manual_login.html', {'form': form, 'error': 'This user is already logged in another device.'})
 			else:
-				return render(request, 'login/manual_login.html', {'form': form, 'error': 'Usuário ou senha inválido(a).'})			
+				return render(request, 'login/manual_login.html', {'form': form, 'error': 'Username or password is invalid.'})			
 	else:
 		form = CustomAuthenticationForm()
 	return render(request, 'login/manual_login.html', {'form': form})
@@ -43,7 +43,7 @@ def	manual_login(request):
 def	callback(request):
 	code = request.GET.get('code')
 	if not code:
-		return render(request, 'login/error.html', {'error': 'Código de autorização não recebido.'})
+		return render(request, 'login/error.html', {'error': 'Authentication code not received.'})
 
 	token_url = 'https://api.intra.42.fr/oauth/token'
 	token_data = {
@@ -61,7 +61,7 @@ def	callback(request):
 	token_json = token_response.json()
 	access_token = token_json.get('access_token')
 	if not access_token:
-		return render(request, 'login/error.html', {'error': 'Não foi possível acessar o token.'})
+		return render(request, 'login/error.html', {'error': 'It was not possible to access token.'})
 
 	request.session['access_token'] = access_token
 
@@ -115,7 +115,7 @@ def	set_password(request):
 			form.save()
 			return redirect(reverse('login:set_email'))
 		else:
-			return render(request, 'login/set_password.html', {'form': form, 'error': 'Erro ao definir a senha.'})
+			return render(request, 'login/set_password.html', {'form': form, 'error': 'Error defining password'})
 	else:
 		form = SetPasswordForm(request.user)
 	return render(request, 'login/set_password.html', {'form': form})
@@ -129,7 +129,7 @@ def	set_email(request):
 			send_2fa_code_email(request)
 			return redirect(reverse('login:verify2fa'))
 		else:
-			return render(request, 'login/set_email.html', {'form': form, 'error': 'Erro ao definir o email.'})
+			return render(request, 'login/set_email.html', {'form': form, 'error': 'Error defining e-mail address.'})
 
 	else:
 		form = SetEmailForm(instance=request.user)
@@ -153,8 +153,8 @@ def	send_2fa_code_email(user):
 	user.user.verification_code = code
 	user.user.save()
 
-	subject = 'Seu código de verificação 2FA'
-	message = f'Olá {user.user.first_name}, \n\nSeu código de verificação é {code}.'
+	subject = 'Transcendencenana | Your 2FA verification code'
+	message = f'Hello {user.user.first_name}, \n\nYour verification code is: {code}.'
 	recipient = [user.user.email]
 	send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient)
 	return redirect(reverse('login:verify2fa'))
@@ -163,7 +163,7 @@ def	verify_2fa_code_email(request):
 	if request.method == 'POST':
 		code = request.POST.get('code')
 		if not code:
-			return render(request, 'login/2fa.html', {'error': 'Por favor, inserir o código 2fa.'})
+			return render(request, 'login/2fa.html', {'error': 'Please insert your 2FA code:'})
 		try:
 			if int(code) == request.user.verification_code:
 				request.user.is_online = True
@@ -174,7 +174,7 @@ def	verify_2fa_code_email(request):
 				# HERE
 				return redirect('users:wanna_play', username=request.user.username)
 			else:
-				return render(request, 'login/2fa.html', {'error': 'Código incorreto.'})
+				return render(request, 'login/2fa.html', {'error': 'Incorrect code.'})
 		except ValueError:
-			return render(request, 'login/2fa.html', {'error': 'Código incorreto.'})
+			return render(request, 'login/2fa.html', {'error': 'Incorrect code.'})
 	return render(request, 'login/2fa.html')

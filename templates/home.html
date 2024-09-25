@@ -4,11 +4,12 @@
 {% block content %}
 	<h2><span class="gradient-text"><b>Welcome to Transcendencenana!</b></span></h2>
 	<br>
-	<p>Transcendencenana is a platform where you can play Pong with your friends!<br>
-		Please log in so you can start:<br><br>
-	</p>
+	<p>Transcendencenana is a platform where you can play Pong with your friends!</p>
+	{% if not user.is_verified %}
+	<p>Please log in so you can start:<br><br></p>
 	<button class="login-button" onclick="window.location.href='/login/'">
 		<img src="../static/imgs/Logo42saopaulo.png" class="button-icon"> Sign in with 42</button>
 	<button class="login-button" onclick="window.location.href='/login/manual_login/'">
 		<img src="../static/imgs/person.png" class="button-icon"> Login with Username and Password</button>
+	{% endif %}
 {% endblock %}

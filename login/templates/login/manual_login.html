@@ -5,18 +5,16 @@
 	Manual Login
 {% endblock %}
 
-{% block undertitle %}
-	<h2>Enter with your username and password</h2>
-{% endblock %}
-
 {% block content %}
-	<h2>Enter</h2>
+	<h2><b>Enter with your username and password</b></h2>
+	<div class="manual-login">
 	<form method="post">
 		{% csrf_token %}
 		{{ form.as_p }}
 		{% if error %}
-			<p style="color: red;">{{ error }}</p>
+			<p style="color: #4d267d;">{{ error }}</p>
 		{% endif %}
 		<button class="small-button" type="submit">Login</button>
 	</form>
+	</div>
 {% endblock %}

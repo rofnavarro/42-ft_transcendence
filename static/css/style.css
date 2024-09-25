@@ -2,14 +2,17 @@ header {
 	font-family: "Space Grotesk", sans-serif;
 	font-optical-sizing: auto;
 	font-weight: 600;
+	font-size: 20px;
 	font-style: normal;
-	/* color: rgb(133, 140, 238); */
 	text-align: center;
 	justify-content: center;
-	display: fixed;
+	align-content: center;
+	display: flex;
 	flex-direction: column;
 	align-items: center;
 	position: sticky;
+	width: 100%;
+	top: 0;
 }
 
 body {
@@ -27,7 +30,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	height: 100vh;
+	height: auto;
 	margin: 0;
 }
 
@@ -47,20 +50,19 @@ nav {
 	color: rgb(133, 140, 238);
 	display: flex;
 	padding: 1rem;
-	background-size: cover;
 	position: sticky;
 	justify-content: space-between;
 	gap: 50px;
 	align-content: center;
 	align-items: center;
 	font-size: 20px;
-	width: calc(100% - 10px);
+	width: 100%;
 	margin: 0 auto;
 	border-right: rgb(133, 140, 238);
 	box-sizing: border-box;
 }
 
-ul {
+nav ul{
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
@@ -73,11 +75,11 @@ ul {
 	margin-right: 0;
 }
 
-.navbar a {
+.navbar a, .nav-logout a {
 	display: block;
 	color: rgb(133, 140, 238);
 	text-align: center;
-	padding: 10px 10px;
+	padding: 10px 20px;
 	text-decoration: none;
 }
 
@@ -98,6 +100,35 @@ nav a {
 	height: 30px;
 	width: auto;
 	vertical-align: middle;
+}
+
+.nav-logout {
+	float: right;
+	align-items: center;
+}
+
+.nav-logout ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+}
+
+.nav-logout li {
+	border-right: 1px solid rgb(133, 140, 238);
+}
+
+.nav-logout li:last-child {
+	border-right: none;
+	padding-right: 0;
+}
+
+.nav-logout a {
+	display: block;
+	color: rgb(133, 140, 238);
+	text-align: center;
+	padding: 10px 20px;
+	text-decoration: none;
 }
 
 main {
@@ -240,8 +271,8 @@ canvas {
 }
 
 .profile-image {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     margin-bottom: 10px;
     margin-left: 10px;
@@ -287,7 +318,7 @@ canvas {
 }
 
 .friends-section {
-	background-color: white;
+	background-color: #252e59;
 	border: 2px solid rgba(133, 140, 238, 0.8);
 	border-radius: 10px;
 	padding: 10px;
@@ -301,7 +332,8 @@ canvas {
 	margin-left: 100px;
 	align-items: center;
 }
-li {
+.set-password li {
+	list-style-type: none;
 	align-items: left;
 	margin-right: 25px;
 }
@@ -368,4 +400,53 @@ li {
 
 .story b {
 	color: #4d267d;
+}
+
+.link-about {
+	color:#858cee;
+	text-decoration: none;
+}
+
+.link-about:hover {
+	color: #4d267d;
+	transition-duration: 0.4s;
+}
+
+.icon-about ul {
+	background-color: aqua;
+	gap: 2rem;
+}
+
+.li-about {
+	display: inline;
+	padding: 10px 10px;
+	gap: 20px;
+}
+
+input {
+	width: auto;
+	font-family: "Dosis", sans-serif;
+	font-size: 20px;
+	color: #040c30;
+	background-color: #a8b4f0;
+	border: 2px solid #858cee;
+	border-radius: 8px;
+	padding: 5px 5px;
+}
+
+input:focus {
+	background-color: #c3c6f1;
+}
+
+.manual-login li {
+	list-style-type: none;
+	color: #9754e9
+}
+.nickname {
+	cursor: pointer;
+}
+
+.nickname:hover {
+	color: #4d267d;
+	transition-duration: 0.4s;
 }
