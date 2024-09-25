@@ -37,8 +37,8 @@
 			</a></li>
 		</ul>
 		</div>
-		
-		<div class="nav-logout">
+
+			<div class="nav-logout">
 			<ul class="nav-logout">
 			{% if user.is_verified %}
 			{% url 'users:profile' user.username as profile_url %}
@@ -63,6 +63,8 @@
 	</undertitle>
 	<main>		
 		{% block content %}
+		{% endblock %}
+		{% block content2 %}
 		{% endblock %}
 	</main>
 	{% block scripts %}

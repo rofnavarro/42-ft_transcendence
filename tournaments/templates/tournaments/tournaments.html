@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+	Torneios
+{% endblock %}
+
+{% block undertitle %}
+	<h1>Torneios</h1>
+{% endblock %}
+
+{% block content %}
+	
+{% endblock %}
+
+{% block content2 %}
+	<h1>Historico</h1>
+	<section>
+		<article class="rank">
+			<div class="rank-item">Name</div>
+			<div class="rank-item">Start</div>
+			<div class="rank-item">End</div>
+		</article>
+		{% for name in tournament %}
+		<article class="rank">
+			<div class="rank-item">{{ name.name }}</div>
+			<div class="rank-item">{{ name.start_date }}</div>
+			<div class="rank-item">{{ name.end_date }}</div>
+		</article>
+		<br>
+		{% endfor %}
+	</section>
+{% endblock %}
+
