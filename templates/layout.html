@@ -48,7 +48,7 @@
 			<li class="nav-logout"><a href="{% url 'login:logout_user' %}">
 			<form action="{% url 'login:logout_user' %}" method="post">
 				{% csrf_token %}
-				<img src="{% static 'imgs/logout.png' %}" class="nav-icon"> Logout</i>
+				<button type="submit" class="button-logout"><img src="{% static 'imgs/logout.png' %}" class="nav-icon"> Logout</i></button>
 			</form>
 			</a></li>
 			</ul>
