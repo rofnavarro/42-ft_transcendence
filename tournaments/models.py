@@ -13,11 +13,15 @@ class Tournament(models.Model):
 	end_date = models.DateTimeField(gettext_lazy('end'), default=timezone.now)
 	players = models.ManyToManyField('self', symmetrical=True, through='inviteLobby')
 	# TODO: usar timestamp para criar o token
-	token = random.randint(100000, 999999)
+	token = models.IntegerField(null=True, blank=True)
+
+	def save(self, **kwargs):
+		if not self.token:  # Gera o token apenas se ele ainda não existir
+			self.token = random.randint(100000, 999999)
+		super().save(**kwargs)
 
 	def __str__(self):
 		return self.name
-
 
 class inviteLobby(models.Model):
 	user1 = models.ForeignKey(CustomUser, related_name='owner', on_delete=models.CASCADE)

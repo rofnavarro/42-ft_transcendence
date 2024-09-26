@@ -6,6 +6,8 @@ from django.urls import reverse
 from django.core.files.base import ContentFile
 from django.core.mail import send_mail
 from django.conf import settings
+from django.http import HttpResponse
+
 
 from .forms import CustomAuthenticationForm, SetEmailForm
 from users.models import CustomUser
@@ -13,6 +15,10 @@ from users.models import CustomUser
 import random
 import requests
 import os
+
+# from django.utils import timezone
+import datetime
+from login.jwt import create_jwt
 
 USER_ID = 'u-s4t2ud-a782b48361e73b59a6d5cbec76768c8aafa00b43e48aea014b90da7efb556ce5'
 API_KEY = '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'
@@ -30,7 +36,6 @@ def	manual_login(request):
 			user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
 			if user:
 				if not user.is_online:
-					# LOGIN
 					login(request, user)
 					send_2fa_code_email(request)
 					return redirect('login:verify2fa')
@@ -97,16 +102,13 @@ def	callback(request):
 				user.save()
 
 	if not user.password:
-		# LOGIN
 		login(request, user)
 		return redirect(reverse('login:set_password'))
 
 	if not user.email:
-		# LOGIN
 		login(request, user)
 		return redirect(reverse('login:set_email'))
 
-	# LOGIN
 	login(request, user)
 	send_2fa_code_email(request)
 	return redirect(reverse('login:verify2fa'))
@@ -175,9 +177,17 @@ def	verify_2fa_code_email(request):
 				request.user.is_online = True
 				request.user.is_verified = True
 				request.user.verification_code = None
+				# TODO: JWT token
+				current_time = (datetime.datetime.now() + datetime.timedelta(days=1)).timestamp()
+				payload = {
+					'username': request.user.username,
+					'user_mail': request.user.email,
+					'exp': current_time
+				}
+				token = create_jwt(payload, SECRET_KEY, algorithm='HS256')
+				request.session['tokenJWT'] = token
 				request.user.save()
-				login(request, request.user)
-				# HERE
+
 				return redirect('users:wanna_play', username=request.user.username)
 			else:
 				return render(request, 'login/2fa.html', {'error': 'Código incorreto.'})
