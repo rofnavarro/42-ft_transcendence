@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 {% load static %}
 
+{% block token_head %}
+	<meta name="csrf-token" content="{{ csrf_token }}">
+{% endblock %}
+
 {% block title %}
 	Pong Game
 {% endblock %}
@@ -10,15 +14,15 @@
 {% endblock %}
 
 {% block content %}
-	<canvas>
-	</canvas>
+	<canvas></canvas>
+	<canvas id="gameCanvas" data-playerA-username="{{ playerA.username }}" data-playerB-username="{{ playerB.username }}" data-rounds-won-a="{{ roundsWonA }}" data-rounds-won-b="{{ roundsWonB }}"></canvas>
 	<h3><strong>Instructions:</strong></h3>
 	<p>
-		<b>{{ players.0 }}:</b> Control the left player using the W and S keys<br>
-		<b>{{ players.1 }}:</b> Control the right player using the up and down arrow keys<br>
+		<b>{{ usernames.0 }}:</b> Control the left player using the W and S keys<br>
+		<b>{{ usernames.1 }}:</b> Control the right player using the up and down arrow keys<br>
 		{% if players|length > 2 %}
-		<b>{{ players.2 }}:</b> Control the left player using the Q and A keys<br>
-		<b>{{ players.3 }}:</b> Control the right player using the I and K keys<br>
+		<b>{{ usernames.2 }}:</b> Control the left player using the Q and A keys<br>
+		<b>{{ usernames.3 }}:</b> Control the right player using the I and K keys<br>
 		{% endif %}
 	</p>
 {% endblock %}
@@ -33,7 +37,15 @@
 			'{{ players.3|default:"" }}'
 			{% endif %}
 		];
-		const turns = {{ turns }}
+		const usernames = [
+			'{{ usernames.0|default:"" }}',
+			'{{ usernames.1|default:"" }}',
+			{% if players|length > 2 %}
+			'{{ usernames.2|default:"" }}',
+			'{{ usernames.3|default:"" }}'
+			{% endif %}
+		];
+		turns = {{ turns }}
 	</script>
 	{% if players|length == 2 %}
 		<script src="{% static 'js/game.js' %}"></script>
