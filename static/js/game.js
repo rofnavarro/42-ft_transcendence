@@ -51,6 +51,7 @@ var Game = {
 
 		this.playerA = Computer.new.call(this, 'left', players[0], usernames[0]);
 		this.playerB = Computer.new.call(this, 'right', players[1], usernames[1]);
+		
 		this.ball = Ball.new.call(this);
 
 		this.running = this.over = false;
@@ -119,6 +120,7 @@ var Game = {
 			this.handleBallCollisions();
 			this.handlePlayerMovements();
 			this.handleBallMovement();
+
 			this.checkRoundEnd();
 		}
 	},
@@ -186,7 +188,7 @@ var Game = {
 			if (!rounds[this.round + 1]) {
 				this.over = true;
 				this.resetBall();
-				setTimeout(() => { this.endGameMenu('Player A wins!'); }, 1000);
+				setTimeout(() => { this.endGameMenu('Player 1 wins!'); }, 1000);
 			} else {
 				this.playerA.score = this.playerB.score = 0;
 				this.playerA.speed += 1;
@@ -201,7 +203,7 @@ var Game = {
 			if (!rounds[this.round + 1]) {
 				this.over = true;
 				this.resetBall();
-				setTimeout(() => { this.endGameMenu('Player B wins!'); }, 1000);
+				setTimeout(() => { this.endGameMenu('Player 2 wins!'); }, 1000);
 			} else {
 				this.playerA.score = this.playerB.score = 0;
 				this.playerA.speed += 1;

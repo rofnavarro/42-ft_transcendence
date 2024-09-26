@@ -11,23 +11,24 @@ var rounds = [];
 var Ball = {
 	new: function (incrementSpeed) {
 		return {
-			width: 18,
-			height: 18,
-			x: (this.canvas.width / 2) - 9,
-			y: (this.canvas.height / 2) - 9,
+			width: 10,
+			height: 10,
+			x: (this.canvas.width / 2) - 5,
+			y: (this.canvas.height / 2) - 5,
 			moveX: Math.random() > 0.5 ? DIRECTION.RIGHT : DIRECTION.LEFT,
 			moveY: Math.random() > 0.5 ? DIRECTION.DOWN : DIRECTION.UP,
-			speed: incrementSpeed || 7
+			speed: incrementSpeed || 10
 		};
 	}
 };
 
 var Computer = {
-	new: function (side, player_name) {
+	new: function (side, player_name, player_username) {
 		return {
 			name: player_name,
+			username: player_username,
 			width: 18,
-			height: 180,
+			height: 100,
 			x: side === 'left' ? 10 : this.canvas.width - 30,
 			y: (this.canvas.height / 2) - 90,
 			score: 0,
@@ -38,7 +39,7 @@ var Computer = {
 };
 
 var Game = {
-	initialize: function (players, turns) {
+	initialize: function (players, usernames, turns) {
 		this.canvas = document.querySelector('canvas');
 		this.context = this.canvas.getContext('2d');
 
@@ -48,10 +49,10 @@ var Game = {
 		this.canvas.style.width = (this.canvas.width / 2) + 'px';
 		this.canvas.style.height = (this.canvas.height / 2) + 'px';
 
-		this.playerA = Computer.new.call(this, 'left', players[0]);
-		this.playerB = Computer.new.call(this, 'right', players[1]);
-		this.playerC = Computer.new.call(this, 'left', players[2]);
-		this.playerD = Computer.new.call(this, 'right', players[3]);
+		this.playerA = Computer.new.call(this, 'left', players[0], usernames[0]);
+		this.playerB = Computer.new.call(this, 'right', players[1], usernames[1]);
+		this.playerC = Computer.new.call(this, 'left', players[2], usernames[2]);
+		this.playerD = Computer.new.call(this, 'right', players[3], usernames[3]);
 
 
 		this.playerA.y = (this.canvas.height / 2) - 180;
@@ -140,7 +141,7 @@ var Game = {
 	
 		detectCollision: function (ball, player) {
 		const nextBallX = ball.x + (ball.moveX === DIRECTION.RIGHT ? ball.speed : (ball.moveX === DIRECTION.LEFT ? -ball.speed : 0));
-		const nextBallY = ball.y + (ball.moveY === DIRECTION.DOWN ? ball.speed : (ball.moveY === DIRECTION.UP ? -ball.speed : 0));
+		const nextBallY = ball.y + (ball.moveY === DIRECTION.UP ? ball.speed : (ball.moveY === DIRECTION.DOWN ? +ball.speed : 0));
 
 		return (nextBallX < player.x + player.width &&
 				nextBallX + ball.width > player.x &&
@@ -173,7 +174,6 @@ var Game = {
 		if (this.detectCollision(this.ball, this.playerD)) {
 			this.handlePlayerCollision(this.playerD, DIRECTION.LEFT);
 		}
-		console.log(this.ball.speed)
 	},
 
 	handlePlayerCollision: function (player, newMoveX) {
@@ -183,7 +183,7 @@ var Game = {
 
 		this.ball.moveX = newMoveX;
 		this.ball.moveY = (angle > 0) ? DIRECTION.DOWN : DIRECTION.UP;
-		this.ball.speed += 0.25;
+		this.ball.speed += 1;
 
 		if (newMoveX === DIRECTION.RIGHT) {
 			this.ball.x = player.x + player.width;
@@ -248,11 +248,13 @@ var Game = {
 			if (!rounds[this.round + 1]) {
 				this.over = true;
 				this.resetBall();
-				setTimeout(() => { this.endGameMenu('Player A wins!'); }, 1000);
+				setTimeout(() => { this.endGameMenu('PLeft Side wins!'); }, 1000);
 			} else {
 				this.playerA.score = this.playerB.score = 0;
 				this.playerA.speed += 1;
 				this.playerB.speed += 1;
+				this.playerC.speed += 1;
+				this.playerD.speed += 1;
 				this.round++;
 				this.roundsWonA++;
 				this.resetBall();
@@ -263,11 +265,13 @@ var Game = {
 			if (!rounds[this.round + 1]) {
 				this.over = true;
 				this.resetBall();
-				setTimeout(() => { this.endGameMenu('Player B wins!'); }, 1000);
+				setTimeout(() => { this.endGameMenu('Right Side wins!'); }, 1000);
 			} else {
 				this.playerA.score = this.playerB.score = 0;
 				this.playerA.speed += 1;
 				this.playerB.speed += 1;
+				this.playerC.speed += 1;
+				this.playerD.speed += 1;
 				this.round++;
 				this.roundsWonB++;
 				this.resetBall();
@@ -286,7 +290,7 @@ var Game = {
 		this.ball = Ball.new.call(this);
 		this.ball.moveX = Math.random() > 0.5 ? DIRECTION.RIGHT : DIRECTION.LEFT;
 		this.ball.moveY = Math.random() > 0.5 ? DIRECTION.DOWN : DIRECTION.UP;
-		this.ball.speed = 7;
+		this.ball.speed = 10;
 	},
 
 	render: function () {
@@ -313,17 +317,15 @@ var Game = {
 		this.context.fillStyle = '#858cee';
 		this.context.fillText(`Round: ${this.round + 1} / ${rounds.length}`, this.canvas.width / 2, this.canvas.height - 20);
 	
-	    this.context.fillText(`${this.playerA.name}: ${this.roundsWonA}`, 0 + 200, 50);
-    	this.context.fillText(`${this.playerB.name}: ${this.roundsWonB}`, this.canvas.width - 200, 50);
-	    this.context.fillText(`${this.playerC.name}: ${this.roundsWonA}`, 0 + 200, this.canvas.height - 50);
-    	this.context.fillText(`${this.playerD.name}: ${this.roundsWonB}`, this.canvas.width - 200, this.canvas.height - 50);
+	    this.context.fillText(`${this.playerA.username}: ${this.roundsWonA}`, 0 + 200, 50);
+    	this.context.fillText(`${this.playerB.username}: ${this.roundsWonB}`, this.canvas.width - 200, 50);
+	    this.context.fillText(`${this.playerC.username}: ${this.roundsWonA}`, 0 + 200, this.canvas.height - 50);
+    	this.context.fillText(`${this.playerD.username}: ${this.roundsWonB}`, this.canvas.width - 200, this.canvas.height - 50);
 
 	}
 };
 
 document.addEventListener('DOMContentLoaded', () => {
 
-	// console.log("Player:", players);
-	// console.log("Turns:", turns);
-	Game.initialize(players, turns);
+	Game.initialize(players, usernames, turns);
 });
