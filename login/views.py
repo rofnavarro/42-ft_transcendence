@@ -23,7 +23,6 @@ from login.jwt import create_jwt
 USER_ID = 'u-s4t2ud-a782b48361e73b59a6d5cbec76768c8aafa00b43e48aea014b90da7efb556ce5'
 API_KEY = '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'
 REDIRECT_URI = 'http://localhost:8000/login/callback'
-SECRET_KEY =  'f57a6e57ae'
 
 def	login_user(request):
 	url = f'https://api.intra.42.fr/oauth/authorize?client_id={USER_ID}&redirect_uri={REDIRECT_URI}&response_type=code'
@@ -147,6 +146,7 @@ def	logout_user(request):
 			user = request.user
 			user.is_online = False
 			user.is_verified = False
+			user.token = None
 			user.save()
 			request.session.flush()
 			logout(request)
@@ -178,14 +178,16 @@ def	verify_2fa_code_email(request):
 				request.user.is_verified = True
 				request.user.verification_code = None
 				# TODO: JWT token
-				current_time = (datetime.datetime.now() + datetime.timedelta(days=1)).timestamp()
+
+				current_time = (datetime.datetime.now() + datetime.timedelta(minutes=2)).timestamp()
 				payload = {
 					'username': request.user.username,
 					'user_mail': request.user.email,
 					'exp': current_time
 				}
-				token = create_jwt(payload, SECRET_KEY, algorithm='HS256')
+				token = create_jwt(payload, settings.SECRET_KEY, algorithm='HS256')
 				request.session['tokenJWT'] = token
+				request.user.token = token
 				request.user.save()
 
 				return redirect('users:wanna_play', username=request.user.username)

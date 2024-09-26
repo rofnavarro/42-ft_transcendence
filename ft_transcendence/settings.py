@@ -17,6 +17,7 @@ CSRF_COOKIE_SECURE = True
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# Felipe Notas: estou usando esta key para o jwt por 0 motivos
 SECRET_KEY = 'django-insecure-6waaegtj9iw2dh7plax#^2w+e$s(ig$by=v9zdrvavq9u5hf8^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -51,7 +52,7 @@ MIDDLEWARE = [
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-	# 'ft_transcendent.middleware.middlewareJWT.verify_jwt_token',
+	'ft_transcendence.middleware.middlewareJWT.JWTMiddleware',
 ]
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'

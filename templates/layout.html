@@ -10,7 +10,8 @@
 		{% endblock %}
 	</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
 	<link rel="icon" type="image/x-icon" href="{% static 'imgs/favicon.ico' %}">
 	<link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
@@ -41,17 +42,17 @@
 			<div class="nav-logout">
 			<ul class="nav-logout">
 			{% if user.is_verified and user.is_authenticated == True %}
-			{% url 'users:profile' user.username as profile_url %}
-			<li class="nav-logout"><a href="{{ profile_url }}">
-			<img src="{% static 'imgs/user.png' %}" class="nav-icon"> Profile
-			</a></li>
-			<li class="nav-logout"><a href="{% url 'login:logout_user' %}">
-			<form action="{% url 'login:logout_user' %}" method="post">
-				{% csrf_token %}
-				<button type="submit" class="button-logout"><img src="{% static 'imgs/logout.png' %}" class="nav-icon"> Logout</i></button>
-			</form>
-			</a></li>
-			</ul>
+				{% url 'users:profile' user.username as profile_url %}
+				<li class="nav-logout"><a href="{{ profile_url }}">
+				<img src="{% static 'imgs/user.png' %}" class="nav-icon"> Profile
+				</a></li>
+				<li class="nav-logout"><a href="{% url 'login:logout_user' %}">
+				<form action="{% url 'login:logout_user' %}" method="POST">
+					{% csrf_token %}
+					<button type="submit" class="button-logout"><img src="{% static 'imgs/logout.png' %}" class="nav-icon"> Logout</i></button>
+				</form>
+				</a></li>
+				</ul>
 			{% endif %}
 		</div>
 	</nav>
