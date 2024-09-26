@@ -9,4 +9,5 @@ urlpatterns = [
 	path('friends/', views.view_friends, name='view_friends'),
 	path('play/<str:username>/', views.wanna_play, name='wanna_play'),
 	path('play/local/<str:username>/', views.local_play, name='local_play'),
+	path('play/tournament/<str:username>/', views.tournament_play, name='tournament_play'),
 ]

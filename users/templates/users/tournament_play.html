@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+	Play
+{% endblock %}
+
+{% block undertitle %}
+	<h1>Tournament Settings</h1>
+{% endblock %}
+
+{% block content %}
+	<form id="tournament-form" method="POST">
+		{% csrf_token %}
+		<div class="tournament-play">
+			<div id="qtd-jogadores">
+				<h2>Players</h2>
+				<input type="radio" name="qtd-jogadores" value="4" checked>
+				<label>4</label>
+				<input type="radio" name="qtd-jogadores" value="8">
+				<label>8</label>
+			</div>
+			<div id="qtd-turnos">
+				<h2>Rounds</h2>
+				<input type="radio" name="qtd-turnos" value="1" checked>
+				<label>1</label>
+				<input type="radio" name="qtd-turnos" value="3">
+				<label>3</label>
+				<input type="radio" name="qtd-turnos" value="5">
+				<label>5</label>
+			</div>
+		</div>
+		<div>
+			<button type="submit" class="submit-button" onclick="prepareForm()">Invite Players!</button>
+		</div>
+	</form>
+{% endblock %}
+
+{% block scripts %}
+	<script>
+		function prepareForm() {
+			const total_players = document.getElementById('qtd-jogadores').value;
+			const selectedPlayers = document.querySelector('input[name="qtd-jogadores"]:checked').value;
+
+			if (selectedPlayers === '4') {
+				form.action = "{% url 'tournaments:tournament_4' %}";
+			} else if (selectedPlayers === '8') {
+				form.action = "{% url 'tournaments:tournament_8' %}";
+			}
+		}
+	</script>
+{% endblock %}

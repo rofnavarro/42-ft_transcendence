@@ -1,7 +1,7 @@
 from .models import Tournament
 from django.shortcuts import render
 from django.db.models import QuerySet
-from django.utils import timezone
+from users.models import CustomUser
 import datetime
 import json
 
@@ -110,3 +110,17 @@ def tournament(request):
 		print("WEB3 Fail:", e)
 		#TODO: dar um render em uma pagina de erro caso o container da blockchain nao suba
 		return render(request, 'tournaments/tournaments.html', {'tournament': tournaments})
+	
+
+def tournament_4(request):
+	if request.method == 'POST':
+		total_players = request.POST.get('qtd-jogadores')
+		turns = request.POST.get('qtd-turnos')
+	return render(request, 'home.html')
+
+
+def tournament_8(request):
+	if request.method == 'POST':
+		total_players = request.POST.get('qtd-jogadores')
+		turns = request.POST.get('qtd-turnos')
+	return render(request, 'home.html')
