@@ -23,6 +23,12 @@ class	Match(models.Model):
 			return self.user2
 		return None
 
+	@property
+	def tournament_hash(self):
+		if self.is_tournament:
+			return self.hash
+			
+
 	def	clean(self):
 		if self.user1 == self.user2:
 			raise ValidationError("Jogador 1 e jogador 2 precisam ser usuários diferentes.")

@@ -1,13 +1,12 @@
 from django.contrib import admin
-from .models import Tournament, inviteLobby
+from .models import Tournament
 
 class TournamentAdmin(admin.ModelAdmin):
-	list_display = ('name', 'start_date', 'end_date', 'token')
-	list_filter = ('start_date', 'end_date')
-	ordering = ['start_date']
-	filter_horizontal = ['players']
+    list_display = ('id', 'owner', 'get_players')
+    filter_horizontal = ('players',)
 
+    def get_players(self, obj):
+        return ", ".join([player.username for player in obj.players.all()])
+    get_players.short_description = 'Players'
 
-# Register your models here.
 admin.site.register(Tournament, TournamentAdmin)
-

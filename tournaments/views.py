@@ -90,8 +90,8 @@ def serialize_queryset(queryset: QuerySet) -> dict:
 def tournament(request):
 	global TX_HASH
 	global TX_RECEIPT
-	querySet_obj = Tournament.objects.all().order_by('-start_date')
-	tournaments = serialize_queryset(querySet_obj.values())
+	# querySet_obj = Tournament.objects.all().order_by('-start_date')
+	# tournaments = serialize_queryset(querySet_obj.values())
 
 	try:
 		#TODO: por as var web3 e deployed_contract em um models para salvar o hash e o address
@@ -113,7 +113,16 @@ def tournament(request):
 	
 
 def tournament_4(request):
+
+	tournament(request)
+	print("TX_HASH", TX_HASH)
+	i = 0
+	for key in TX_RECEIPT:
+		print("contract", i, key, "\n\n\n")
+		i = i + 1
+
 	if request.method == 'POST':
+
 		total_players = request.POST.get('qtd-jogadores')
 		turns = request.POST.get('qtd-turnos')
 	return render(request, 'home.html')

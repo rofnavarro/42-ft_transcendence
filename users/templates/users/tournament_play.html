@@ -38,7 +38,7 @@
 {% block scripts %}
 	<script>
 		function prepareForm() {
-			const total_players = document.getElementById('qtd-jogadores').value;
+			const form = document.getElementById('tournament-form');
 			const selectedPlayers = document.querySelector('input[name="qtd-jogadores"]:checked').value;
 
 			if (selectedPlayers === '4') {
