@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 {% load static %}
 
+{% block token_head %}
+	<meta name="csrf-token" content="{{ csrf_token }}">
+{% endblock %}
+
 {% block title %}
 	Pong Game
 {% endblock %}
@@ -10,8 +14,8 @@
 {% endblock %}
 
 {% block content %}
-	<canvas>
-	</canvas>
+	<canvas></canvas>
+	<canvas id="gameCanvas" data-playerA-username="{{ playerA.username }}" data-playerB-username="{{ playerB.username }}" data-rounds-won-a="{{ roundsWonA }}" data-rounds-won-b="{{ roundsWonB }}"></canvas>
 	<h3><strong>Instructions:</strong></h3>
 	<p>
 		<b>{{ usernames.0 }}:</b> Control the left player using the W and S keys<br>
@@ -41,7 +45,7 @@
 			'{{ usernames.3|default:"" }}'
 			{% endif %}
 		];
-		const turns = {{ turns }}
+		turns = {{ turns }}
 	</script>
 	{% if players|length == 2 %}
 		<script src="{% static 'js/game.js' %}"></script>

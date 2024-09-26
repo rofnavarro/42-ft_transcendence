@@ -39,7 +39,7 @@ var Computer = {
 };
 
 var Game = {
-	initialize: function (players, usernames, turns) {
+	initialize: function (players, usernames, turns, csrfToken) {
 		this.canvas = document.querySelector('canvas');
 		this.context = this.canvas.getContext('2d');
 
@@ -62,13 +62,15 @@ var Game = {
 
 		this.ball = Ball.new.call(this);
 
-		this.running = this.over = false;
+		this.running = this.over = this.matchSaved = false;
 		this.turn = this.playerB;
 		this.timer = this.round = 0;
 		this.color = '#0a0a0a';
 
 		this.roundsWonA = 0;
 		this.roundsWonB = 0;	
+
+		const token = csrfToken;
 
 		const _turns = parseInt(turns, 10);
 		rounds = Array(_turns).fill(3);
@@ -136,6 +138,12 @@ var Game = {
 			this.handleBallMovement();
 
 			this.checkRoundEnd();
+		}
+		if (this.over === true && this.matchSaved === false)
+		{
+			saveMatch(this.playerA.name, this.playerB.name, this.playerC.name, this.playerD.name, this.roundsWonA, this.roundsWonB, this.token);
+			this.matchSaved = true;
+			return;
 		}
 	},
 	
@@ -245,6 +253,7 @@ var Game = {
 
 	checkRoundEnd: function () {
 		if (this.playerA.score === rounds[this.round]) {
+			this.roundsWonA++;
 			if (!rounds[this.round + 1]) {
 				this.over = true;
 				this.resetBall();
@@ -256,12 +265,12 @@ var Game = {
 				this.playerC.speed += 1;
 				this.playerD.speed += 1;
 				this.round++;
-				this.roundsWonA++;
 				this.resetBall();
 				this.turn = this.playerB;
 			}
 		}
 		else if (this.playerB.score === rounds[this.round]) {
+			this.roundsWonB++;
 			if (!rounds[this.round + 1]) {
 				this.over = true;
 				this.resetBall();
@@ -273,7 +282,6 @@ var Game = {
 				this.playerC.speed += 1;
 				this.playerD.speed += 1;
 				this.round++;
-				this.roundsWonB++;
 				this.resetBall();
 				this.turn = this.playerA;
 			}
@@ -317,15 +325,62 @@ var Game = {
 		this.context.fillStyle = '#858cee';
 		this.context.fillText(`Round: ${this.round + 1} / ${rounds.length}`, this.canvas.width / 2, this.canvas.height - 20);
 	
-	    this.context.fillText(`${this.playerA.username}: ${this.roundsWonA}`, 0 + 200, 50);
-    	this.context.fillText(`${this.playerB.username}: ${this.roundsWonB}`, this.canvas.width - 200, 50);
-	    this.context.fillText(`${this.playerC.username}: ${this.roundsWonA}`, 0 + 200, this.canvas.height - 50);
-    	this.context.fillText(`${this.playerD.username}: ${this.roundsWonB}`, this.canvas.width - 200, this.canvas.height - 50);
+		this.context.fillText(`${this.playerA.username}: ${this.roundsWonA}`, 0 + 200, 50);
+		this.context.fillText(`${this.playerB.username}: ${this.roundsWonB}`, this.canvas.width - 200, 50);
+		this.context.fillText(`${this.playerC.username}: ${this.roundsWonA}`, 0 + 200, this.canvas.height - 50);
+		this.context.fillText(`${this.playerD.username}: ${this.roundsWonB}`, this.canvas.width - 200, this.canvas.height - 50);
 
 	}
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-
-	Game.initialize(players, usernames, turns);
+	const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+	Game.initialize(players, usernames, turns, csrfToken);
 });
+
+
+
+function saveMatch(user1, user2, user3, user4, roundsWonA, roundsWonB, token) {
+	const data = {
+		user1: user1,
+		user2: user2,
+		user3: user3,
+		user4: user4,
+		score_user1: roundsWonA,
+		score_user3: roundsWonA,
+		score_user2: roundsWonB,
+		score_user4: roundsWonB
+	};
+	csrfToken = token;
+	fetch('/match/save_match_ajax_4', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'X-CSRFToken': getCookie('csrftoken')  // Se você estiver usando CSRF token
+		},
+		body: JSON.stringify(data)
+	})
+	.then(response => response.json())
+	.then(data => {
+		if (data.status === 'success') {
+		} else {
+			console.error('Error saving match:', data.message);
+		}
+	})
+	.catch(error => console.error('Error:', error));
+}
+
+function getCookie(name) {
+	let cookieValue = null;
+	if (document.cookie && document.cookie !== '') {
+		const cookies = document.cookie.split(';');
+		for (let i = 0; i < cookies.length; i++) {
+			const cookie = cookies[i].trim();
+			if (cookie.substring(0, name.length + 1) === (name + '=')) {
+				cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+				break;
+			}
+		}
+	}
+	return cookieValue;
+}

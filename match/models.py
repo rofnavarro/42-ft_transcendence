@@ -8,8 +8,7 @@ class	Match(models.Model):
 	user1 = models.ForeignKey(CustomUser, related_name='matches_as_user1', on_delete=models.CASCADE)
 	user2 = models.ForeignKey(CustomUser, related_name='matches_as_user2', on_delete=models.CASCADE)
 
-	date_started = models.DateTimeField(gettext_lazy('date started'), default=timezone.now)
-	date_ended = models.DateTimeField(gettext_lazy('date ended'), null=True, blank=True)
+	date = models.DateTimeField(gettext_lazy('date'), auto_now_add=True)
 
 	score_user1 = models.IntegerField(gettext_lazy('score player 1'), default=0)
 	score_user2 = models.IntegerField(gettext_lazy('score player 2'), default=0)
@@ -30,13 +29,9 @@ class	Match(models.Model):
 
 	def	save(self, *args, **kwargs):
 		self.clean()
-
-		if not self.date_ended and self.score_user1 is not None and self.score_user2 is not None:
-			self.date_ended = timezone.now()
-
 		super().save(*args, **kwargs)
 
 	class	Meta:
 		constraints = [
-			models.UniqueConstraint(fields=['user1', 'user2', 'date_started'], name='unique_match'),
+			models.UniqueConstraint(fields=['user1', 'user2', 'date'], name='unique_match'),
 		]
