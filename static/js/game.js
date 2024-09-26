@@ -23,9 +23,10 @@ var Ball = {
 };
 
 var Computer = {
-	new: function (side, player_name) {
+	new: function (side, player_name, player_username) {
 		return {
 			name: player_name,
+			username: player_username,
 			width: 18,
 			height: 180,
 			x: side === 'left' ? 150 : this.canvas.width - 150,
@@ -38,7 +39,7 @@ var Computer = {
 };
 
 var Game = {
-	initialize: function (players, turns) {
+	initialize: function (players, usernames, turns) {
 		this.canvas = document.querySelector('canvas');
 		this.context = this.canvas.getContext('2d');
 
@@ -48,8 +49,8 @@ var Game = {
 		this.canvas.style.width = (this.canvas.width / 2) + 'px';
 		this.canvas.style.height = (this.canvas.height / 2) + 'px';
 
-		this.playerA = Computer.new.call(this, 'left', players[0]);
-		this.playerB = Computer.new.call(this, 'right', players[1]);
+		this.playerA = Computer.new.call(this, 'left', players[0], usernames[0]);
+		this.playerB = Computer.new.call(this, 'right', players[1], usernames[1]);
 		this.ball = Ball.new.call(this);
 
 		this.running = this.over = false;
@@ -124,7 +125,7 @@ var Game = {
 	
 	detectCollision: function (ball, player) {
 		const nextBallX = ball.x + (ball.moveX === DIRECTION.RIGHT ? ball.speed : (ball.moveX === DIRECTION.LEFT ? -ball.speed : 0));
-		const nextBallY = ball.y + (ball.moveY === DIRECTION.DOWN ? ball.speed : (ball.moveY === DIRECTION.UP ? -ball.speed : 0));
+		const nextBallY = ball.y + (ball.moveY === DIRECTION.UP ? ball.speed : (ball.moveY === DIRECTION.DOWN ? +ball.speed : 0));
 
 		return (nextBallX < player.x + player.width &&
 				nextBallX + ball.width > player.x &&
@@ -136,7 +137,7 @@ var Game = {
 		if (this.ball.x - (this.ball.width / 2) <= 0) this.resetTurn(this.playerB, this.playerA);
 		if (this.ball.x + (this.ball.width / 2) >= this.canvas.width) this.resetTurn(this.playerA, this.playerB);
 		if (this.ball.y - (this.ball.height / 2) <= 0) this.ball.moveY = DIRECTION.DOWN;
-		if (this.ball.y + (this.ball.height / 2) >= this.canvas.height) this.ball.moveY = DIRECTION.UP;
+		if (this.ball.y + (this.ball.height) >= this.canvas.height) this.ball.moveY = DIRECTION.UP;
 
 		if (this.detectCollision(this.ball, this.playerA)) {
 			this.handlePlayerCollision(this.playerA, DIRECTION.RIGHT);
@@ -145,7 +146,6 @@ var Game = {
 		if (this.detectCollision(this.ball, this.playerB)) {
 			this.handlePlayerCollision(this.playerB, DIRECTION.LEFT);
 		}
-		console.log(this.ball.speed)
 	},
 
 	handlePlayerCollision: function (player, newMoveX) {
@@ -249,16 +249,12 @@ var Game = {
 		this.context.fillStyle = '#858cee';
 		this.context.fillText(`Round: ${this.round + 1} / ${rounds.length}`, this.canvas.width / 2, this.canvas.height - 20);
 	
-	    this.context.fillText(`${this.playerA.name}: ${this.roundsWonA}`, 0 + 200, 50);
-    	this.context.fillText(`${this.playerB.name}: ${this.roundsWonB}`, this.canvas.width - 200, 50);
+	    this.context.fillText(`${this.playerA.username}: ${this.roundsWonA}`, 0 + 200, 50);
+    	this.context.fillText(`${this.playerB.username}: ${this.roundsWonB}`, this.canvas.width - 200, 50);
 
 	}
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-
-	console.log("Player:", players);
-	console.log("Turns:", turns);
-
-	Game.initialize(players, turns);
+	Game.initialize(players, usernames, turns);
 });
