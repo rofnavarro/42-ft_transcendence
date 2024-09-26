@@ -177,9 +177,7 @@ def	verify_2fa_code_email(request):
 				request.user.is_online = True
 				request.user.is_verified = True
 				request.user.verification_code = None
-				login(request, request.user)
 				# TODO: JWT token
-				responses = HttpResponse()
 				current_time = (datetime.datetime.now() + datetime.timedelta(days=1)).timestamp()
 				payload = {
 					'username': request.user.username,
@@ -187,10 +185,9 @@ def	verify_2fa_code_email(request):
 					'exp': current_time
 				}
 				token = create_jwt(payload, SECRET_KEY, algorithm='HS256')
-				print('TOKEN', token)
-				responses.set_signed_cookie('nana_token', token, httponly=True)
-				# request.user.token = token
+				request.session['tokenJWT'] = token
 				request.user.save()
+
 				return redirect('users:wanna_play', username=request.user.username)
 			else:
 				return render(request, 'login/2fa.html', {'error': 'Código incorreto.'})
