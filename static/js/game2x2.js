@@ -68,7 +68,8 @@ var Game = {
 		this.color = color;
 
 		this.roundsWonA = 0;
-		this.roundsWonB = 0;	
+		this.roundsWonB = 0;
+		this.pauseGame = false;	
 
 		const _turns = parseInt(turns, 10);
 		rounds = Array(_turns).fill(3);
@@ -107,6 +108,9 @@ var Game = {
 			if (event.key === 's') this.playerA.move = DIRECTION.DOWN;
 			if (event.key === 'q') this.playerC.move = DIRECTION.UP;
 			if (event.key === 'a') this.playerC.move = DIRECTION.DOWN;
+			if (event.key === ' ' ) {
+				this.pauseGame = false;
+			}
 
 			if (!this.running && !this.over) {
 				this.running = true;
@@ -130,7 +134,7 @@ var Game = {
 	},
 
 	update: function () {
-		if (!this.over) {
+		if (!this.over && !this.pauseGame) {
 			this.handleBallCollisions();
 			this.handlePlayerMovements();
 			this.handleBallMovement();
@@ -251,11 +255,12 @@ var Game = {
 
 	checkRoundEnd: function () {
 		if (this.playerA.score === rounds[this.round]) {
+			this.pauseGame = true;
 			this.roundsWonA++;
 			if (!rounds[this.round + 1]) {
 				this.over = true;
 				this.resetBall();
-				setTimeout(() => { this.endGameMenu('PLeft Side wins!'); }, 1000);
+				setTimeout(() => { this.endGameMenu('PLeft Side wins!'); }, 10000);
 			} else {
 				this.playerA.score = this.playerB.score = 0;
 				this.playerA.speed += 1;
@@ -268,11 +273,12 @@ var Game = {
 			}
 		}
 		else if (this.playerB.score === rounds[this.round]) {
+			this.pauseGame = true;
 			this.roundsWonB++;
 			if (!rounds[this.round + 1]) {
 				this.over = true;
 				this.resetBall();
-				setTimeout(() => { this.endGameMenu('Right Side wins!'); }, 1000);
+				setTimeout(() => { this.endGameMenu('Right Side wins!'); }, 10000);
 			} else {
 				this.playerA.score = this.playerB.score = 0;
 				this.playerA.speed += 1;
@@ -311,13 +317,15 @@ var Game = {
 		this.context.fillRect(this.playerC.x, this.playerC.y, this.playerC.width, this.playerC.height);
 		this.context.fillRect(this.playerD.x, this.playerD.y, this.playerD.width, this.playerD.height);
 
+		this.context.fillRect(this.canvas.width / 2 - 1, 0, 2, this.canvas.height);
+
 		this.context.fillStyle = '#ffffff';
 		this.context.fillRect(this.ball.x, this.ball.y, this.ball.width, this.ball.height);
 
 		this.context.font = '40px Dosis';
 		this.context.fillStyle = '#858cee';
 		this.context.fillText(this.playerA.score, this.canvas.width / 2 - 80, 50);
-		this.context.fillText(this.playerB.score, this.canvas.width / 2 + 50, 50);
+		this.context.fillText(this.playerB.score, this.canvas.width / 2 + 70, 50);
 
 		this.context.font = '40px Dosis';
 		this.context.fillStyle = '#858cee';
@@ -328,6 +336,14 @@ var Game = {
 		this.context.fillText(`${this.playerC.username}: ${this.roundsWonA}`, 0 + 200, this.canvas.height - 50);
 		this.context.fillText(`${this.playerD.username}: ${this.roundsWonB}`, this.canvas.width - 200, this.canvas.height - 50);
 
+		if (this.pauseGame === true) {
+			this.context.font = '45px Dosis';
+			this.context.fillStyle = this.color;
+			this.context.fillRect(this.canvas.width / 2 - 350, this.canvas.height / 2 - 48, 700, 100);
+			this.context.fillStyle = '#858cee';
+			this.context.fillText('Press "space" to continue', this.canvas.width / 2, this.canvas.height / 2 + 15);
+		}
+		
 	}
 };
 
