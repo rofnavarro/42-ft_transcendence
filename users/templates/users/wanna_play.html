@@ -9,21 +9,15 @@
 {% endblock %}
 
 {% block content %}
-	<div class="play">
-		<div id="play-casual">
-			<h2>Casual</h2>
-			<div class="play">
-				<a href="{% url 'users:local_play' user.username %}" class="btn-play">Local</a>
-				<a href="" class="btn-play">Random</a>
-			</div>
+	Choose your playing mode: <br><br><br>
+	<div class="play-container">
+		<div class="play-column">
+			<h3>Casual</h3>
+				<a href="{% url 'users:local_play' user.username %}" class="btn-play">Local game</a>
 		</div>
-		<div id="play-torneio">
-			<h2>Tournament</h2>
-			<div class="play">
-				<a href="" class="btn-play">Create</a>
-				<a href="" class="btn-play">Enter with code</a>
-			</div>
+		<div class="play-column">
+		<h3>Tournament</h3>
+			<a href="" class="btn-play">Create Tournament</a>
 		</div>
 	</div>
 {% endblock %}
-

@@ -37,10 +37,6 @@
 				</form>
 			</div>
 		</div>
-
-		<div>
-			<a href="/tournament/">Torneio</a>
-		</div>
 	{% endif %}
 {% endblock %}
 
@@ -85,6 +81,9 @@
 					</table>
 				</div>
 			</div>
+			<div class ="history">
+				<button type="submit" class="small-button" onclick="prepareForm()">Matches History</button>
+			</div>
 		</div>
 
 		<!-- Seção de Amigos -->
@@ -118,7 +117,6 @@
 
 {% block scripts %}
 	<!-- Script para popups --> 
-	<!-- <script src="{% static 'js/popup.js' %}"></script> -->
 	<script>
 		const changeNicknameButton = document.getElementById('change-nickname-button');
 		const nicknamePopup = document.getElementById('nickname-popup');

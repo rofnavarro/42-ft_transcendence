@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import CustomUser, Friendship
 from .forms import EditNicknameForm, ProfilePictureForm
+from django.contrib import messages
 
 def	user_profile(request, username):
     user = get_object_or_404(CustomUser, username=username)
@@ -67,4 +68,5 @@ def wanna_play(request, username):
 @login_required
 def local_play(request, username):
     user = get_object_or_404(CustomUser, username=username)
-    return render(request, 'users/local_play.html', {'user': user})
+    friends = user.friends.all()
+    return render(request, 'users/local_play.html', {'user': user, 'friends': friends})

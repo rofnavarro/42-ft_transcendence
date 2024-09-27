@@ -5,58 +5,135 @@
 {% endblock %}
 
 {% block undertitle %}
-	<h1>Local Match Settings</h1>
+	<h2><strong class="gradient-text">Local Match Settings</strong></h2>
 {% endblock %}
 
 {% block content %}
-	<div class="local-play">
-		<!-- qtd jogadores -->
-		<div id="qtd-jogadores" >
-			<h2>Players</h2>
-				<input type="radio" name="qtd_jogadores" value="2_jogadores" checked>
+	<form id="game-form" method="POST" action="{% url 'match:match' %}">
+		{% csrf_token %}
+		<div class="local-play">
+			<div id="qtd-jogadores">
+				<h2><strong class="gradient-text">Number of Players</strong></h2>
+				<p>Choose the number of players:</p>
+				<input type="radio" name="qtd_jogadores" value="2_jogadores" checked onclick="togglePlayers(2)">
 				<label>2</label>
-				<input type="radio" name="qtd_jogadores" value="4_jogadores">
+				<input type="radio" name="qtd_jogadores" value="4_jogadores" onclick="togglePlayers(4)">
 				<label>4</label>
-		</div>
-
-		<!-- qtd-turnos -->
-		<div id="qtd-turnos" >
-			<h2>Rounds</h2>
+			</div>
+			<div id="local-players">
+				<h2><strong class="gradient-text">Players</strong></h2>
+				<p>Choose who is playing with you:</p>
+				<div class="players">
+					<div id="player1" class="player">
+						<h3>Player 1</h3>
+						<input type="hidden" id="player1-name" name="player1" value="{{ request.user.username }}">
+						<span id="player1-label">{{ request.user.nickname }} (You)</span>
+					</div>
+					<div id="player2" class="player">
+						<h3>Player 2</h3>
+						<button type="button" id="invite-btn-2" class="small-button" onclick="openFriendModal(2)">Invite Friend</button>
+						<input type="hidden" id="player2-name" name="player2">
+						<span id="player2-label"></span>
+					</div>
+				</div>
+				<div class="players">
+					<div id="player3" class="player" style="display: none;">
+						<h3>Player 3</h3>
+						<button type="button" id="invite-btn-3" class="small-button" onclick="openFriendModal(3)">Invite Friend</button>
+						<input type="hidden" id="player3-name" name="player3">
+						<span id="player3-label"></span>
+					</div>
+					<div id="player4" class="player" style="display: none;">
+						<h3>Player 4</h3>
+						<button type="button" id="invite-btn-4" class="small-button" onclick="openFriendModal(4)">Invite Friend</button>
+						<input type="hidden" id="player4-name" name="player4">
+						<span id="player4-label"></span>
+					</div>
+				</div>
+				<div id="friend-modal" style="display:none;">
+					<div class="modal-content">
+						<h3><strong>Select a friend:</strong></h3>
+						<ul id="friends-list">
+							{% for friend in friends %}
+								<li><a href="#" onclick="selectFriend('{{ friend.username }}', '{{ friend.nickname }}', currentPlayer)"> {{ friend.nickname }} </a></li>
+							{% empty %}
+								<li>You still don't have any friends.</li>
+							{% endfor %}
+						</ul>
+						<button class="small-button" onclick="closeFriendModal()">Close</button>
+					</div>
+				</div>
+			<div id="qtd-turnos" class="rounds">
+				<h2><strong class="gradient-text">Rounds</strong></h2>
+				<p>Choose the number of rounds:</p>
 				<input type="radio" name="qtd-turnos" value="1" checked>
 				<label>1</label>
 				<input type="radio" name="qtd-turnos" value="3">
 				<label>3</label>
 				<input type="radio" name="qtd-turnos" value="5">
 				<label>5</label>
+			</div>
 		</div>
-	</div>
-	<div>
-		<button class="submit-button">Finish</button>
-	</div>
 
-	<!-- TODO: criar um script para colocar o nick dos players locais inteligente para compreender se é 2 ou 4 jogadores -->
-	<div id="local-players">
-		<h2>Players</h2>
-		<div class="players">
-			<div id="player1" class="player">
-				<h3>Player 1</h3>
-				<input type="text" name="player1" placeholder="Player 1 Name">
-			</div>
-			<div id="player2" class="player">
-				<h3>Player 2</h3>
-				<input type="text" name="player2" placeholder="Player 2 Name">
-			</div>
+		<div>
+			<button type="submit" class="small-button" onclick="prepareForm()">Let's Play!</button>
 		</div>
-		<div class="players" >
-			<div id="player3" class="player" >
-				<h3>Player 3</h3>
-				<input type="text" name="player3" placeholder="Player 3 Name">
-			</div>
-			<div id="player4" class="player">
-				<h3>Player 4</h3>
-				<input type="text" name="player4" placeholder="Player 4 Name">
-			</div>
-		</div>
-	</div>
+	</form>
+
+
 {% endblock %}
 
+{% block scripts %}
+	<script>
+		function togglePlayers(qtd) {
+			if (qtd === 2) {
+				document.getElementById('player3').style.display = 'none';
+				document.getElementById('player4').style.display = 'none';
+			} else {
+				document.getElementById('player3').style.display = 'block';
+				document.getElementById('player4').style.display = 'block';
+			}
+		}
+
+		window.onload = function() {
+			togglePlayers(2);
+		}
+
+		function openFriendModal(playerId) {
+			currentPlayer = playerId;
+			document.getElementById('friend-modal').style.display = 'block';
+		}
+
+		function closeFriendModal() {
+			event.preventDefault();
+			document.getElementById('friend-modal').style.display = 'none';
+		}
+
+		function selectFriend(username, nickname, playerId) {
+			document.getElementById(`player${playerId}-name`).value = username;
+			document.getElementById(`player${playerId}-label`).innerText = nickname;
+			document.getElementById(`invite-btn-${playerId}`).style.display = 'none';
+			closeFriendModal();
+		}
+
+		function prepareForm() {
+			const player1 = document.getElementById('player1-name').value;
+			const player2 = document.getElementById('player2-name').value;
+			const player3 = document.getElementById('player3-name').value;
+			const player4 = document.getElementById('player4-name').value;
+
+			const turns = document.getElementById('qtd-turnos').value;
+
+			const players = [player1, player2];
+			if (document.getElementById('player3').style.display !== 'none') players.push(player3);
+			if (document.getElementById('player4').style.display !== 'none') players.push(player4);
+
+			const validPlayers = players.filter(player => player !== '');
+
+			if (validPlayers.length < 2) {
+				alert('Select at least two players');
+				event.preventDefault();
+			}
+		}
+	</script>
+{% endblock %}

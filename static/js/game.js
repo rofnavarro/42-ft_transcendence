@@ -6,7 +6,7 @@ var DIRECTION = {
 	RIGHT: 4
 };
 
-var rounds = [3, 3, 3];
+var rounds = [];
 
 var Ball = {
 	new: function (incrementSpeed) {
@@ -23,8 +23,9 @@ var Ball = {
 };
 
 var Computer = {
-	new: function (side) {
+	new: function (side, player_name) {
 		return {
+			name: player_name,
 			width: 18,
 			height: 180,
 			x: side === 'left' ? 150 : this.canvas.width - 150,
@@ -37,7 +38,7 @@ var Computer = {
 };
 
 var Game = {
-	initialize: function () {
+	initialize: function (players, turns) {
 		this.canvas = document.querySelector('canvas');
 		this.context = this.canvas.getContext('2d');
 
@@ -47,14 +48,20 @@ var Game = {
 		this.canvas.style.width = (this.canvas.width / 2) + 'px';
 		this.canvas.style.height = (this.canvas.height / 2) + 'px';
 
-		this.playerA = Computer.new.call(this, 'left');
-		this.playerB = Computer.new.call(this, 'right');
+		this.playerA = Computer.new.call(this, 'left', players[0]);
+		this.playerB = Computer.new.call(this, 'right', players[1]);
 		this.ball = Ball.new.call(this);
 
 		this.running = this.over = false;
 		this.turn = this.playerB;
 		this.timer = this.round = 0;
 		this.color = '#0a0a0a';
+
+		this.roundsWonA = 0;
+		this.roundsWonB = 0;	
+
+		const _turns = parseInt(turns, 10);
+		rounds = Array(_turns).fill(3);
 
 		this.drawMenu();
 		this.addEventListeners();
@@ -78,10 +85,6 @@ var Game = {
 		this.context.fillRect(this.canvas.width / 2 - 350, this.canvas.height / 2 - 48, 700, 100);
 		this.context.fillStyle = '#858cee';
 		this.context.fillText(text, this.canvas.width / 2, this.canvas.height / 2 + 15);
-
-		setTimeout(() => {
-			this.initialize();
-		}, 3000);
 	},
 
 	addEventListeners: function () {
@@ -189,6 +192,7 @@ var Game = {
 				this.playerA.speed += 1;
 				this.playerB.speed += 1;
 				this.round++;
+				this.roundsWonA++;
 				this.resetBall();
 				this.turn = this.playerB;
 			}
@@ -203,6 +207,7 @@ var Game = {
 				this.playerA.speed += 1;
 				this.playerB.speed += 1;
 				this.round++;
+				this.roundsWonB++;
 				this.resetBall();
 				this.turn = this.playerA;
 			}
@@ -239,9 +244,21 @@ var Game = {
 		this.context.fillStyle = '#858cee';
 		this.context.fillText(this.playerA.score, this.canvas.width / 2 - 80, 50);
 		this.context.fillText(this.playerB.score, this.canvas.width / 2 + 50, 50);
+
+		this.context.font = '40px Dosis';
+		this.context.fillStyle = '#858cee';
+		this.context.fillText(`Round: ${this.round + 1} / ${rounds.length}`, this.canvas.width / 2, this.canvas.height - 20);
+	
+	    this.context.fillText(`${this.playerA.name}: ${this.roundsWonA}`, 0 + 200, 50);
+    	this.context.fillText(`${this.playerB.name}: ${this.roundsWonB}`, this.canvas.width - 200, 50);
+
 	}
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-	Game.initialize();
+
+	console.log("Player:", players);
+	console.log("Turns:", turns);
+
+	Game.initialize(players, turns);
 });
