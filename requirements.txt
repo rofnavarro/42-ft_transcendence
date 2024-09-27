@@ -50,3 +50,4 @@ urllib3==2.2.2
 web3==7.2.0
 websockets==13.0.1
 yarl==1.9.7
+python-gettext==5.0

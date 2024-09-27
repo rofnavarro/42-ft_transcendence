@@ -25,7 +25,7 @@ class	Match(models.Model):
 
 	def	clean(self):
 		if self.user1 == self.user2:
-			raise ValidationError("Jogador 1 e jogador 2 precisam ser usuários diferentes.")
+			raise ValidationError("Player 1 and Player 2 must be different users.")
 
 	def	save(self, *args, **kwargs):
 		self.clean()

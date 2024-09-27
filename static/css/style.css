@@ -1,5 +1,5 @@
 header {
-	font-family: "Space Grotesk", sans-serif;
+	font-family: "Play", sans-serif;
 	font-optical-sizing: auto;
 	font-weight: 600;
 	font-size: 20px;
@@ -22,7 +22,7 @@ body {
 	font-weight: 400;
 	font-style: normal;
 	color: rgb(133, 140, 238);
-	font-size: 20px;
+	font-size: 22px;
 	/* background-image: linear-gradient(145deg, #03021d 0%, #050e3b 55%, #4d267d 100%); */
 	background-color: #040c30;
 	/* background-image: url(../imgs/background-banana.png); */
@@ -290,7 +290,7 @@ main {
 /* FIM */
 
 h1 {
-	font-family: "Space Grotesk", sans-serif;
+	font-family: "Play", sans-serif;
 	font-optical-sizing: auto;
 	font-weight: 400;
 	font-style: normal;
@@ -299,7 +299,7 @@ h1 {
 }
 
 h2 {
-	font-family: "Space Grotesk", sans-serif;
+	font-family: "Play", sans-serif;
 	font-optical-sizing: auto;
 	font-weight: 400;
 	font-style: normal;
