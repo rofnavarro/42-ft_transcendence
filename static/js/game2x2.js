@@ -39,7 +39,7 @@ var Computer = {
 };
 
 var Game = {
-	initialize: function (players, usernames, turns, color, csrfToken) {
+	initialize: function (players, usernames, turns, color) {
 		this.canvas = document.querySelector('canvas');
 		this.context = this.canvas.getContext('2d');
 
@@ -69,8 +69,6 @@ var Game = {
 
 		this.roundsWonA = 0;
 		this.roundsWonB = 0;	
-
-		token = csrfToken;
 
 		const _turns = parseInt(turns, 10);
 		rounds = Array(_turns).fill(3);
@@ -141,7 +139,7 @@ var Game = {
 		}
 		if (this.over === true && this.matchSaved === false)
 		{
-			saveMatch(this.playerA.name, this.playerB.name, this.playerC.name, this.playerD.name, this.roundsWonA, this.roundsWonB, this.token);
+			saveMatch(this.playerA.name, this.playerB.name, this.playerC.name, this.playerD.name, this.roundsWonA, this.roundsWonB);
 			this.matchSaved = true;
 			return;
 		}
@@ -334,13 +332,12 @@ var Game = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-	const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-	Game.initialize(players, usernames, turns, color, csrfToken);
+	Game.initialize(players, usernames, turns, color);
 });
 
 
 
-function saveMatch(user1, user2, user3, user4, roundsWonA, roundsWonB, token) {
+function saveMatch(user1, user2, user3, user4, roundsWonA, roundsWonB) {
 	const data = {
 		user1: user1,
 		user2: user2,
@@ -352,11 +349,13 @@ function saveMatch(user1, user2, user3, user4, roundsWonA, roundsWonB, token) {
 		score_user4: roundsWonB
 	};
 
+	const csrftoken = getCookie('csrftoken');
+
 	fetch('/match/save_match_ajax_4', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			'X-CSRFToken': token
+			'X-CSRFToken': csrftoken
 		},
 		body: JSON.stringify(data)
 	})
@@ -370,3 +369,17 @@ function saveMatch(user1, user2, user3, user4, roundsWonA, roundsWonB, token) {
 	.catch(error => console.error('Error:', error));
 }
 
+function getCookie(name) {
+	let cookieValue = null;
+	if (document.cookie && document.cookie !== '') {
+		const cookies = document.cookie.split(';');
+		for (let i = 0; i < cookies.length; i++) {
+			const cookie = cookies[i].trim();
+			if (cookie.substring(0, name.length + 1) === (name + '=')) {
+				cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+				break;
+			}
+		}
+	}
+	return cookieValue;
+}

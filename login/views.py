@@ -79,6 +79,7 @@ def	callback(request):
 
 	user, created = CustomUser.objects.get_or_create(
 		username=username,
+		nickname=username,
 		defaults={
 			'username': username,
 			'first_name': first_name,

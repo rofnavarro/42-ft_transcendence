@@ -264,7 +264,7 @@ var Game = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-	Game.initialize(players, usernames, turns, color, csrfToken);
+	Game.initialize(players, usernames, turns, color);
 });
 
 function saveMatch(user1, user2, roundsWonA, roundsWonB) {
