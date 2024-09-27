@@ -6,7 +6,8 @@
 {% endblock %}
 
 {% block content %}
-	<h2><b>Define your e-mail address</b></h2>
+	<h2><strong class="gradient-text">E-mail</strong></h2>
+	<h3>Define your e-mail address:</h3>
 	<form method="post">
 		{% csrf_token %}
 		{{ form.as_p }}

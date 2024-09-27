@@ -21,5 +21,6 @@ function closeFriendModal() {
 }
 
 function selectFriend(username) {
+
 	closeFriendModal()
 }

@@ -95,6 +95,7 @@ def	gamepage(request):
 			request.POST.get('player3'),
 			request.POST.get('player4'),
 		]
+    
 		players = [player for player in players if player]
 		
 		usernames = [

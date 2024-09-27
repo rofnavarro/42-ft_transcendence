@@ -10,19 +10,19 @@
 {% endblock %}
 
 {% block undertitle %}
-	<h1>Pong Contest</h1>
+	<h1><strong class="gradient-text">Pong Contest</strong></h1>
 {% endblock %}
 
 {% block content %}
 	<canvas></canvas>
 	<canvas id="gameCanvas" data-playerA-username="{{ playerA.username }}" data-playerB-username="{{ playerB.username }}" data-rounds-won-a="{{ roundsWonA }}" data-rounds-won-b="{{ roundsWonB }}"></canvas>
-	<h3><strong>Instructions:</strong></h3>
-	<p>
-		<b>{{ usernames.0 }}:</b> Control the left player using the W and S keys<br>
-		<b>{{ usernames.1 }}:</b> Control the right player using the up and down arrow keys<br>
+	<h3><strong class="gradient-text">Instructions:</strong></h3>
+	<p class="game-instructions">
+    <b>{{ usernames.0 }}:</b> Control the left player using the <strong>W and S keys</strong><br>
+		<b>{{ usernames.1 }}:</b> Control the right player using the <strong>UP and DOWN arrow keys</strong><br>
 		{% if players|length > 2 %}
-		<b>{{ usernames.2 }}:</b> Control the left player using the Q and A keys<br>
-		<b>{{ usernames.3 }}:</b> Control the right player using the I and K keys<br>
+    <b>{{ usernames.2 }}:</b> Control the left player using the <strong>Q and A keys</strong><br>
+    <b>{{ usernames.3 }}:</b> Control the right player using the <strong>I and K keys</strong><br>
 		{% endif %}
 	</p>
 {% endblock %}

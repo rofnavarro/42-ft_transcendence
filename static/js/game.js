@@ -203,6 +203,7 @@ var Game = {
 				this.playerA.speed += 1;
 				this.playerB.speed += 1;
 				this.round++;
+				this.roundsWonA++;
 				this.resetBall();
 				this.turn = this.playerB;
 			}
@@ -218,6 +219,7 @@ var Game = {
 				this.playerA.speed += 1;
 				this.playerB.speed += 1;
 				this.round++;
+				this.roundsWonB++;
 				this.resetBall();
 				this.turn = this.playerA;
 			}
@@ -266,6 +268,7 @@ var Game = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+
 	const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 	Game.initialize(players, usernames, turns, csrfToken);
 });

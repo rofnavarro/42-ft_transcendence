@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import CustomUser, Friendship
 from .forms import EditNicknameForm, ProfilePictureForm
+from django.contrib import messages
 
 def	user_profile(request, username):
     user = get_object_or_404(CustomUser, username=username)

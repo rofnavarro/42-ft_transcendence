@@ -139,6 +139,7 @@ var Game = {
 
 			this.checkRoundEnd();
 		}
+
 		if (this.over === true && this.matchSaved === false)
 		{
 			saveMatch(this.playerA.name, this.playerB.name, this.playerC.name, this.playerD.name, this.roundsWonA, this.roundsWonB, this.token);
@@ -149,6 +150,7 @@ var Game = {
 	
 		detectCollision: function (ball, player) {
 		const nextBallX = ball.x + (ball.moveX === DIRECTION.RIGHT ? ball.speed : (ball.moveX === DIRECTION.LEFT ? -ball.speed : 0));
+
 		const nextBallY = ball.y + (ball.moveY === DIRECTION.UP ? ball.speed : (ball.moveY === DIRECTION.DOWN ? +ball.speed : 0));
 
 		return (nextBallX < player.x + player.width &&

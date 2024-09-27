@@ -6,11 +6,11 @@
 {% endblock %}
 
 {% block undertitle %}
-	<h2><b>Two-Factor Authentication</b></h2>
+	<h2><strong class="gradient-text">Two-Factor Authentication</strong></h2>
 {% endblock %}
 
 {% block content %}
-	<h2><b>Inform your 2FA code</b></h2>
+	<h3>Inform your 2FA code</h3>
 	<form method="post" action="{% url 'login:verify2fa' %}" >
 		{% csrf_token %}
 		<label for="code">Type the verification code sent to your e-mail address: </label>

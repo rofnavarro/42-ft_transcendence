@@ -5,21 +5,35 @@
 {% endblock %}
 
 {% block undertitle %}
-	<h1><strong class="gradient-text">Top Bananas</strong></h1>
+	<img src="../../../static/imgs/laurel-new.png" class="ranking-image"></img><br>
+	<h1><strong class="gradient-text">Top Bananas </strong></h1>
 {% endblock %}
 
 {% block content %}
 	<section>
-		{% for user in ranking %}
-		<article class="rank">
-			<div class="rank-item-name">
-				<a href="{% url 'users:profile' user.user %}">{{ user.user.nickname }}</a>
-			</div>
-			<div class="rank-item">{{ user.matches }}</div>
-			<div class="rank-item">{{ user.wins }}</div>
-			<div class="rank-item">{{ user.loses }}</div>
-			<div class="rank-item">{{ user.formatted_win_rate }}</div>
-		</article>
-		{% endfor %}
+		<div class="ranking">
+			<table class="ranking-table">
+				<thead>
+					<tr>
+						<th>User</th>
+						<th>Matches</th>
+						<th>Wins</th>
+						<th>Losses</th>
+						<th>Win Rate</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for user in ranking %}
+					<tr>
+						<td><a href="{% url 'users:profile' user.user %}">{{ user.user.nickname }}</a></td>
+						<td>{{ user.matches }}</td>
+						<td>{{ user.wins }}</td>
+						<td>{{ user.loses }}</td>
+						<td>{{ user.formatted_win_rate }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+	</table>
+	</div>
 	</section>
 {% endblock %}
