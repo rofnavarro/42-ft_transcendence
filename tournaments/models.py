@@ -1,31 +1,43 @@
 from django.db import models
-from django.contrib import admin
-from django.utils import timezone
-from django.utils.translation import gettext_lazy
 from users.models import CustomUser
-import random
+from match.models import Match
+from django.core.exceptions import ValidationError
 
-# Create your models here.
 class Tournament(models.Model):
-	name = models.CharField(max_length=50)
 	owner = models.ForeignKey(CustomUser, null=True, blank=True, on_delete=models.CASCADE)
-	start_date = models.DateTimeField(gettext_lazy('start'), default=timezone.now)
-	end_date = models.DateTimeField(gettext_lazy('end'), default=timezone.now)
-	players = models.ManyToManyField('self', symmetrical=True, through='inviteLobby')
-	# TODO: usar timestamp para criar o token
-	token = models.IntegerField(null=True, blank=True)
-
-	def save(self, **kwargs):
-		if not self.token:  # Gera o token apenas se ele ainda não existir
-			self.token = random.randint(100000, 999999)
-		super().save(**kwargs)
+	players = models.ManyToManyField(CustomUser, related_name='tournaments')
 
 	def __str__(self):
-		return self.name
+		return str(self.id)
+	
+	def create_bracket(self):
+		"""
+		Gera as partidas iniciais para o torneio.
+		"""
+		players = list(self.players.all())
+		if len(players) not in [4, 8]:
+			raise ValidationError('The number of players must be 4 or 8 to create a bracket.')
+		matches = []
+		if len(players) == 4:
+			matches.append(Match.objects.create(user1=players[0], user2=players[1], is_tournament=True, tournament=self))
+			matches.append(Match.objects.create(user1=players[2], user2=players[3], is_tournament=True, tournament=self))
+		elif len(players) == 8:
+			matches.append(Match.objects.create(user1=players[0], user2=players[1], is_tournament=True, tournament=self))
+			matches.append(Match.objects.create(user1=players[2], user2=players[3], is_tournament=True, tournament=self))
+			matches.append(Match.objects.create(user1=players[4], user2=players[5], is_tournament=True, tournament=self))
+			matches.append(Match.objects.create(user1=players[6], user2=players[7], is_tournament=True, tournament=self))
+		return
+	
+	def advance_to_next_round(self):
+		"""
+		Gera as próximas partidas com os vencedores da rodada anterior.
+		"""
+		previous_round_matches = Match.objects.filter(tournament=self, winner__isnull=False)
+		winners = [match.winner for match in previous_round_matches]
 
-class inviteLobby(models.Model):
-	user1 = models.ForeignKey(CustomUser, related_name='owner', on_delete=models.CASCADE)
-	user2 = models.ForeignKey(CustomUser, related_name='inviter',on_delete=models.CASCADE)
-
-	class Meta:
-		unique_together = ('user1', 'user2')
+		if len(winners) == 2:
+			Match.objects.create(user1=winners[0], user2=winners[1], is_tournament=True, tournament=self)
+		elif len(winners) == 4:
+			Match.objects.create(user1=winners[0], user2=winners[1], is_tournament=True, tournament=self)
+			Match.objects.create(user1=winners[2], user2=winners[3], is_tournament=True, tournament=self)
+		return

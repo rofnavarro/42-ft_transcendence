@@ -15,9 +15,11 @@
 			<h3>Casual</h3>
 				<a href="{% url 'users:local_play' user.username %}" class="btn-play">Local game</a>
 		</div>
-		<div class="play-column">
-		<h3>Tournament</h3>
-			<a href="" class="btn-play">Create Tournament</a>
+		<div id="play-torneio">
+			<h2>Tournament</h2>
+			<div class="play">
+				<a href="{% url 'users:tournament_play' user.username %}" class="btn-play">Criar</a>
+			</div>
 		</div>
 	</div>
 {% endblock %}

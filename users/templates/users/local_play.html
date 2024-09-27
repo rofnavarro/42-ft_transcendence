@@ -20,52 +20,8 @@
 				<input type="radio" name="qtd_jogadores" value="4_jogadores" onclick="togglePlayers(4)">
 				<label>4</label>
 			</div>
-			<div id="local-players">
-				<h2><strong class="gradient-text">Players</strong></h2>
-				<p>Choose who is playing with you:</p>
-				<div class="players">
-					<div id="player1" class="player">
-						<h3>Player 1</h3>
-						<input type="hidden" id="player1-name" name="player1" value="{{ request.user.username }}">
-						<span id="player1-label">{{ request.user.nickname }} (You)</span>
-					</div>
-					<div id="player2" class="player">
-						<h3>Player 2</h3>
-						<button type="button" id="invite-btn-2" class="small-button" onclick="openFriendModal(2)">Invite Friend</button>
-						<input type="hidden" id="player2-name" name="player2">
-						<span id="player2-label"></span>
-					</div>
-				</div>
-				<div class="players">
-					<div id="player3" class="player" style="display: none;">
-						<h3>Player 3</h3>
-						<button type="button" id="invite-btn-3" class="small-button" onclick="openFriendModal(3)">Invite Friend</button>
-						<input type="hidden" id="player3-name" name="player3">
-						<span id="player3-label"></span>
-					</div>
-					<div id="player4" class="player" style="display: none;">
-						<h3>Player 4</h3>
-						<button type="button" id="invite-btn-4" class="small-button" onclick="openFriendModal(4)">Invite Friend</button>
-						<input type="hidden" id="player4-name" name="player4">
-						<span id="player4-label"></span>
-					</div>
-				</div>
-				<div id="friend-modal" style="display:none;">
-					<div class="modal-content">
-						<h3><strong>Select a friend:</strong></h3>
-						<ul id="friends-list">
-							{% for friend in friends %}
-								<li><a href="#" onclick="selectFriend('{{ friend.username }}', '{{ friend.nickname }}', currentPlayer)"> {{ friend.nickname }} </a></li>
-							{% empty %}
-								<li>You still don't have any friends.</li>
-							{% endfor %}
-						</ul>
-						<button class="small-button" onclick="closeFriendModal()">Close</button>
-					</div>
-				</div>
-			<div id="qtd-turnos" class="rounds">
-				<h2><strong class="gradient-text">Rounds</strong></h2>
-				<p>Choose the number of rounds:</p>
+			<div id="qtd-turnos">
+				<h2>Rounds</h2>
 				<input type="radio" name="qtd-turnos" value="1" checked>
 				<label>1</label>
 				<input type="radio" name="qtd-turnos" value="3">
@@ -73,6 +29,68 @@
 				<input type="radio" name="qtd-turnos" value="5">
 				<label>5</label>
 			</div>
+			<div id="game-background">
+				<h2>Background</h2>
+				<input type="radio" name="background" value="#0a0a0a" checked>
+				<label>Dark</label>
+				<input type="radio" name="background" value="#E6E6FA">
+				<label>Light</label>
+				<input type="radio" name="background" value="#7B68EE">
+				<label>Modern</label>
+			</div>
+		</div>
+		<div id="local-players">
+			<h2>Players</h2>
+			<div class="players">
+				<div id="player1" class="player">
+					<h3>Player 1 (You)</h3>
+					<input type="hidden" id="player1-name" name="player1" value="{{ request.user.username }}">
+					<input type="hidden" id="player1-nickname" name="player1-nickname" value="{{ request.user.nickname }}">
+					<span id="player1-label">{{ request.user.nickname }}</span>
+				</div>
+				<div id="player2" class="player">
+					<h3>Player 2</h3>
+					<button type="button" id="invite-btn-2" onclick="openFriendModal(2)">Invite Friend</button>
+					<input type="hidden" id="player2-name" name="player2">
+					<input type="hidden" id="player2-nickname" name="player2-nickname">
+					<span id="player2-label"></span>
+				</div>
+			</div>
+			<div class="players">
+				<div id="player3" class="player" style="display: none;">
+					<h3>Player 3</h3>
+					<button type="button" id="invite-btn-3" onclick="openFriendModal(3)">Invite Friend</button>
+					<input type="hidden" id="player3-name" name="player3">
+					<input type="hidden" id="player3-nickname" name="player3-nickname">
+					<span id="player3-label"></span>
+				</div>
+				<div id="player4" class="player" style="display: none;">
+					<h3>Player 4</h3>
+					<button type="button" id="invite-btn-4" onclick="openFriendModal(4)">Invite Friend</button>
+					<input type="hidden" id="player4-name" name="player4">
+					<input type="hidden" id="player4-nickname" name="player4-nickname">
+					<span id="player4-label"></span>
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<button type="submit" class="submit-button" onclick="prepareForm()">Start Game!</button>
+		</div>
+	</form>
+
+	<div id="friend-modal" style="display:none;">
+		<div class="modal-content">
+			<h2>Invite a Friend</h2>
+			<ul id="friends-list">
+				{% for friend in friends %}
+					<li><a href="#" onclick="selectFriend('{{ friend.username }}', '{{ friend.nickname }}', currentPlayer)"> {{ friend.nickname }} </a></li>
+				{% empty %}
+					<li>You still don't have any friends.</li>
+					<li>You Loser!</li>
+				{% endfor %}
+			</ul>
+			<button onclick="closeFriendModal()">Close</button>
 		</div>
 
 		<div>
@@ -121,7 +139,9 @@
 			const player3 = document.getElementById('player3-name').value;
 			const player4 = document.getElementById('player4-name').value;
 
-			const turns = document.getElementById('qtd-turnos').value;
+			const turns = document.querySelector('input[name="qtd-turnos"]:checked').value;
+
+			const color = document.querySelector('input[name="background"]:checked').value;
 
 			const players = [player1, player2];
 			if (document.getElementById('player3').style.display !== 'none') players.push(player3);
@@ -130,7 +150,7 @@
 			const validPlayers = players.filter(player => player !== '');
 
 			if (validPlayers.length < 2) {
-				alert('Select at least two players');
+				alert('Need at last 2 players.');
 				event.preventDefault();
 			}
 		}

@@ -1,8 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
-from users.models import CustomUser
 from django.utils.translation import gettext_lazy
-from django.utils import timezone
+from users.models import CustomUser
 
 class	Match(models.Model):
 	user1 = models.ForeignKey(CustomUser, related_name='matches_as_user1', on_delete=models.CASCADE)

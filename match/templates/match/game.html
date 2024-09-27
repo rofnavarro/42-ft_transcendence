@@ -45,7 +45,8 @@
 			'{{ usernames.3|default:"" }}'
 			{% endif %}
 		];
-		turns = {{ turns }}
+		const turns = {{ turns }}
+		const color = '{{ color }}'
 	</script>
 	{% if players|length == 2 %}
 		<script src="{% static 'js/game.js' %}"></script>

@@ -1,7 +1,7 @@
 from .models import Tournament
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import QuerySet
-from django.utils import timezone
+from users.models import CustomUser
 import datetime
 import json
 
@@ -24,20 +24,15 @@ def web3_init():
 	global TX_HASH
 	global TX_RECEIPT
 	contract = get_contract()
-
 	web3Instance = Web3(Web3.HTTPProvider('http://localhost:8545/'))
-
 	Tournament = web3Instance.eth.contract(abi=contract['abi'], bytecode=contract['bytecode'])
-
 	account = web3Instance.eth.accounts[0]
-
 	try:
 		TX_HASH = (Tournament.constructor().transact({'from': account}))
 		TX_RECEIPT.append(web3Instance.eth.wait_for_transaction_receipt(TX_HASH))
 	except Exception as e:
 		print("ITS WORK")
 		pass
-
 	return (web3Instance)
 
 def deploy_contract(web3):
@@ -110,3 +105,18 @@ def tournament(request):
 		print("WEB3 Fail:", e)
 		#TODO: dar um render em uma pagina de erro caso o container da blockchain nao suba
 		return render(request, 'tournaments/tournaments.html', {'tournament': tournaments})
+	
+
+def tournament_4(request):
+	if request.method == 'POST':
+		turns = request.POST.get('qtd-turnos')
+		user = get_object_or_404(CustomUser, username=request.user.username)
+		friends = user.friends.all()
+	return render(request, 'tournaments/tournament_4.html', {'user': user, 'friends': friends, 'turns': turns})
+
+
+def tournament_8(request):
+	if request.method == 'POST':
+		total_players = request.POST.get('qtd-jogadores')
+		turns = request.POST.get('qtd-turnos')
+	return render(request, 'home.html')

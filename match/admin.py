@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models import Match
 
 class	MatchAdmin(admin.ModelAdmin):
-	list_display = ('user1', 'user2', 'date', 'score_user1', 'score_user2', 'is_tournament', 'winner')
+	list_display = ('user1', 'user2', 'date', 'score_user1', 'score_user2',  'winner', 'is_tournament')
 	list_filter = ('is_tournament', 'date')
 	search_fields = ('user1__username', 'user2__username')
 	ordering = ('-date',)
