@@ -39,7 +39,7 @@ var Computer = {
 };
 
 var Game = {
-	initialize: function (players, usernames, turns, csrfToken) {
+	initialize: function (players, usernames, turns, color, csrfToken) {
 		this.canvas = document.querySelector('canvas');
 		this.context = this.canvas.getContext('2d');
 
@@ -65,12 +65,12 @@ var Game = {
 		this.running = this.over = this.matchSaved = false;
 		this.turn = this.playerB;
 		this.timer = this.round = 0;
-		this.color = '#0a0a0a';
+		this.color = color;
 
 		this.roundsWonA = 0;
 		this.roundsWonB = 0;	
 
-		const token = csrfToken;
+		token = csrfToken;
 
 		const _turns = parseInt(turns, 10);
 		rounds = Array(_turns).fill(3);
@@ -335,7 +335,7 @@ var Game = {
 
 document.addEventListener('DOMContentLoaded', () => {
 	const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-	Game.initialize(players, usernames, turns, csrfToken);
+	Game.initialize(players, usernames, turns, color, csrfToken);
 });
 
 
@@ -351,12 +351,12 @@ function saveMatch(user1, user2, user3, user4, roundsWonA, roundsWonB, token) {
 		score_user2: roundsWonB,
 		score_user4: roundsWonB
 	};
-	csrfToken = token;
+
 	fetch('/match/save_match_ajax_4', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			'X-CSRFToken': getCookie('csrftoken')  // Se você estiver usando CSRF token
+			'X-CSRFToken': token
 		},
 		body: JSON.stringify(data)
 	})
@@ -370,17 +370,3 @@ function saveMatch(user1, user2, user3, user4, roundsWonA, roundsWonB, token) {
 	.catch(error => console.error('Error:', error));
 }
 
-function getCookie(name) {
-	let cookieValue = null;
-	if (document.cookie && document.cookie !== '') {
-		const cookies = document.cookie.split(';');
-		for (let i = 0; i < cookies.length; i++) {
-			const cookie = cookies[i].trim();
-			if (cookie.substring(0, name.length + 1) === (name + '=')) {
-				cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-				break;
-			}
-		}
-	}
-	return cookieValue;
-}

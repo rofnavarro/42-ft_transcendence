@@ -1,1 +1,110 @@
+{% extends 'layout.html' %}
 
+{% block title %}
+    Tournament 4 Players
+{% endblock %}
+
+{% block undertitle %}
+    <h1>Tournament 4 Players</h1>
+{% endblock %}
+
+{% block content %}
+<div class="tournament-bracket">
+    <div class="round round-1">
+        <div class="match">
+			<div id="player1" class="player">
+				<h3>Player 1</h3>
+				<input type="hidden" id="player1-name" name="player1" value="{{ request.user.username }}">
+				<input type="hidden" id="player1-nickname" name="player1-nickname" value="{{ request.user.nickname }}">
+				<span id="player1-label">{{ request.user.nickname }}</span>
+			</div>
+			<div id="player2" class="player">
+				<h3>Player 2</h3>
+				<button type="button" id="invite-btn-2" onclick="openFriendModal(2)">Invite Friend</button>
+				<input type="hidden" id="player2-name" name="player2">
+				<input type="hidden" id="player2-nickname" name="player2-nickname">
+				<span id="player2-label"></span>
+			</div>
+			<div id="player3" class="player">
+				<h3>Player 3</h3>
+				<button type="button" id="invite-btn-3" onclick="openFriendModal(3)">Invite Friend</button>
+				<input type="hidden" id="player3-name" name="player3">
+				<input type="hidden" id="player3-nickname" name="player3-nickname">
+				<span id="player3-label"></span>
+			</div>
+			<div id="player4" class="player">
+				<h3>Player 4</h3>
+				<button type="button" id="invite-btn-4" onclick="openFriendModal(4)">Invite Friend</button>
+				<input type="hidden" id="player4-name" name="player4">
+				<input type="hidden" id="player4-nickname" name="player4-nickname">
+				<span id="player4-label"></span>
+			</div>
+        </div>
+    </div>
+</div>
+<div id="friend-modal" style="display:none;">
+	<div class="modal-content">
+		<h2>Invite a Friend</h2>
+		<ul id="friends-list">
+			{% for friend in friends %}
+				<li><a href="#" onclick="selectFriend('{{ friend.username }}', '{{ friend.nickname }}', currentPlayer)"> {{ friend.nickname }} </a></li>
+			{% empty %}
+				<li>You still don't have any friends.</li>
+				<li>You Loser!</li>
+			{% endfor %}
+		</ul>
+		<button onclick="closeFriendModal()">Close</button>
+	</div>
+</div>
+{% endblock %}
+
+{% block content2 %}
+<style>
+    .tournament-bracket {
+        width: 100%;
+        padding: 100px;
+    }
+
+    .round {
+        display: flex;
+        flex-direction: row;
+        gap: 50px; /* Aumenta o espaçamento entre as partidas */
+        align-items: center;
+    }
+
+    .match {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+    }
+
+    .player {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40%;
+        padding: 20px;
+        text-align: center;
+    }
+</style>
+
+<script>
+
+	function openFriendModal(playerId) {
+		currentPlayer = playerId;
+		document.getElementById('friend-modal').style.display = 'block';
+	}
+
+	function closeFriendModal() {
+		document.getElementById('friend-modal').style.display = 'none';
+	}
+
+	function selectFriend(username, nickname, playerId) {
+		document.getElementById(`player${playerId}-name`).value = username;
+		document.getElementById(`player${playerId}-nickname`).value = nickname;
+		document.getElementById(`player${playerId}-label`).innerText = nickname;
+		document.getElementById(`invite-btn-${playerId}`).style.display = 'none';
+		closeFriendModal();
+	}
+</script>
+{% endblock %}

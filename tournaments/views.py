@@ -1,5 +1,5 @@
 from .models import Tournament
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import QuerySet
 from users.models import CustomUser
 import datetime
@@ -24,20 +24,15 @@ def web3_init():
 	global TX_HASH
 	global TX_RECEIPT
 	contract = get_contract()
-
 	web3Instance = Web3(Web3.HTTPProvider('http://localhost:8545/'))
-
 	Tournament = web3Instance.eth.contract(abi=contract['abi'], bytecode=contract['bytecode'])
-
 	account = web3Instance.eth.accounts[0]
-
 	try:
 		TX_HASH = (Tournament.constructor().transact({'from': account}))
 		TX_RECEIPT.append(web3Instance.eth.wait_for_transaction_receipt(TX_HASH))
 	except Exception as e:
 		print("ITS WORK")
 		pass
-
 	return (web3Instance)
 
 def deploy_contract(web3):
@@ -90,8 +85,8 @@ def serialize_queryset(queryset: QuerySet) -> dict:
 def tournament(request):
 	global TX_HASH
 	global TX_RECEIPT
-	# querySet_obj = Tournament.objects.all().order_by('-start_date')
-	# tournaments = serialize_queryset(querySet_obj.values())
+	querySet_obj = Tournament.objects.all().order_by('-start_date')
+	tournaments = serialize_queryset(querySet_obj.values())
 
 	try:
 		#TODO: por as var web3 e deployed_contract em um models para salvar o hash e o address
@@ -113,19 +108,11 @@ def tournament(request):
 	
 
 def tournament_4(request):
-
-	tournament(request)
-	print("TX_HASH", TX_HASH)
-	i = 0
-	for key in TX_RECEIPT:
-		print("contract", i, key, "\n\n\n")
-		i = i + 1
-
 	if request.method == 'POST':
-
-		total_players = request.POST.get('qtd-jogadores')
 		turns = request.POST.get('qtd-turnos')
-	return render(request, 'home.html')
+		user = get_object_or_404(CustomUser, username=request.user.username)
+		friends = user.friends.all()
+	return render(request, 'tournaments/tournament_4.html', {'user': user, 'friends': friends, 'turns': turns})
 
 
 def tournament_8(request):

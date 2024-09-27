@@ -107,5 +107,7 @@ def	gamepage(request):
 
 		turns = request.POST.get('qtd-turnos')
 
-		return render(request, 'match/game.html', {'players': players, 'usernames': usernames, 'turns': turns})
+		color = request.POST.get('background')
+
+		return render(request, 'match/game.html', {'players': players, 'usernames': usernames, 'turns': turns, 'color': color})
 	return render(request, 'home.html')

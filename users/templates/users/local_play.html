@@ -27,6 +27,17 @@
 				<label>3</label>
 				<input type="radio" name="qtd-turnos" value="5">
 				<label>5</label>
+			</div>
+			<div id="game-background">
+				<h2>Background</h2>
+				<input type="radio" name="background" value="#0a0a0a" checked>
+				<label>Dark</label>
+				<input type="radio" name="background" value="#E6E6FA">
+				<label>Light</label>
+				<input type="radio" name="background" value="#7B68EE">
+				<label>Modern</label>
+			</div>
+		</div>
 		<div id="local-players">
 			<h2>Players</h2>
 			<div class="players">
@@ -123,7 +134,9 @@
 			const player3 = document.getElementById('player3-name').value;
 			const player4 = document.getElementById('player4-name').value;
 
-			const turns = document.getElementById('qtd-turnos').value;
+			const turns = document.querySelector('input[name="qtd-turnos"]:checked').value;
+
+			const color = document.querySelector('input[name="background"]:checked').value;
 
 			const players = [player1, player2];
 			if (document.getElementById('player3').style.display !== 'none') players.push(player3);
@@ -132,7 +145,7 @@
 			const validPlayers = players.filter(player => player !== '');
 
 			if (validPlayers.length < 2) {
-				alert('Selecione ao menos dois jogadores.');
+				alert('Need at last 2 players.');
 				event.preventDefault();
 			}
 		}
