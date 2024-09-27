@@ -34,6 +34,8 @@ class	CustomUser(AbstractBaseUser, PermissionsMixin):
 	username = models.CharField(max_length=50, unique=True)
 	nickname = models.CharField(max_length=50,unique=True, blank=True, null=True, default=username)
 	email = models.EmailField(gettext_lazy('email address'), unique=True)
+	#TODO: Ajuda do RO para validar a criação do campo de token
+	token = models.CharField(max_length=300, blank=True, null=True)
 
 	first_name = models.CharField(gettext_lazy('first name'), max_length=30, blank=True)
 	last_name = models.CharField(gettext_lazy('last name'), max_length=30, blank=True)

@@ -21,6 +21,6 @@ function closeFriendModal() {
 }
 
 function selectFriend(username) {
-	console.log("\n\nINVITED\n\n")
+
 	closeFriendModal()
 }

@@ -70,3 +70,4 @@ def local_play(request, username):
     user = get_object_or_404(CustomUser, username=username)
     friends = user.friends.all()
     return render(request, 'users/local_play.html', {'user': user, 'friends': friends})
+

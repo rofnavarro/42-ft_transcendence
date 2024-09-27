@@ -13,6 +13,7 @@ class	CustomUserAdmin(UserAdmin):
 		('Personal info', {'fields': ('first_name', 'last_name', 'profile_picture')}),
 		('Permissions', {'fields': ('is_staff', 'is_active', 'is_superuser')}),
 		('Important dates', {'fields': ('last_login', 'date_joined', 'is_online')}),
+		('Token', {'fields': ('token',)}),
 	)
 	add_fieldsets = (
 		(None, {
