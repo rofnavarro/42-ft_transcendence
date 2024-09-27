@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Tournament
 
 class TournamentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'owner', 'get_players')
+    list_display = ('id', 'owner', 'get_players')  # 'id' já exibe o ID do torneio
     filter_horizontal = ('players',)
 
     def get_players(self, obj):
