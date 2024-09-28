@@ -111,8 +111,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Internationalization
-LANGUAGE_CODE = 'en-us'
-# LANGUAGE_CODE = 'pt-br'
+# LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale'),
 ]

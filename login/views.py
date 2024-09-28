@@ -180,7 +180,7 @@ def	verify_2fa_code_email(request):
 				request.user.verification_code = None
 				# TODO: JWT token
 
-				current_time = (datetime.datetime.now() + datetime.timedelta(minutes=2)).timestamp()
+				current_time = (datetime.datetime.now() + datetime.timedelta(days=1)).timestamp()
 				payload = {
 					'username': request.user.username,
 					'user_mail': request.user.email,

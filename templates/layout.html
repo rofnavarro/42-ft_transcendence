@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
+{% load i18n %}
+
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -31,19 +33,19 @@
 				<img src="{% static 'imgs/house.png' %}" class="nav-icon"> Home
 			</a></li>
 			<li class="navbar"><a href="/about">
-				<img src="{% static 'imgs/banana1.png' %}" class="nav-icon"> About
+				<img src="{% static 'imgs/banana1.png' %}" class="nav-icon"> {% trans "About" %}
 			</a></li>
 		{% if user.is_verified %}
 		{% url 'users:wanna_play' user.username as wanna_play_url %}
 			<li class="navbar"><a href="{{ wanna_play_url }}">
-				<img src="{% static 'imgs/joystick.png' %}" class="nav-icon"> Play
+				<img src="{% static 'imgs/joystick.png' %}" class="nav-icon"> {% trans "Play" %}
 			</a></li>
 		{% endif %}
 			<li class="navbar"><a href="/ranking">
 				<img src="{% static 'imgs/champion.png' %}" class="nav-icon"> Ranking
 			</a></li>
 			<li class="navbar"><a href="/tournaments">
-				<img src="{% static 'imgs/trophy.png' %}" class="nav-icon"> Tournaments
+				<img src="{% static 'imgs/trophy.png' %}" class="nav-icon"> {% trans "Tournaments" %}
 			</a></li>
 		</ul>
 		</div>
@@ -53,7 +55,7 @@
 			{% if user.is_verified and user.is_authenticated == True %}
 				{% url 'users:profile' user.username as profile_url %}
 				<li class="nav-logout"><a href="{{ profile_url }}">
-				<img src="{% static 'imgs/user.png' %}" class="nav-icon"> Profile
+				<img src="{% static 'imgs/user.png' %}" class="nav-icon"> {% trans "Profile" %}
 				</a></li>
 				<li class="nav-logout"><a href="{% url 'login:logout_user' %}">
 				<form action="{% url 'login:logout_user' %}" method="POST">

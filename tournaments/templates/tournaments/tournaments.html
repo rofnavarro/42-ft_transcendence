@@ -1,11 +1,12 @@
 {% extends 'layout.html' %}
+{% load i18n %}
 
 {% block title %}
-	Torneios
+	{% trans Tournaments %}
 {% endblock %}
 
 {% block undertitle %}
-	<h1>Torneios</h1>
+	<h2><strong class="gradient-text">{% trans Tournaments %}</strong></h2>
 {% endblock %}
 
 {% block content %}
@@ -13,12 +14,12 @@
 {% endblock %}
 
 {% block content2 %}
-	<h1>Historico</h1>
+	<h2><strong class="gradient-text">{% trans "History" %}</strong></h2>
 	<section>
 		<article class="rank">
-			<div class="rank-item">Name</div>
-			<div class="rank-item">Start</div>
-			<div class="rank-item">End</div>
+			<div class="rank-item">{% trans "Name" %}</div>
+			<div class="rank-item">{% trans "Start" %}</div>
+			<div class="rank-item">{% trans "End" %}</div>
 		</article>
 		{% for name in tournament %}
 		<article class="rank">

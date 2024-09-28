@@ -1,14 +1,15 @@
 {% extends 'layout.html' %}
+{% load i18n %}
 
 {% block title %}
-	Error 404 - Page not found
+	{% trans "Error 404 - Page not found" %}
 {% endblock %}
 
 {% block content %}
 	<div class="not-found-container">
-		<h2><b>404 - Page not found</b></h2>
+		<h2><b>{% trans "404 - Page not found" %}</b></h2>
 		<img src="../static/imgs/error-404.png" width="200" height="200">
-		<p>The page you are trying to access does not exist.</p>
-		<a href="{% url 'home' %}">Return Home</a>
+		<p>{% trans "The page you are trying to access does not exist." %}</p>
+		<a href="{% url 'home' %}">{% trans "Return Home" %}</a>
 	</div>
 {% endblock %}

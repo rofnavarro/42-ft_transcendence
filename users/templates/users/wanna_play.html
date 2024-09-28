@@ -1,24 +1,25 @@
 {% extends 'layout.html' %}
+{% load i18n %}
 
 {% block title %}
-	Play
+	{% trans "Play" %}
 {% endblock %}
 
 {% block undertitle %}
-	<h2><span class="gradient-text"><b>Play</b></span></h2>
+	<h2><span class="gradient-text"><b>{% trans "Play" %}</b></span></h2>
 {% endblock %}
 
 {% block content %}
-	Choose your playing mode: <br><br><br>
+	{% trans "Choose your playing mode:" %} <br><br><br>
 	<div class="play-container">
 		<div class="play-column">
 			<h3>Casual</h3>
-				<a href="{% url 'users:local_play' user.username %}" class="btn-play">Local game</a>
+				<a href="{% url 'users:local_play' user.username %}" class="btn-play">{% trans "Local game" %}</a>
 		</div>
 		<div id="play-torneio">
-			<h2>Tournament</h2>
-			<div class="play">
-				<a href="{% url 'users:tournament_play' user.username %}" class="btn-play">Criar</a>
+			<div class="play-column">
+			<h3>{% trans "Tournament" %}</h3>
+				<a href="{% url 'users:tournament_play' user.username %}" class="btn-play">{% trans "Create game" %}</a>
 			</div>
 		</div>
 	</div>

@@ -1,11 +1,15 @@
 {% extends 'layout.html' %}
+{% load i18n %}
+
 
 {% block title %}
-	Torneios
+{% blocktrans with username=user_info.nickname %}
+{{ username }}'s Matches History
+{% endblocktrans %}
 {% endblock %}
 
 {% block undertitle %}
-	<h2><strong class="gradient-text">Matches History</strong></h2>
+	<h2><strong class="gradient-text">{% trans "Matches History" %}</strong></h2>
 {% endblock %}
 
 {% block content %}
@@ -13,18 +17,22 @@
 {% endblock %}
 
 {% block content2 %}
-	<h2><strong class="gradient-text">{{ user_info.nickname }}'s History</strong></h2>
+	<h2><strong class="gradient-text">
+		{% blocktrans with username=user_info.nickname %}
+		{{ username }}'s History
+		{% endblocktrans %}
+	</strong></h2>
 	<section>
 		<div class="history">
 			<table class="history-table">
 				<thead>
 					<tr>
-						<th>Player 1</th>
-						<th>Player 2</th>
-						<th>Score Player 1</th>
-						<th>Score Player 2</th>
-						<th>Winner</th>
-						<th>Tournament?</th>
+						<th>{% trans "Player 1" %}</th>
+						<th>{% trans "Player 2" %}</th>
+						<th>{% trans "Score Player 1" %}</th>
+						<th>{% trans "Score Player 2" %}</th>
+						<th>{% trans "Winner" %}</th>
+						<th>{% trans "Tournament" %}</th>
 
 					</tr>
 				</thead>

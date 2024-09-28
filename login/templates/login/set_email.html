@@ -1,16 +1,17 @@
 {% extends "layout.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}
-	Set Email
+	{% trans "Set Email" %}
 {% endblock %}
 
 {% block content %}
 	<h2><strong class="gradient-text">E-mail</strong></h2>
-	<h3>Define your e-mail address:</h3>
+	<h3>{% trans "Define your e-mail address:" %}</h3>
 	<form method="post">
 		{% csrf_token %}
 		{{ form.as_p }}
-		<button class="small-button" type="submit">Save new email</button>
+		<button class="small-button" type="submit">{% trans "Save new e-mail" %}</button>
 	</form>
 {% endblock %}
