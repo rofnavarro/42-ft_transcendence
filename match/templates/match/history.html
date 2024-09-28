@@ -3,7 +3,7 @@
 
 
 {% block title %}
-{% blocktrans with username=user_info.nickname %}
+{% blocktrans with username=user.nickname %}
 {{ username }}'s Matches History
 {% endblocktrans %}
 {% endblock %}
@@ -18,7 +18,7 @@
 
 {% block content2 %}
 	<h2><strong class="gradient-text">
-		{% blocktrans with username=user_info.nickname %}
+		{% blocktrans with username=user.nickname %}
 		{{ username }}'s History
 		{% endblocktrans %}
 	</strong></h2>
@@ -27,6 +27,7 @@
 			<table class="history-table">
 				<thead>
 					<tr>
+						<th>{% trans "Date" %}</th>
 						<th>{% trans "Player 1" %}</th>
 						<th>{% trans "Player 2" %}</th>
 						<th>{% trans "Score Player 1" %}</th>

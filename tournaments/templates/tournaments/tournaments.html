@@ -15,21 +15,28 @@
 {% endblock %}
 
 {% block content2 %}
-	<h2><strong class="gradient-text">{% trans "History" %}</strong></h2>
+	<h2><strong class="gradient-text">{% trans "Tournaments History" %}</strong></h2>
 	<section>
-		<article class="rank">
-			<div class="rank-item">{% trans "Name" %}</div>
-			<div class="rank-item">{% trans "Start" %}</div>
-			<div class="rank-item">{% trans "End" %}</div>
-		</article>
-		{% for name in tournament %}
-		<article class="rank">
-			<div class="rank-item">{{ name.name }}</div>
-			<div class="rank-item">{{ name.start_date }}</div>
-			<div class="rank-item">{{ name.end_date }}</div>
-		</article>
-		<br>
-		{% endfor %}
+		<div class="history">
+			<table class="history-table">
+				<thead>
+					<tr>
+						<th>{% trans "Name" %}</th>
+						<th>{% trans "Start" %}</th>
+						<th>{% trans "End" %}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for name in tournament %}
+					<tr>
+						<td>{{ name.name }}</td>
+						<td>{{ name.start_date }}</td>
+						<td>{{ name.end.date }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+	</table>
+	</div>
 	</section>
 {% endblock %}
 
