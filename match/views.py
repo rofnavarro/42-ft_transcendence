@@ -1,8 +1,11 @@
-from django.shortcuts import render
-from .models import Match
+from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-import json
+from django.db.models import Q
 from users.models import CustomUser
+from .models import Match
+import json
+
 
 def save_match_ajax(request):
 	if request.method == 'POST':
@@ -112,3 +115,11 @@ def	gamepage(request):
 
 		return render(request, 'match/game.html', {'players': players, 'usernames': usernames, 'turns': turns, 'color': color})
 	return render(request, 'home.html')
+
+
+@login_required
+def history(request):
+	username = request.user.username
+	user = get_object_or_404(CustomUser, username=username)
+	matches = Match.objects.filter(Q(user1=user) | Q(user2=user)).order_by('-date')
+	return render(request, 'match/history.html', {'user': user, 'matches': matches})
