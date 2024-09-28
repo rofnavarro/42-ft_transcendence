@@ -36,6 +36,8 @@
 				<form id="profile-picture-form" method="POST" enctype="multipart/form-data">
 					{% csrf_token %}
 					{{ picture_form.as_p }}
+					<button type="submit" name="clear_profile_picture" class="small-button">Deletar Imagem de Perfil</button>
+					{% comment %} <button type="submit" name="clear_profile_picture" class="small-button">{% trans Deletar Imagem de Perfil %}</button> {% endcomment %}
 					<button type="submit" class="small-button">{% trans "Update Profile Photo" %}</button>
 				</form>
 			</div>

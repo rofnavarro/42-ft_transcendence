@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block token_head %}
+	<meta name="csrf-token" content="{{ csrf_token }}">
+{% endblock %}
+
+{% block title %}
+	{% trans "Tournament's Pong Game" %}
+{% endblock %}
+
+{% block undertitle %}
+	<h1><strong class="gradient-text">{% trans "Tournament's Pong Game" %}</strong></h1>
+{% endblock %}
+
+{% block content %}
+	<canvas></canvas>
+	<h3><strong class="gradient-text">Instructions:</strong></h3>
+	<p class="game-instructions">
+    <b>{{ nicknames.0 }}:</b> Control the left player using the <strong>W and S keys</strong><br>
+		<b>{{ nicknames.1 }}:</b> Control the right player using the <strong>UP and DOWN arrow keys</strong><br>
+	</p>
+{% endblock %}
+
+{% block scripts %}
+	<script>
+		usernames = [
+			'{{ usernames.0|default:"" }}',
+			'{{ usernames.1|default:"" }}',
+		];
+		nicknames = [
+			'{{ nicknames.0|default:"" }}',
+			'{{ nicknames.1|default:"" }}',
+		];
+		turns = {{ turns }}
+		color = '{{ color }}'
+	</script>
+	<script src="{% static 'js/game.js' %}"></script>
+{% endblock %}

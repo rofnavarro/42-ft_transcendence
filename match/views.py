@@ -115,6 +115,25 @@ def	gamepage(request):
 	return render(request, 'home.html')
 
 
+def tournament_games(request):
+	if request.method == 'POST':
+		usernames = [
+			request.POST.get('player1'),
+			request.POST.get('player2'),
+			request.POST.get('player3'),
+			request.POST.get('player4'),
+		]		
+		nicknames = [
+			request.POST.get('player1-nickname'),
+			request.POST.get('player2-nickname'),
+			request.POST.get('player3-nickname'),
+			request.POST.get('player4-nickname'),
+		]
+		turns = request.POST.get('qtd-turnos')
+
+		return render(request, 'match/tournament_games.html', {'usernames': usernames, 'nicknames': nicknames, 'turns': turns})
+	return render(request, 'tournaments:tournament_4')
+
 @login_required
 def history(request, username):
 	user = get_object_or_404(CustomUser, username=username)
