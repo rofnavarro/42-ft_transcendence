@@ -92,28 +92,26 @@ def save_match_ajax_4(request):
 
 def	gamepage(request):
 	if request.method == 'POST':
-		players = [
+		usernames = [
 			request.POST.get('player1'),
 			request.POST.get('player2'),
 			request.POST.get('player3'),
 			request.POST.get('player4'),
 		]
-    
-		players = [player for player in players if player]
+		usernames = [username for username in usernames if username]
 		
-		usernames = [
+		nicknames = [
 			request.POST.get('player1-nickname'),
 			request.POST.get('player2-nickname'),
 			request.POST.get('player3-nickname'),
 			request.POST.get('player4-nickname'),
 		]
-		usernames = [username for username in usernames if username]
+		nicknames = [nickname for nickname in nicknames if nickname]
 
 		turns = request.POST.get('qtd-turnos')
 
 		color = request.POST.get('background')
-
-		return render(request, 'match/game.html', {'players': players, 'usernames': usernames, 'turns': turns, 'color': color})
+		return render(request, 'match/game.html', {'usernames': usernames, 'nicknames': nicknames, 'turns': turns, 'color': color})
 	return render(request, 'home.html')
 
 

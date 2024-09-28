@@ -85,7 +85,7 @@ def serialize_queryset(queryset: QuerySet) -> dict:
 def tournament(request):
 	global TX_HASH
 	global TX_RECEIPT
-	querySet_obj = Tournament.objects.all().order_by('-start_date')
+	querySet_obj = Tournament.objects.all().order_by('-date')
 	tournaments = serialize_queryset(querySet_obj.values())
 
 	try:
@@ -104,7 +104,7 @@ def tournament(request):
 	except Exception as e:
 		print("WEB3 Fail:", e)
 		#TODO: dar um render em uma pagina de erro caso o container da blockchain nao suba
-		return render(request, 'tournaments/tournaments.html', {'tournament': tournaments})
+	return render(request, 'tournaments/tournaments.html', {'tournament': tournaments})
 	
 
 def tournament_4(request):
