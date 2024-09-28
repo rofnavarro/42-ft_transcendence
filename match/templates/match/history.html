@@ -1,7 +1,9 @@
 {% extends 'layout.html' %}
+{% load static%}
+{% load i18n%}
 
 {% block title %}
-	Torneios
+	User's History
 {% endblock %}
 
 {% block undertitle %}
@@ -13,29 +15,30 @@
 {% endblock %}
 
 {% block content2 %}
-	<h2><strong class="gradient-text">{{ user_info.nickname }}'s History</strong></h2>
+	<h2><strong class="gradient-text">{{ user.nickname }}'s History</strong></h2>
 	<section>
 		<div class="history">
 			<table class="history-table">
 				<thead>
 					<tr>
+						<th>Date</th>
 						<th>Player 1</th>
 						<th>Player 2</th>
 						<th>Score Player 1</th>
 						<th>Score Player 2</th>
 						<th>Winner</th>
 						<th>Tournament?</th>
-
 					</tr>
 				</thead>
 				<tbody>
 					{% for match in matches %}
 					<tr>
-						<td><a href="{% url 'users:profile' user.user %}">{{ match.user1 }}</a></td>
-						<td><a href="{% url 'users:profile' user.user %}">{{ match.user2 }}</a></td>
+						<td>{{ match.date|date:"d/m/Y" }}</td>
+						<td><a href="{% url 'users:profile' match.user1.username %}">{{ match.user1.nickname }}</a></td>
+						<td><a href="{% url 'users:profile' match.user2.username %}">{{ match.user2.nickname }}</a></td>
 						<td>{{ match.score_user1 }}</td>
 						<td>{{ match.score_user2 }}</td>
-						<td><a href="{% url 'users:profile' user.user %}">{{ match.winner }}</a></td>
+						<td><a href="{% url 'users:profile' match.winner %}">{{ match.winner.nickname }}</a></td>
 						{% if match.is_tournament is True %}
 						<td><img src="../../../static/imgs/check.png" width="20" height="20" alt="yes" title="yes"></img></td>
 						{% else %}

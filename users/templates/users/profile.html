@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
-{% load static %}
+{% load static%}
+{% load i18n%}
 
 {% block title %}
 	{{ user_info.username }}'s Profile
@@ -82,7 +83,7 @@
 				</div>
 			</div>
 			<div class ="history">
-				<button type="submit" class="small-button" onclick="prepareForm()">Matches History</button>
+				<button class="small-button" onclick="window.location.href='{% url 'match:history' %}'">Matches History</button>
 			</div>
 		</div>
 
