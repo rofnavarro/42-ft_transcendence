@@ -11,5 +11,5 @@ class	ProfilePictureForm(forms.ModelForm):
 		model = CustomUser
 		fields = ['profile_picture']
 		widgets = {
-			'profile_picture': forms.ClearableFileInput(attrs={'class': 'form-control'}),
-		}
+            'profile_picture': forms.FileInput(attrs={'class': 'form-control'}),
+        }

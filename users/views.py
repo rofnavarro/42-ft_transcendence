@@ -28,6 +28,13 @@ def	user_profile(request, username):
 	elif not request.user.is_anonymous:
 		picture_form = ProfilePictureForm(instance=request.user)
 
+	if request.method == 'POST' and 'clear_profile_picture' in request.POST:
+		request.user.profile_picture = None
+		request.user.save()
+		return redirect('users:profile', username=username)
+	elif not request.user.is_anonymous:
+		picture_form = ProfilePictureForm(instance=request.user)
+
 	if not request.user.is_anonymous:
 		context = {
 			'user_info': user,
