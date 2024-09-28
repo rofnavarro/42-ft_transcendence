@@ -15,8 +15,7 @@ class	CustomUserManager(BaseUserManager):
 		if not username:
 			raise ValueError(gettext_lazy('A username is needed.'))
 		email = self.normalize_email(email)
-		extra_fields.setdefault('nickname', username)
-		user = self.model(email=email, username=username, **extra_fields)
+		user = self.model(email=email, username=username, nickname=username, **extra_fields)
 		user.set_unusable_password()
 		user.save(using=self._db)
 		return user
@@ -32,9 +31,9 @@ class	CustomUserManager(BaseUserManager):
 
 class	CustomUser(AbstractBaseUser, PermissionsMixin):
 	username = models.CharField(max_length=50, unique=True)
-	nickname = models.CharField(max_length=50,unique=True, blank=True, null=True, default=username)
+	nickname = models.CharField(max_length=50,unique=True, null=True, blank=True)
 	email = models.EmailField(gettext_lazy('email address'), unique=True)
-	#TODO: Ajuda do RO para validar a criação do campo de token
+
 	token = models.CharField(max_length=300, blank=True, null=True)
 
 	first_name = models.CharField(gettext_lazy('first name'), max_length=30, blank=True)
