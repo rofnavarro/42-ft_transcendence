@@ -116,8 +116,7 @@ def	gamepage(request):
 
 
 @login_required
-def history(request):
-	username = request.user.username
+def history(request, username):
 	user = get_object_or_404(CustomUser, username=username)
 	matches = Match.objects.filter(Q(user1=user) | Q(user2=user)).order_by('-date')
 	return render(request, 'match/history.html', {'user': user, 'matches': matches})
