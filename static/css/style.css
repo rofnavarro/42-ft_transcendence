@@ -47,7 +47,7 @@ body {
 	font-optical-sizing: auto;
 	font-weight: 400;
 	font-style: normal;
-	color: rgb(133, 140, 238);
+	color: #858cee;
 	font-size: 22px;
 	/* background-image: linear-gradient(145deg, #03021d 0%, #050e3b 55%, #4d267d 100%); */
 	background-color: #040c30;
@@ -87,7 +87,7 @@ nav {
 	font-size: 20px;
 	width: 100%;
 	margin: 0 auto;
-	border-right: rgb(133, 140, 238);
+	border-right: #858cee;
 	box-sizing: border-box;
 }
 
@@ -100,13 +100,13 @@ nav ul{
 
 .navbar {
 	float: left;
-	border-right: 1px solid rgb(133, 140, 238);
+	border-right: 1px solid #858cee;
 	margin-right: 0;
 }
 
 .navbar a, .nav-logout a {
 	display: block;
-	color: rgb(133, 140, 238);
+	color: #858cee;
 	text-align: center;
 	padding: 10px 20px;
 	text-decoration: none;
@@ -118,7 +118,7 @@ nav ul{
 
 nav a {
 	text-decoration: none;
-	color: rgb(133, 140, 238);
+	color: #858cee;
 }
 
 .nav-button {
@@ -151,7 +151,7 @@ nav a {
 }
 
 .nav-logout li {
-	border-right: 1px solid rgb(133, 140, 238);
+	border-right: 1px solid #858cee;
 }
 
 .nav-logout li:last-child {
@@ -161,7 +161,7 @@ nav a {
 
 .nav-logout a {
 	display: block;
-	color: rgb(133, 140, 238);
+	color: #858cee;
 	text-align: center;
 	padding: 10px 20px;
 	text-decoration: none;
@@ -335,7 +335,7 @@ h1 {
 	font-optical-sizing: auto;
 	font-weight: 400;
 	font-style: normal;
-	color: rgb(133, 140, 238);
+	color: #858cee;
 	text-align: center;
 }
 
@@ -344,7 +344,7 @@ h2 {
 	font-optical-sizing: auto;
 	font-weight: 400;
 	font-style: normal;
-	color: rgb(133, 140, 238);
+	color: #858cee;
 	text-align: center;
 }
 
@@ -471,11 +471,11 @@ canvas {
 
 .friends-section {
 	background-color: #252e59;
-	border: 2px solid rgba(133, 140, 238, 0.8);
+	border: 2px solid #858ceecc;
 	border-radius: 10px;
 	padding: 10px;
 	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-	color: rgb(133, 140, 238);
+	color: #858cee;
 	size: 0cap;
 	max-width: 300px;
 	min-width: 300px;
@@ -531,7 +531,7 @@ canvas {
 
 .rank a {
 	text-decoration: none;
-	color: rgb(133, 140, 238);
+	color: #858cee;
 }
 
 .rank a:hover {
