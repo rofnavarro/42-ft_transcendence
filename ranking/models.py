@@ -28,6 +28,9 @@ class	Ranking(models.Model):
 @receiver(post_save, sender=Match)
 @receiver(post_delete, sender=Match)
 def	update_ranking(sender, instance, **kwargs):
-	for user in [instance.user1, instance.user2]:
-		ranking = Ranking.objects.get(user=user)
-		ranking.update_ranking()
+	try:
+		for user in [instance.user1, instance.user2]:
+			ranking = Ranking.objects.get(user=user)
+			ranking.update_ranking()
+	except Ranking.DoesNotExist:
+		pass
