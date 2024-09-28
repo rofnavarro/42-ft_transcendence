@@ -1,6 +1,5 @@
 {% extends 'layout.html' %}
-{% load static%}
-{% load i18n%}
+{% load i18n %}
 
 {% block title %}
 	{% trans "Play" %}
@@ -90,6 +89,10 @@
 				<button class="small-button" onclick="closeFriendModal()">{% trans "Close" %}</button>
 			</div>
 		</div>
+
+			<div class="start-button">
+				<button type="submit" class="small-button" onclick="prepareForm()">{% trans "Start Game!" %}</button>
+			</div>
 	</form>
 {% endblock %}
 

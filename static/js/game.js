@@ -256,13 +256,13 @@ var Game = {
 		this.context.fillRect(this.playerA.x, this.playerA.y, this.playerA.width, this.playerA.height);
 		this.context.fillRect(this.playerB.x, this.playerB.y, this.playerB.width, this.playerB.height);
 		
-		this.context.fillRect(this.canvas.width / 2 - 1, 0, 2, this.canvas.height);
+		this.context.fillRect(this.canvas.width / 2 - 3, 60, 6, this.canvas.height - 120);
 
 		this.context.fillStyle = '#ffffff';
 		this.context.fillRect(this.ball.x, this.ball.y, this.ball.width, this.ball.height);
 
 		this.context.font = '40px Dosis';
-		this.context.fillStyle = '#7B68EE';
+		this.context.fillStyle = '#000000';
 		this.context.fillText(this.playerA.score, this.canvas.width / 2 - 80, 50);
 		this.context.fillText(this.playerB.score, this.canvas.width / 2 + 70, 50);
 
