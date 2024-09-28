@@ -23,10 +23,10 @@ var Ball = {
 };
 
 var Computer = {
-	new: function (side, player_name, player_username) {
+	new: function (side, username, nickname) {
 		return {
-			name: player_name,
-			username: player_username,
+			nickname: nickname,
+			username: username,
 			width: 18,
 			height: 100,
 			x: side === 'left' ? 10 : this.canvas.width - 30,
@@ -39,7 +39,7 @@ var Computer = {
 };
 
 var Game = {
-	initialize: function (players, usernames, turns, color) {
+	initialize: function (usernames, nicknames, turns, color) {
 		this.canvas = document.querySelector('canvas');
 		this.context = this.canvas.getContext('2d');
 
@@ -49,10 +49,10 @@ var Game = {
 		this.canvas.style.width = (this.canvas.width / 2) + 'px';
 		this.canvas.style.height = (this.canvas.height / 2) + 'px';
 
-		this.playerA = Computer.new.call(this, 'left', players[0], usernames[0]);
-		this.playerB = Computer.new.call(this, 'right', players[1], usernames[1]);
-		this.playerC = Computer.new.call(this, 'left', players[2], usernames[2]);
-		this.playerD = Computer.new.call(this, 'right', players[3], usernames[3]);
+		this.playerA = Computer.new.call(this, 'left', usernames[0], nicknames[0]);
+		this.playerB = Computer.new.call(this, 'right', usernames[1], nicknames[1]);
+		this.playerC = Computer.new.call(this, 'left', usernames[2], nicknames[2]);
+		this.playerD = Computer.new.call(this, 'right', usernames[3], nicknames[3]);
 
 
 		this.playerA.y = (this.canvas.height / 2) - 180;
@@ -147,7 +147,7 @@ var Game = {
 
 		if (this.over === true && this.matchSaved === false)
 		{
-			saveMatch(this.playerA.name, this.playerB.name, this.playerC.name, this.playerD.name, this.roundsWonA, this.roundsWonB);
+			saveMatch(this.playerA.username, this.playerB.username, this.playerC.username, this.playerD.username, this.roundsWonA, this.roundsWonB);
 			this.matchSaved = true;
 			return;
 		}
@@ -322,7 +322,7 @@ var Game = {
 		this.context.fillRect(this.playerC.x, this.playerC.y, this.playerC.width, this.playerC.height);
 		this.context.fillRect(this.playerD.x, this.playerD.y, this.playerD.width, this.playerD.height);
 
-		this.context.fillRect(this.canvas.width / 2 - 1, 0, 2, this.canvas.height);
+		this.context.fillRect(this.canvas.width / 2 - 3, 60, 6, this.canvas.height - 120);
 
 		this.context.fillStyle = '#ffffff';
 		this.context.fillRect(this.ball.x, this.ball.y, this.ball.width, this.ball.height);
@@ -336,10 +336,10 @@ var Game = {
 		this.context.fillStyle = '#858cee';
 		this.context.fillText(`Round: ${this.round + 1} / ${rounds.length}`, this.canvas.width / 2, this.canvas.height - 20);
 	
-		this.context.fillText(`${this.playerA.username}: ${this.roundsWonA}`, 0 + 200, 50);
-		this.context.fillText(`${this.playerB.username}: ${this.roundsWonB}`, this.canvas.width - 200, 50);
-		this.context.fillText(`${this.playerC.username}: ${this.roundsWonA}`, 0 + 200, this.canvas.height - 50);
-		this.context.fillText(`${this.playerD.username}: ${this.roundsWonB}`, this.canvas.width - 200, this.canvas.height - 50);
+		this.context.fillText(`${this.playerA.nickname}: ${this.roundsWonA}`, 0 + 200, 50);
+		this.context.fillText(`${this.playerB.nickname}: ${this.roundsWonB}`, this.canvas.width - 200, 50);
+		this.context.fillText(`${this.playerC.nickname}: ${this.roundsWonA}`, 0 + 200, this.canvas.height - 50);
+		this.context.fillText(`${this.playerD.nickname}: ${this.roundsWonB}`, this.canvas.width - 200, this.canvas.height - 50);
 
 		if (this.pauseGame === true) {
 			this.context.font = '45px Dosis';
@@ -353,7 +353,7 @@ var Game = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-	Game.initialize(players, usernames, turns, color);
+	Game.initialize(usernames, nicknames, turns, color);
 });
 
 
