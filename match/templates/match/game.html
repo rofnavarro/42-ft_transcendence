@@ -16,29 +16,20 @@
 
 {% block content %}
 	<canvas></canvas>
-	<canvas id="gameCanvas" data-playerA-username="{{ playerA.username }}" data-playerB-username="{{ playerB.username }}" data-rounds-won-a="{{ roundsWonA }}" data-rounds-won-b="{{ roundsWonB }}"></canvas>
 	<h3><strong class="gradient-text">Instructions:</strong></h3>
 	<p class="game-instructions">
-    <b>{{ usernames.0 }}:</b> Control the left player using the <strong>W and S keys</strong><br>
-		<b>{{ usernames.1 }}:</b> Control the right player using the <strong>UP and DOWN arrow keys</strong><br>
+    <b>{{ nicknames.0 }}:</b> Control the left player using the <strong>W and S keys</strong><br>
+		<b>{{ nicknames.1 }}:</b> Control the right player using the <strong>UP and DOWN arrow keys</strong><br>
 		{% if players|length > 2 %}
-    <b>{{ usernames.2 }}:</b> Control the left player using the <strong>Q and A keys</strong><br>
-    <b>{{ usernames.3 }}:</b> Control the right player using the <strong>I and K keys</strong><br>
+    <b>{{ nicknames.2 }}:</b> Control the left player using the <strong>Q and A keys</strong><br>
+    <b>{{ nicknames.3 }}:</b> Control the right player using the <strong>I and K keys</strong><br>
 		{% endif %}
 	</p>
 {% endblock %}
 
 {% block scripts %}
 	<script>
-		const players = [
-			'{{ players.0|default:"" }}',
-			'{{ players.1|default:"" }}',
-			{% if players|length > 2 %}
-			'{{ players.2|default:"" }}',
-			'{{ players.3|default:"" }}'
-			{% endif %}
-		];
-		const usernames = [
+		usernames = [
 			'{{ usernames.0|default:"" }}',
 			'{{ usernames.1|default:"" }}',
 			{% if players|length > 2 %}
@@ -46,12 +37,20 @@
 			'{{ usernames.3|default:"" }}'
 			{% endif %}
 		];
-		const turns = {{ turns }}
-		const color = '{{ color }}'
+		nicknames = [
+			'{{ nicknames.0|default:"" }}',
+			'{{ nicknames.1|default:"" }}',
+			{% if players|length > 2 %}
+			'{{ nicknames.2|default:"" }}',
+			'{{ nicknames.3|default:"" }}'
+			{% endif %}
+		];
+		turns = {{ turns }}
+		color = '{{ color }}'
 	</script>
-	{% if players|length == 2 %}
+	{% if usernames|length == 2 %}
 		<script src="{% static 'js/game.js' %}"></script>
-	{% elif players|length == 4 %}
+	{% elif usernames|length == 4 %}
 		<script src="{% static 'js/game2x2.js' %}"></script>
 	{% endif %}
 {% endblock %}

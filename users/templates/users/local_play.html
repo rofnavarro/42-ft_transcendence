@@ -94,10 +94,6 @@
 			</ul>
 			<button onclick="closeFriendModal()">Close</button>
 		</div>
-
-		<div>
-			<button type="submit" class="small-button" onclick="prepareForm()">Let's Play!</button>
-		</div>
 	</form>
 
 {% endblock %}
@@ -130,31 +126,10 @@
 
 		function selectFriend(username, nickname, playerId) {
 			document.getElementById(`player${playerId}-name`).value = username;
+			document.getElementById(`player${playerId}-nickname`).value = nickname;
 			document.getElementById(`player${playerId}-label`).innerText = nickname;
 			document.getElementById(`invite-btn-${playerId}`).style.display = 'none';
 			closeFriendModal();
-		}
-
-		function prepareForm() {
-			const player1 = document.getElementById('player1-name').value;
-			const player2 = document.getElementById('player2-name').value;
-			const player3 = document.getElementById('player3-name').value;
-			const player4 = document.getElementById('player4-name').value;
-
-			const turns = document.querySelector('input[name="qtd-turnos"]:checked').value;
-
-			const color = document.querySelector('input[name="background"]:checked').value;
-
-			const players = [player1, player2];
-			if (document.getElementById('player3').style.display !== 'none') players.push(player3);
-			if (document.getElementById('player4').style.display !== 'none') players.push(player4);
-
-			const validPlayers = players.filter(player => player !== '');
-
-			if (validPlayers.length < 2) {
-				alert('Need at last 2 players.');
-				event.preventDefault();
-			}
 		}
 	</script>
 {% endblock %}
