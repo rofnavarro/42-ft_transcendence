@@ -100,8 +100,11 @@ var Game = {
 
 	addEventListeners: function () {
 		document.addEventListener('keydown', (event) => {
-			if (event.key === 'ArrowUp') this.playerB.move = DIRECTION.UP;
-			if (event.key === 'ArrowDown') this.playerB.move = DIRECTION.DOWN;
+			if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+				event.preventDefault();
+				if (event.key === 'ArrowUp') this.playerB.move = DIRECTION.UP;
+				if (event.key === 'ArrowDown') this.playerB.move = DIRECTION.DOWN;
+			}
 			if (event.key === 'i') this.playerD.move = DIRECTION.UP;
 			if (event.key === 'k') this.playerD.move = DIRECTION.DOWN;
 			if (event.key === 'w') this.playerA.move = DIRECTION.UP;
@@ -262,7 +265,7 @@ var Game = {
 			if (!rounds[this.round + 1]) {
 				this.over = true;
 				this.resetBall();
-				setTimeout(() => { this.endGameMenu('PLeft Side wins!'); }, 10000);
+				setTimeout(() => { this.endGameMenu('Left Side wins!'); }, 10000);
 			} else {
 				this.playerA.score = this.playerB.score = 0;
 				this.playerA.speed += 1;
@@ -324,12 +327,12 @@ var Game = {
 		this.context.fillStyle = '#ffffff';
 		this.context.fillRect(this.ball.x, this.ball.y, this.ball.width, this.ball.height);
 
-		this.context.font = '40px Dosis';
+		this.context.font = '45px Dosis';
 		this.context.fillStyle = '#858cee';
 		this.context.fillText(this.playerA.score, this.canvas.width / 2 - 80, 50);
 		this.context.fillText(this.playerB.score, this.canvas.width / 2 + 70, 50);
 
-		this.context.font = '40px Dosis';
+		this.context.font = '45px Dosis';
 		this.context.fillStyle = '#858cee';
 		this.context.fillText(`Round: ${this.round + 1} / ${rounds.length}`, this.canvas.width / 2, this.canvas.height - 20);
 	

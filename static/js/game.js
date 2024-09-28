@@ -78,7 +78,7 @@ var Game = {
 
 		this.context.font = '50px Dosis';
 		this.context.textAlign = 'center';
-		this.context.fillStyle = '#858cee';
+		this.context.fillStyle = '#7B68EE';
 		this.context.fillText('Press any key to begin', this.canvas.width / 2, this.canvas.height / 2 + 15);
 	},
 
@@ -86,14 +86,17 @@ var Game = {
 		this.context.font = '45px Dosis';
 		this.context.fillStyle = this.color;
 		this.context.fillRect(this.canvas.width / 2 - 350, this.canvas.height / 2 - 48, 700, 100);
-		this.context.fillStyle = '#858cee';
+		this.context.fillStyle = '#7B68EE';
 		this.context.fillText(text, this.canvas.width / 2, this.canvas.height / 2 + 15);
 	},
 
 	addEventListeners: function () {
 		document.addEventListener('keydown', (event) => {
-			if (event.key === 'ArrowUp') this.playerB.move = DIRECTION.UP;
-			if (event.key === 'ArrowDown') this.playerB.move = DIRECTION.DOWN;
+			if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+				event.preventDefault();
+				if (event.key === 'ArrowUp') this.playerB.move = DIRECTION.UP;
+				if (event.key === 'ArrowDown') this.playerB.move = DIRECTION.DOWN;
+			}
 			if (event.key === 'w') this.playerA.move = DIRECTION.UP;
 			if (event.key === 's') this.playerA.move = DIRECTION.DOWN;
 			if (event.key === ' ' ) {
@@ -259,12 +262,12 @@ var Game = {
 		this.context.fillRect(this.ball.x, this.ball.y, this.ball.width, this.ball.height);
 
 		this.context.font = '40px Dosis';
-		this.context.fillStyle = '#858cee';
+		this.context.fillStyle = '#7B68EE';
 		this.context.fillText(this.playerA.score, this.canvas.width / 2 - 80, 50);
 		this.context.fillText(this.playerB.score, this.canvas.width / 2 + 70, 50);
 
 		this.context.font = '40px Dosis';
-		this.context.fillStyle = '#858cee';
+		this.context.fillStyle = '#7B68EE';
 		this.context.fillText(`Round: ${this.round + 1} / ${rounds.length}`, this.canvas.width / 2, this.canvas.height - 20);
 	
 		this.context.fillText(`${this.playerA.username}: ${this.roundsWonA}`, 0 + 200, 50);
@@ -274,7 +277,7 @@ var Game = {
 			this.context.font = '45px Dosis';
 			this.context.fillStyle = this.color;
 			this.context.fillRect(this.canvas.width / 2 - 350, this.canvas.height / 2 - 48, 700, 100);
-			this.context.fillStyle = '#858cee';
+			this.context.fillStyle = '#7B68EE';
 			this.context.fillText('Press "space" to continue', this.canvas.width / 2, this.canvas.height / 2 + 15);
 		}
 

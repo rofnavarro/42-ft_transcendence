@@ -16,6 +16,32 @@ header {
 	background-color: #040c30;
 }
 
+.flags {
+	float: right;
+}
+
+.flag-icon {
+	width: 25px;
+	height: 25px;
+}
+
+.flags a {
+	text-decoration: none;
+}
+
+.flags ul {
+	list-style-type: none;
+}
+
+.flags li {
+	display: inline;
+	border-right: 1px solid #858cee;
+}
+
+.flags li:last-child {
+	border-right: none;
+}
+
 body {
 	font-family: "Dosis", sans-serif;
 	font-optical-sizing: auto;
@@ -219,6 +245,10 @@ main {
 	gap: 10%;
 }
 
+.local-players {
+	margin-bottom: 10px;
+}
+
 .players{
 	display: flex;
 	flex-direction: row;
@@ -226,6 +256,7 @@ main {
 	text-align: center;
 	align-items: center;
 	justify-content: space-between;
+	margin-bottom: 10px;
 }
 
 .players h2 {
@@ -233,10 +264,14 @@ main {
 	margin-bottom: 10px;
 }
 
-.players h3 {
+.players h3, h4 {
 	color: #a8b4f0;
 	font-weight: bold;
 	margin-bottom: 10px;
+}
+
+.start-button {
+	margin-top: 10px;
 }
 
 .submit-button {
@@ -258,11 +293,13 @@ main {
 .player {
 	display: flex;
 	flex-direction: column;
+	margin-bottom: 10px;
 
 }
 
 .modal-content {
 	z-index: 9999;
+	margin-bottom: 10px;
 }
 
 .modal-content ul {
@@ -281,6 +318,10 @@ main {
 .modal-content a:hover {
 	color: #c3c6f1;
 	transition-duration: 0.4s;
+}
+
+.friend-modal {
+	margin-bottom: 10px;
 }
 
 .rounds {

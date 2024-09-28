@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-27 16:20-0300\n"
+"POT-Creation-Date: 2024-09-28 05:25-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,83 +17,498 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-#: match/models.py:11
+
+#: login/templates/login/2fa.html:7 login/templates/login/2fa.html:11
+msgid "Two-Factor Authentication"
+msgstr "Autenticação de Dois Fatores (2FA)"
+
+#: login/templates/login/2fa.html:15
+msgid "Inform your 2FA code"
+msgstr "Informe seu código 2FA"
+
+#: login/templates/login/2fa.html:18
+msgid "Type the verification code sent to your e-mail address:"
+msgstr "Digite o código de verificação enviado ao seu endereço de e-mail:"
+
+#: login/templates/login/2fa.html:20
+msgid "Verify"
+msgstr "Verificar"
+
+#: login/templates/login/error.html:7 login/templates/login/error.html:11
+msgid "Error"
+msgstr "Erro"
+
+#: login/templates/login/error.html:16 templates/404.html:13
+msgid "Return Home"
+msgstr "Voltar para a Home"
+
+#: login/templates/login/manual_login.html:7
+msgid "Manual Login"
+msgstr "Login Manual"
+
+#: login/templates/login/manual_login.html:12
+msgid "Enter with your username and password:"
+msgstr "Entre com seu nome de usuário e senha:"
+
+#: login/templates/login/set_email.html:6
+msgid "Set Email"
+msgstr "Definir E-mail"
+
+#: login/templates/login/set_email.html:11
+msgid "Define your e-mail address:"
+msgstr "Defina seu endereço de e-mail:"
+
+#: login/templates/login/set_email.html:15
+msgid "Save new e-mail"
+msgstr "Salvar novo e-mail"
+
+#: login/templates/login/set_password.html:6
+msgid "Set Password"
+msgstr "Definir Senha"
+
+#: login/templates/login/set_password.html:11
+msgid "Password"
+msgstr "Senha"
+
+#: login/templates/login/set_password.html:12
+msgid "Define your password:"
+msgstr "Defina sua senha:"
+
+#: login/templates/login/set_password.html:17
+msgid "Save new password"
+msgstr "Salvar nova senha"
+
+#: match/models.py:10
 msgid "date"
 msgstr ""
 
-#: match/models.py:13
+#: match/models.py:12
 msgid "score player 1"
 msgstr ""
 
-#: match/models.py:14
+#: match/models.py:13
 msgid "score player 2"
 msgstr ""
+
+#: match/templates/match/game.html:10
+msgid "Pong Game"
+msgstr "Jogo Pong"
+
+#: match/templates/match/game.html:14
+msgid "Pong Contest"
+msgstr "Campeonato Pong"
+
+#: match/templates/match/game.html:20
+msgid "Instructions:"
+msgstr "Instruções:"
+
+#: match/templates/match/game.html:22 match/templates/match/game.html:25
+msgid "Control the left player using the"
+msgstr "Controle o jogador da esquerda usando as"
+
+#: match/templates/match/game.html:22
+msgid "W and S keys"
+msgstr "teclas W e S"
+
+#: match/templates/match/game.html:23 match/templates/match/game.html:26
+msgid "Control the right player using the"
+msgstr "Controle o jogador da direita usando as"
+
+#: match/templates/match/game.html:23
+msgid "UP and DOWN arrow keys"
+msgstr "teclas UP e DOWN"
+
+#: match/templates/match/game.html:25
+msgid "Q and A keys"
+msgstr "teclas Q e A"
+
+#: match/templates/match/game.html:26
+msgid "I and K keys"
+msgstr "teclas I e K"
+
+#: match/templates/match/history.html:6
+#, python-format
+msgid ""
+"\n"
+"%(username)s's Matches History\n"
+msgstr ""
+"\n"
+"Histórico de Partidas de %(username)s\n"
+
+#: match/templates/match/history.html:12 users/templates/users/profile.html:89
+msgid "Matches History"
+msgstr "Histórico de Partidas"
+
+#: match/templates/match/history.html:21
+#, python-format
+msgid ""
+"\n"
+"\t\t%(username)s's History\n"
+"\t\t"
+msgstr ""
+"\n"
+"\t\t Histórico de %(username)s\n"
+"\t\t"
+
+#: match/templates/match/history.html:30
+msgid "Player 1"
+msgstr "Jogador 1"
+
+#: match/templates/match/history.html:31
+#: users/templates/users/local_play.html:54
+msgid "Player 2"
+msgstr "Jogador 2"
+
+#: match/templates/match/history.html:32
+msgid "Score Player 1"
+msgstr "Pontos Jogador 1"
+
+#: match/templates/match/history.html:33
+msgid "Score Player 2"
+msgstr "Pontos Jogador 2"
+
+#: match/templates/match/history.html:34
+msgid "Winner"
+msgstr "Ganhador"
+
+#: match/templates/match/history.html:35
+#: users/templates/users/wanna_play.html:21
+msgid "Tournament"
+msgstr "Torneio"
+
+#: ranking/templates/ranking/ranking.html:20
+msgid "User"
+msgstr "Usuário"
+
+#: ranking/templates/ranking/ranking.html:21
+#: users/templates/users/profile.html:71
+msgid "Matches"
+msgstr "Partidas"
+
+#: ranking/templates/ranking/ranking.html:22
+#: users/templates/users/profile.html:72
+msgid "Wins"
+msgstr "Vitórias"
+
+#: ranking/templates/ranking/ranking.html:23
+#: users/templates/users/profile.html:73
+msgid "Losses"
+msgstr "Derrotas"
+
+#: ranking/templates/ranking/ranking.html:24
+msgid "Win Rate"
+msgstr "Taxa de Vitórias"
+
+#: templates/404.html:5
+msgid "Error 404 - Page not found"
+msgstr "Erro 404 - Página não encontrada"
+
+#: templates/404.html:10
+msgid "404 - Page not found"
+msgstr "404 - Página não encontrada"
+
+#: templates/404.html:12
+msgid "The page you are trying to access does not exist."
+msgstr "A página que você está tentando acessar não existe."
+
+#: templates/about.html:15
+msgid "First things first..."
+msgstr "Antes de mais nada..."
+
+#: templates/about.html:16
+msgid "Why banana?"
+msgstr "Por que banana?"
+
+#: templates/about.html:17
+msgid ""
+"Well, during our coding sessions, Rodrigo told us about a game in which the "
+"only goal is to click on images of bananas as much as one can."
+msgstr ""
+"Bom, durante nossas sessões de código, o Rodrigo nos contoou sobre um jogo "
+"em que o único objetivo era clicar em imagens de bananas o máximo possível."
+
+#: templates/about.html:18
+msgid ""
+"We couldn't believe so many people would waste their time on a game like "
+"that, but at the same time, we became obsessed with the ideia. After that, "
+"we started naming everything banana or some variation."
+msgstr ""
+"Nós não conseguíamos acreditar que tanta gente iria perder seu tempo num "
+"jogo como esse, mas ao mesmo tempo, ficamos obcecados com a ideia. Depois "
+"disso, começamos a dar o nome de tudo como banana ou alguma variação disso."
+
+#: templates/about.html:19
+msgid "Now, the team:"
+msgstr "Agora, o time:"
+
+#: templates/about.html:33
+msgid "A really nice text about Clarissa with lots of blablabla."
+msgstr "Um texto muito legal sobre a Clarissa com um monte de blablabla."
+
+#: templates/about.html:34 templates/about.html:63 templates/about.html:92
+msgid "Blablabla whiskas sachê, blablabla, blablabla, blablabla."
+msgstr "Blablabla whiskas sachê, blablabla, blablabla, blablabla."
+
+#: templates/about.html:62
+msgid "A really nice text about Felipe with lots of blablabla."
+msgstr "Um texto muito legal sobre o Felipe com um monte de blablabla."
+
+#: templates/about.html:91
+msgid "A really nice text about Rodrigo with lots of blablabla."
+msgstr "Um texto muito legal sobre o Rodrigo com um monte de blablabla."
+
+#: templates/home.html:6
+msgid "Welcome to Transcendencenana!"
+msgstr "Boas-vindas ao Transcendencenana!"
 
 #: templates/home.html:8
 msgid ""
 "Transcendencenana is a platform where you can play Pong with your friends!"
-msgstr "Transcendencenana é uma plataforma onde você pode jogar Pong com seus amigos!"
-
-#: tournaments/models.py:12
-msgid "start"
 msgstr ""
+"Transcendencenana é uma plataforma onde você pode jogar Pong com seus amigos!"
 
-#: tournaments/models.py:13
-msgid "end"
-msgstr ""
+#: templates/home.html:10
+msgid "Please log in so you can start:"
+msgstr "Por favor, faça login para poder começar:"
+
+#: templates/home.html:12
+msgid "Sign in with 42"
+msgstr "Login com a 42"
+
+#: templates/home.html:14
+msgid "Login with Username and Password"
+msgstr "Login com Nome de usuário e Senha"
+
+#: templates/layout.html:36
+msgid "About"
+msgstr "Sobre"
+
+#: templates/layout.html:41 users/templates/users/local_play.html:5
+#: users/templates/users/tournament_play.html:5
+#: users/templates/users/wanna_play.html:5
+#: users/templates/users/wanna_play.html:9
+msgid "Play"
+msgstr "Jogar"
+
+#: templates/layout.html:48
+msgid "Tournaments"
+msgstr "Torneios"
+
+#: templates/layout.html:58
+msgid "Profile"
+msgstr "Perfil"
+
+#: tournaments/templates/tournaments/tournament_4.html:5
+#: tournaments/templates/tournaments/tournament_4.html:9
+msgid "Tournament 4 Players"
+msgstr "Torneio com 4 Jogadores"
+
+#: tournaments/templates/tournaments/tournaments.html:17
+msgid "History"
+msgstr "Histórico"
+
+#: tournaments/templates/tournaments/tournaments.html:20
+msgid "Name"
+msgstr "Nome"
+
+#: tournaments/templates/tournaments/tournaments.html:21
+msgid "Start"
+msgstr "Início"
+
+#: tournaments/templates/tournaments/tournaments.html:22
+msgid "End"
+msgstr "Fim"
 
 #: users/models.py:16
 msgid "A username is needed."
 msgstr "É necessário ter um usuário."
 
-#: users/models.py:28
+#: users/models.py:27
 msgid "Superuser must have is_staff=True."
 msgstr "O superusuário deve ter o atributo is_staff como verdadeiro."
 
-#: users/models.py:30
+#: users/models.py:29
 msgid "Superuser must have is_superuser=True."
 msgstr "O superusuário deve ter o atributo is_superuser como verdadeiro"
 
-#: users/models.py:36
+#: users/models.py:35
 msgid "email address"
 msgstr ""
 
-#: users/models.py:40
+#: users/models.py:39
 msgid "first name"
 msgstr ""
 
-#: users/models.py:41
+#: users/models.py:40
 msgid "last name"
 msgstr ""
 
-#: users/models.py:44
+#: users/models.py:43
 msgid "2fa_code"
 msgstr ""
 
-#: users/models.py:45
+#: users/models.py:44
 msgid "verified status"
 msgstr ""
 
-#: users/models.py:47
+#: users/models.py:46
 msgid "date joined"
 msgstr ""
 
-#: users/models.py:48
+#: users/models.py:47
 msgid "active"
 msgstr ""
 
-#: users/models.py:50
+#: users/models.py:49
 msgid "staff status"
 msgstr ""
 
-#: users/models.py:51
+#: users/models.py:50
 msgid "superuser status"
 msgstr ""
 
-#: users/models.py:65
+#: users/models.py:64
 msgid "user"
 msgstr ""
 
-#: users/models.py:66
+#: users/models.py:65
 msgid "users"
 msgstr ""
+
+#: users/templates/users/local_play.html:9
+msgid "Local Match Settings"
+msgstr "Configurações de Jogo Local"
+
+#: users/templates/users/local_play.html:17
+msgid "Number of Players"
+msgstr "Número de Jogadores"
+
+#: users/templates/users/local_play.html:18
+msgid "Choose the number of players:"
+msgstr "Escolha o número de jogadores:"
+
+#: users/templates/users/local_play.html:25
+#: users/templates/users/tournament_play.html:24
+msgid "Rounds"
+msgstr "Rodadas"
+
+#: users/templates/users/local_play.html:34
+msgid "Theme"
+msgstr "Tema"
+
+#: users/templates/users/local_play.html:36
+msgid "Dark"
+msgstr "Escuro"
+
+#: users/templates/users/local_play.html:38
+msgid "Light"
+msgstr "Claro"
+
+#: users/templates/users/local_play.html:40
+msgid "Modern"
+msgstr "Moderno"
+
+#: users/templates/users/local_play.html:44
+#: users/templates/users/tournament_play.html:17
+msgid "Players"
+msgstr "Jogadores"
+
+#: users/templates/users/local_play.html:45
+msgid "Choose who is playing with you:"
+msgstr "Escolha quem jogará com você:"
+
+#: users/templates/users/local_play.html:48
+msgid "Player 1 (You)"
+msgstr "Jogador 1 (Você)"
+
+#: users/templates/users/local_play.html:55
+#: users/templates/users/local_play.html:64
+#: users/templates/users/local_play.html:71
+msgid "Invite Friend"
+msgstr "Convidar Amigo"
+
+#: users/templates/users/local_play.html:63
+msgid "Player 3"
+msgstr "Jogador 3"
+
+#: users/templates/users/local_play.html:70
+msgid "Player 4"
+msgstr "Jogador 4"
+
+#: users/templates/users/local_play.html:81
+msgid "Invite a Friend"
+msgstr "Convide um Amigo"
+
+#: users/templates/users/local_play.html:86
+msgid "You still don't have any friends."
+msgstr "Você ainda não tem amigos."
+
+#: users/templates/users/local_play.html:89
+msgid "Close"
+msgstr "Fechar"
+
+#: users/templates/users/local_play.html:94
+msgid "Start Game!"
+msgstr "Começar o Jogo!"
+
+#: users/templates/users/profile.html:7
+#, python-format
+msgid ""
+"\n"
+"%(username)s's Profile\n"
+msgstr ""
+"\n"
+"Perfil de %(username)s\n"
+
+#: users/templates/users/profile.html:16
+msgid "Change Nickname"
+msgstr "Mudar Apelido"
+
+#: users/templates/users/profile.html:27
+msgid "Save Changes"
+msgstr "Salvar Alterações"
+
+#: users/templates/users/profile.html:40
+msgid "Update Profile Photo"
+msgstr "Atualizar Foto de Perfil"
+
+#: users/templates/users/profile.html:59
+msgid "Change Photo"
+msgstr "Mudar Foto"
+
+#: users/templates/users/profile.html:66
+msgid "Statistics"
+msgstr "Estatísticas"
+
+#: users/templates/users/profile.html:74
+#, python-format
+msgid "%% Wins"
+msgstr "%% de Vitórias"
+
+#: users/templates/users/profile.html:96
+msgid "Friends"
+msgstr "Amigos"
+
+#: users/templates/users/profile.html:117
+msgid "Add Friend"
+msgstr "Adicionar Amigo"
+
+#: users/templates/users/tournament_play.html:9
+msgid "Tournament Settings"
+msgstr "Configurações de Torneio"
+
+#: users/templates/users/tournament_play.html:34
+msgid "Invite Players!"
+msgstr "Convide Jogadores!"
+
+#: users/templates/users/wanna_play.html:13
+msgid "Choose your playing mode:"
+msgstr "Escolha o modo de jogo:"
+
+#: users/templates/users/wanna_play.html:17
+msgid "Local game"
+msgstr "Jogo local"
+
+#: users/templates/users/wanna_play.html:22
+msgid "Create game"
+msgstr "Criar jogo"

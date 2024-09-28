@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block content %}
-	<h2><span class="gradient-text"><b>Welcome to Transcendencenana!</b></span></h2>
+	<h2><span class="gradient-text"><b>{% trans "Welcome to Transcendencenana!" %}</b></span></h2>
 	<br>
 	<p>{% trans "Transcendencenana is a platform where you can play Pong with your friends!" %}</p>
 	{% if not user.is_verified %}

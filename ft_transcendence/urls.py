@@ -15,6 +15,7 @@ urlpatterns = [
 	path('login/', include('login.urls')),
 	path('users/', include('users.urls')),
 	path('tournaments/', include('tournaments.urls')),
+	path('set_language/<str:language>/', views.set_language, name='set_language'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

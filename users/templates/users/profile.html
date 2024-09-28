@@ -3,14 +3,16 @@
 {% load i18n%}
 
 {% block title %}
-	{{ user_info.username }}'s Profile
+{% blocktrans with username=user_info.username %}
+{{ username }}'s Profile
+{% endblocktrans %}
 {% endblock %}
 
 {% block undertitle %}
 	<h2><strong class="gradient-text">{{ user_info.first_name }} {{ user_info.last_name }}</strong></h2>
 	<h2><strong>{{ user_info.nickname }}</strong></h2>
 	{% if user_info == request.user %}
-	<button id="change-nickname-button" class="small-button">Change Nickname</button>
+	<button id="change-nickname-button" class="small-button">{% trans "Change Nickname" %}</button>
 	{% endif %}
 
 	{% if user_info == request.user and request.user.is_verified == True  %}
@@ -21,7 +23,7 @@
 				<form id="nickname-form" method="POST">
 					{% csrf_token %}
 					{{ form.as_p }}
-					<button type="submit" class="small-button">Save Changes</button>
+					<button type="submit" class="small-button">{% trans "Save Changes" %}</button>
 				</form>
 			</div>
 		</div>
@@ -34,7 +36,7 @@
 				<form id="profile-picture-form" method="POST" enctype="multipart/form-data">
 					{% csrf_token %}
 					{{ picture_form.as_p }}
-					<button type="submit" class="small-button">Update Profile Photo</button>
+					<button type="submit" class="small-button">{% trans "Update Profile Photo" %}</button>
 				</form>
 			</div>
 		</div>
@@ -53,22 +55,22 @@
 			{% endif %}
 			<div class="username"><b>{{ user_info.username }}</b></div>
 			{% if user_info == request.user %}
-				<button id="change-picture-button" class="small-button">Change Photo</button>
+				<button id="change-picture-button" class="small-button">{% trans "Change Photo" %}</button>
 			{% endif %}
 		</div>
 
 		<!-- Seção das Estatísticas do Usuário -->
 		<div class="profile-header">
 			<div class="profile-stats-section">
-				<h2><b>Statistics</b></h2>
+				<h2><b>{% trans "Statistics" %}</b></h2>
 				<div class="stats">
 					<table class="stats-table">
 						<thead>
 							<tr>
-								<th>Matches</th>
-								<th>Wins</th>
-								<th>Losses</th>
-								<th>% Wins</th>
+								<th>{% trans "Matches" %}</th>
+								<th>{% trans "Wins" %}</th>
+								<th>{% trans "Losses" %}</th>
+								<th>{% trans "% Wins" %}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -83,14 +85,14 @@
 				</div>
 			</div>
 			<div class ="history">
-				<button class="small-button" onclick="window.location.href='{% url 'match:history' %}'">Matches History</button>
+				<button class="small-button" onclick="window.location.href='{% url 'match:history' %}'">{% trans "Matches History" %}</button>
 			</div>
 		</div>
 
 		<!-- Seção de Amigos -->
 		{% if annonymous == False and request.user.is_verified %}
 			<div class="friends-section">
-        <h2><strong>Friends</strong></h2>
+        <h2><strong>{% trans "Friends" %}</strong></h2>
 				<ul>
 					{% for friend in friends %}
 						<li>
@@ -111,7 +113,7 @@
 	{% if user_info != request.user and not is_friend and annonymous == False and request.user.is_verified %}
 		<form method="post" action="{% url 'users:send_friend_request' user_info.username %}">
 			{% csrf_token %}
-			<button type="submit" class="small-button">Add Friend</button>
+			<button type="submit" class="small-button">{% trans "Add Friend" %}</button>
 		</form>
 	{% endif %}
 {% endblock %}

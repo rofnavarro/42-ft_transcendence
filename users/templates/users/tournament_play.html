@@ -3,11 +3,11 @@
 {% load i18n%}
 
 {% block title %}
-	Play
+	{% trans "Play" %}
 {% endblock %}
 
 {% block undertitle %}
-	<h1>Tournament Settings</h1>
+	<h1>{% trans "Tournament Settings" %}</h1>
 {% endblock %}
 
 {% block content %}
@@ -15,14 +15,14 @@
 		{% csrf_token %}
 		<div class="tournament-play">
 			<div id="qtd-jogadores">
-				<h2>Players</h2>
+				<h2>{% trans "Players" %}</h2>
 				<input type="radio" name="qtd-jogadores" value="4" checked>
 				<label>4</label>
 				<input type="radio" name="qtd-jogadores" value="8">
 				<label>8</label>
 			</div>
 			<div id="qtd-turnos">
-				<h2>Rounds</h2>
+				<h2>{% trans "Rounds" %}</h2>
 				<input type="radio" name="qtd-turnos" value="1" checked>
 				<label>1</label>
 				<input type="radio" name="qtd-turnos" value="3">
@@ -32,7 +32,7 @@
 			</div>
 		</div>
 		<div>
-			<button type="submit" class="submit-button" onclick="prepareForm()">Invite Players!</button>
+			<button type="submit" class="small-button" onclick="prepareForm()">{% trans "Invite Players!" %}</button>
 		</div>
 	</form>
 {% endblock %}

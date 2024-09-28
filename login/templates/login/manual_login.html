@@ -1,14 +1,15 @@
 {% extends "layout.html" %}
-{% load static%}
-{% load i18n%}
+{% load static %}
+{% load i18n %}
+
 
 {% block title %}
-	Manual Login
+	{% trans "Manual Login" %}
 {% endblock %}
 
 {% block content %}
 	<h2><strong class="gradient-text">Login</strong></h2>
-	<h3>Enter with your username and password:</h3>
+	<h3>{% trans "Enter with your username and password:" %}</h3>
 	<div class="manual-login">
 	<form method="post">
 		{% csrf_token %}
