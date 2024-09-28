@@ -26,6 +26,12 @@
 <body>
 	<header>
 		<h1><span class="gradient-text"><b>TRANSCENDENCENANA</b></span></h1>
+		<div class="flags">
+		<ul>
+		<li><button class="language"><a href="{% url 'set_language' 'en-us' %}"><img src="{% static 'imgs/usa-flag.png' %}" class="flag-icon">English</a></button></li>
+		<li><button class="language"><a href="{% url 'set_language' 'pt-br' %}"><img src="{% static 'imgs/brazil-flag.png' %}" class="flag-icon">Português</a></button></li>
+		</ul>
+		</div>
 	<nav>
 		<div class="nav-buttons">
 			<ul>

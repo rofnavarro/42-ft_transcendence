@@ -16,6 +16,32 @@ header {
 	background-color: #040c30;
 }
 
+.flags {
+	float: right;
+}
+
+.flag-icon {
+	width: 25px;
+	height: 25px;
+}
+
+.flags a {
+	text-decoration: none;
+}
+
+.flags ul {
+	list-style-type: none;
+}
+
+.flags li {
+	display: inline;
+	border-right: 1px solid #858cee;
+}
+
+.flags li:last-child {
+	border-right: none;
+}
+
 body {
 	font-family: "Dosis", sans-serif;
 	font-optical-sizing: auto;

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-28 04:03-0300\n"
+"POT-Creation-Date: 2024-09-28 05:25-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -256,6 +256,10 @@ msgstr "Um texto muito legal sobre o Felipe com um monte de blablabla."
 #: templates/about.html:91
 msgid "A really nice text about Rodrigo with lots of blablabla."
 msgstr "Um texto muito legal sobre o Rodrigo com um monte de blablabla."
+
+#: templates/home.html:6
+msgid "Welcome to Transcendencenana!"
+msgstr "Boas-vindas ao Transcendencenana!"
 
 #: templates/home.html:8
 msgid ""
