@@ -31,7 +31,7 @@
 
 		<!-- Popup de alteração de foto de perfil -->
 		<div id="profile-picture-popup" class="popup" style="display:none;">
-			<div class="popup-content">
+			<div class="photo-popup-content">
 				<span class="close-button">&times;</span>
 				<form id="profile-picture-form" method="POST" enctype="multipart/form-data">
 					{% csrf_token %}
@@ -52,7 +52,7 @@
 			{% if user_info.profile_picture %}
 				<img src="{{ user_info.profile_picture.url }}" alt="Profile Picture" class="profile-image">
 			{% else %}
-				<img src={% static 'imgs/banana.png' %} alt="Default Profile Picture" class="profile-image">
+				<img src="{% static 'imgs/banana.png' %}" alt="Default Profile Picture" class="profile-image">
 			{% endif %}
 			<div class="username"><b>{{ user_info.username }}</b></div>
 			{% if user_info == request.user %}
