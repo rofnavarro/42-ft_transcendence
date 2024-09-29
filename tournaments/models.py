@@ -3,27 +3,28 @@ from users.models import CustomUser
 from match.models import Match
 from django.utils.translation import gettext_lazy
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
 class	Tournament(models.Model):
 	owner = models.ForeignKey(CustomUser, null=True, blank=True, on_delete=models.CASCADE)
 	players = models.ManyToManyField(CustomUser, related_name='tournaments')
 
-	date = models.DateTimeField(gettext_lazy('date'), auto_now_add=True)
+	date = models.DateTimeField('date', auto_now_add=True)
 	is_complete = models.BooleanField(default=False)
 	num_players = models.PositiveSmallIntegerField(choices=[(4, '4 Players'), (8, '8 Players')])  # Define o tamanho do torneio
 		
 	matches = models.ManyToManyField(Match, related_name='tournaments')
 
 	def __str__(self):
-		return f"Tournament {self.id} - {self.num_players} players"
+		return _(f"Tournament %(self.id)s - %(self.num_players)s players") % {'self.id': self.id, 'self.num_players': self.num_players}
 
 	def save(self, *args, **kwargs):
 		if self.players.count() != self.num_players:
-			raise ValidationError(gettext_lazy('The number of players must match the tournament type.'))
+			raise ValidationError(_('The number of players must match the tournament type.'))
 
 		required_matches = 3 if self.num_players == 4 else 7
 		if self.matches.count() != required_matches:
-			raise ValidationError(gettext_lazy('All matches must be completed before saving the tournament.'))
+			raise ValidationError(_('All matches must be completed before saving the tournament.'))
 		
 		if self.matches.count() == required_matches:
 			self.is_complete = True

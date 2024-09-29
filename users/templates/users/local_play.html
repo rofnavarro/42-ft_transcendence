@@ -23,6 +23,7 @@
 			</div>
 			<div id="qtd-turnos">
 				<h3><strong class="gradient-text">{% trans "Rounds" %}</strong></h3>
+				<p>{% trans "Choose the number of rounds:" %}</p>
 				<input type="radio" name="qtd-turnos" value="1" checked>
 				<label>1</label>
 				<input type="radio" name="qtd-turnos" value="3">
@@ -34,7 +35,7 @@
 				<h3><strong class="gradient-text">{% trans "Theme" %}</strong></h3>
 				<input type="radio" name="background" value="#0a0a0a" checked>
 				<label>{% trans "Dark" %}</label>
-				<input type="radio" name="background" value="#c3c6f1">
+				<input type="radio" name="background" value="#6f6899">
 				<label>{% trans "Light" %}</label>
 				<input type="radio" name="background" value="#252e59">
 				<label>{% trans "Modern" %}</label>
@@ -45,7 +46,7 @@
 			<p>{% trans "Choose who is playing with you:" %}</p>
 			<div class="players">
 				<div id="player1" class="player">
-					<h4>{% trans "Player 1 (You)" %}</h4>
+					<h4>{% trans "Player 1" %}</h4>
 					<input type="hidden" id="player1-name" name="player1" value="{{ request.user.username }}">
 					<input type="hidden" id="player1-nickname" name="player1-nickname" value="{{ request.user.nickname }}">
 					<span id="player1-label">{{ request.user.nickname }}</span>
@@ -76,8 +77,9 @@
 			</div>
 		</div>
 
-		<div id="friend-modal" style="display:none;">
+		<div id="friend-modal" class="modal" style="display:none;">
 			<div class="modal-content">
+				<span class="close-button" onclick="closeFriendModal()">×</span>
 				<h3><strong class="gradient-text">{% trans "Invite a Friend" %}</strong></h3>
 				<ul id="friends-list">
 					{% for friend in friends %}
@@ -89,10 +91,9 @@
 				<button class="small-button" onclick="closeFriendModal()">{% trans "Close" %}</button>
 			</div>
 		</div>
-
-			<div class="start-button">
-				<button type="submit" class="small-button" onclick="prepareForm()">{% trans "Start Game!" %}</button>
-			</div>
+		<div class="start-button">
+			<button type="submit" class="small-button" onclick="prepareForm()">{% trans "Start Game!" %}</button>
+		</div>
 	</form>
 {% endblock %}
 
@@ -129,5 +130,27 @@
 			document.getElementById(`invite-btn-${playerId}`).style.display = 'none';
 			closeFriendModal();
 		}
+
+		function prepareForm() {
+			const player1 = document.getElementById('player1-name').value;
+            const player2 = document.getElementById('player2-name').value;
+            const player3 = document.getElementById('player3-name').value;
+            const player4 = document.getElementById('player4-name').value;
+
+            const turns = document.querySelector('input[name="qtd-turnos"]:checked').value;
+
+            const color = document.querySelector('input[name="background"]:checked').value;
+
+            const players = [player1, player2];
+            if (document.getElementById('player3').style.display !== 'none') players.push(player3);
+            if (document.getElementById('player4').style.display !== 'none') players.push(player4);
+
+            const validPlayers = players.filter(player => player !== '');
+
+            if (validPlayers.length < 2) {
+                alert('Need at last 2 players.');
+                event.preventDefault();
+		}
+	}
 	</script>
 {% endblock %}

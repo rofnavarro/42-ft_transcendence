@@ -11,13 +11,13 @@ var rounds = [];
 var Ball = {
 	new: function (incrementSpeed) {
 		return {
-			width: 10,
-			height: 10,
-			x: (this.canvas.width / 2) - 5,
-			y: (this.canvas.height / 2) - 5,
+			width: 18,
+			height: 18,
+			x: (this.canvas.width / 2) - 9,
+			y: (this.canvas.height / 2) - 9,
 			moveX: Math.random() > 0.5 ? DIRECTION.RIGHT : DIRECTION.LEFT,
 			moveY: Math.random() > 0.5 ? DIRECTION.DOWN : DIRECTION.UP,
-			speed: incrementSpeed || 10
+			speed: incrementSpeed || 7
 		};
 	}
 };
@@ -28,9 +28,9 @@ var Computer = {
 			nickname: nickname,
 			username: username,
 			width: 18,
-			height: 100,
-			x: side === 'left' ? 10 : this.canvas.width - 30,
-			y: (this.canvas.height / 2) - 90,
+			height: 180,
+			x: side === 'left' ? 150 : this.canvas.width - 150,
+			y: (this.canvas.height / 2) - 35,
 			score: 0,
 			move: DIRECTION.IDLE,
 			speed: 8
@@ -39,33 +39,25 @@ var Computer = {
 };
 
 var Game = {
-	initialize: function (usernames, nicknames, turns, color) {
+	initialize: function (username1, username2, nickname1, nickname2, turns, match) {
 		this.canvas = document.querySelector('canvas');
 		this.context = this.canvas.getContext('2d');
 
 		this.canvas.width = 2800;
-		this.canvas.height = 1000;
+		this.canvas.height = 1200;
 
 		this.canvas.style.width = (this.canvas.width / 2) + 'px';
 		this.canvas.style.height = (this.canvas.height / 2) + 'px';
 
-		this.playerA = Computer.new.call(this, 'left', usernames[0], nicknames[0]);
-		this.playerB = Computer.new.call(this, 'right', usernames[1], nicknames[1]);
-		this.playerC = Computer.new.call(this, 'left', usernames[2], nicknames[2]);
-		this.playerD = Computer.new.call(this, 'right', usernames[3], nicknames[3]);
-
-
-		this.playerA.y = (this.canvas.height / 2) - 180;
-		this.playerC.y = (this.canvas.height / 2) + 100;
-		this.playerB.y = (this.canvas.height / 2) - 180;
-		this.playerD.y = (this.canvas.height / 2) + 100;
-
+		this.playerA = Computer.new.call(this, 'left', username1, nickname1);
+		this.playerB = Computer.new.call(this, 'right', username2, nickname2);
+		
 		this.ball = Ball.new.call(this);
 
-		this.running = this.over = this.matchSaved = false;
+		this.running = this.over = false;
 		this.turn = this.playerB;
 		this.timer = this.round = 0;
-		this.color = color;
+		this.color = "#0A0A0A";
 
 		this.roundsWonA = 0;
 		this.roundsWonB = 0;
@@ -73,6 +65,7 @@ var Game = {
 
 		const _turns = parseInt(turns, 10);
 		rounds = Array(_turns).fill(3);
+		this.match = match;
 
 		this.drawMenu();
 		this.addEventListeners();
@@ -86,35 +79,52 @@ var Game = {
 
 		this.context.font = '50px Dosis';
 		this.context.textAlign = 'center';
-		this.context.fillStyle = '#858cee';
+		this.context.fillStyle = '#7B68EE';
 		this.context.fillText('Press any key to begin', this.canvas.width / 2, this.canvas.height / 2 + 15);
 	},
 
 	endGameMenu: function (text) {
+		this.resetBall();
 		this.context.font = '45px Dosis';
 		this.context.fillStyle = this.color;
 		this.context.fillRect(this.canvas.width / 2 - 350, this.canvas.height / 2 - 48, 700, 100);
-		this.context.fillStyle = '#858cee';
+		this.context.fillStyle = '#7B68EE';
 		this.context.fillText(text, this.canvas.width / 2, this.canvas.height / 2 + 15);
+	
+		if (this.match === '1'){
+			document.getElementById('match-resultA-player').value = `${this.playerA.nickname}`;
+			document.getElementById('match-resultA-score').value = `${this.roundsWonA}`;
+			document.getElementById('match-resultB-player').value = `${this.playerB.nickname}`;
+			document.getElementById('match-resultB-score').value = `${this.roundsWonB}`;
+			const winner1 = document.getElementById('winner1');
+			if (winner1) {
+				winner1.value = `${this.roundsWonA > this.roundsWonB ? this.playerA.nickname : this.playerB.nickname}`;
+			}
+		}
+		else if (this.match === '2'){
+			document.getElementById('match-resultC-player').value = `${this.playerA.nickname}`;
+			document.getElementById('match-resultC-score').value = `${this.roundsWonA}`;
+			document.getElementById('match-resultD-player').value = `${this.playerB.nickname}`;
+			document.getElementById('match-resultD-score').value = `${this.roundsWonB}`;
+			const winner2 = document.getElementById('winner2');
+			if (winner2) {
+				winner2.value = `${this.roundsWonA > this.roundsWonB ? this.playerA.nickname : this.playerB.nickname}`;
+			}
+		}
 	},
 
 	addEventListeners: function () {
 		document.addEventListener('keydown', (event) => {
+			event.preventDefault();
 			if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-				event.preventDefault();
 				if (event.key === 'ArrowUp') this.playerB.move = DIRECTION.UP;
 				if (event.key === 'ArrowDown') this.playerB.move = DIRECTION.DOWN;
 			}
-			if (event.key === 'i') this.playerD.move = DIRECTION.UP;
-			if (event.key === 'k') this.playerD.move = DIRECTION.DOWN;
 			if (event.key === 'w') this.playerA.move = DIRECTION.UP;
 			if (event.key === 's') this.playerA.move = DIRECTION.DOWN;
-			if (event.key === 'q') this.playerC.move = DIRECTION.UP;
-			if (event.key === 'a') this.playerC.move = DIRECTION.DOWN;
 			if (event.key === ' ' ) {
 				this.pauseGame = false;
 			}
-
 			if (!this.running && !this.over) {
 				this.running = true;
 				this.startGame();
@@ -122,10 +132,9 @@ var Game = {
 		});
 
 		document.addEventListener('keyup', (event) => {
+			event.preventDefault();
 			if (event.key === 'ArrowUp' || event.key === 'ArrowDown') this.playerB.move = DIRECTION.IDLE;
-			if (event.key === 'i' || event.key === 'k') this.playerD.move = DIRECTION.IDLE;
 			if (event.key === 'w' || event.key === 's') this.playerA.move = DIRECTION.IDLE;
-			if (event.key === 'q' || event.key === 'a') this.playerC.move = DIRECTION.IDLE;
 		});
 	},
 
@@ -141,6 +150,7 @@ var Game = {
 	},
 
 	update: function () {
+		console.log(this.ball.speed);
 		if (!this.over && !this.pauseGame) {
 			this.handleBallCollisions();
 			this.handlePlayerMovements();
@@ -148,18 +158,14 @@ var Game = {
 
 			this.checkRoundEnd();
 		}
-
-		if (this.over === true && this.matchSaved === false)
+		if (this.over === true)
 		{
-			saveMatch(this.playerA.username, this.playerB.username, this.playerC.username, this.playerD.username, this.roundsWonA, this.roundsWonB);
-			this.matchSaved = true;
 			return;
 		}
 	},
 	
-		detectCollision: function (ball, player) {
+	detectCollision: function (ball, player) {
 		const nextBallX = ball.x + (ball.moveX === DIRECTION.RIGHT ? ball.speed : (ball.moveX === DIRECTION.LEFT ? -ball.speed : 0));
-
 		const nextBallY = ball.y + (ball.moveY === DIRECTION.UP ? ball.speed : (ball.moveY === DIRECTION.DOWN ? +ball.speed : 0));
 
 		return (nextBallX < player.x + player.width &&
@@ -168,16 +174,11 @@ var Game = {
 				nextBallY + ball.height > player.y);
 	},
 
-	detectPlayerCollision: function (player1, player2) {
-		return (player1.y < player2.y + player2.height && player1.y + player1.height > player2.y); 
-	},
-	
-
 	handleBallCollisions: function () {
 		if (this.ball.x - (this.ball.width / 2) <= 0) this.resetTurn(this.playerB, this.playerA);
 		if (this.ball.x + (this.ball.width / 2) >= this.canvas.width) this.resetTurn(this.playerA, this.playerB);
 		if (this.ball.y - (this.ball.height / 2) <= 0) this.ball.moveY = DIRECTION.DOWN;
-		if (this.ball.y + (this.ball.height / 2) >= this.canvas.height) this.ball.moveY = DIRECTION.UP;
+		if (this.ball.y + (this.ball.height) >= this.canvas.height) this.ball.moveY = DIRECTION.UP;
 
 		if (this.detectCollision(this.ball, this.playerA)) {
 			this.handlePlayerCollision(this.playerA, DIRECTION.RIGHT);
@@ -185,13 +186,6 @@ var Game = {
 
 		if (this.detectCollision(this.ball, this.playerB)) {
 			this.handlePlayerCollision(this.playerB, DIRECTION.LEFT);
-		}
-		if (this.detectCollision(this.ball, this.playerC)) {
-			this.handlePlayerCollision(this.playerC, DIRECTION.RIGHT);
-		}
-
-		if (this.detectCollision(this.ball, this.playerD)) {
-			this.handlePlayerCollision(this.playerD, DIRECTION.LEFT);
 		}
 	},
 
@@ -202,7 +196,7 @@ var Game = {
 
 		this.ball.moveX = newMoveX;
 		this.ball.moveY = (angle > 0) ? DIRECTION.DOWN : DIRECTION.UP;
-		this.ball.speed += 1;
+		this.ball.speed += 0.25;
 
 		if (newMoveX === DIRECTION.RIGHT) {
 			this.ball.x = player.x + player.width;
@@ -212,47 +206,13 @@ var Game = {
 	},
 
 	handlePlayerMovements: function () {
-		if (this.playerA.move === DIRECTION.DOWN) {
-			this.playerA.y += this.playerA.speed;
-			if (this.detectPlayerCollision(this.playerA, this.playerC)) {
-				this.playerA.y = this.playerC.y - this.playerC.height;
-			}
-		}
-		if (this.playerA.move === DIRECTION.UP) {
-			this.playerA.y -= this.playerA.speed;
-		}
-		if (this.playerB.move === DIRECTION.DOWN) {
-			this.playerB.y += this.playerB.speed;
-			if (this.detectPlayerCollision(this.playerB, this.playerD)) {
-				this.playerB.y = this.playerD.y - this.playerD.height;
-			}
-		}
-		if (this.playerB.move === DIRECTION.UP) {
-			this.playerB.y -= this.playerB.speed;
-		}
-		if (this.playerC.move === DIRECTION.DOWN) {
-			this.playerC.y += this.playerC.speed;
-		}
-		if (this.playerC.move === DIRECTION.UP) {
-			this.playerC.y -= this.playerC.speed;
-			if (this.detectPlayerCollision(this.playerC, this.playerA)) {
-				this.playerC.y = this.playerA.y + this.playerA.height;
-			}
-		}
-		if (this.playerD.move === DIRECTION.DOWN) {
-			this.playerD.y += this.playerD.speed;
-		}
-		if (this.playerD.move === DIRECTION.UP) {
-			this.playerD.y -= this.playerD.speed;
-			if (this.detectPlayerCollision(this.playerD, this.playerB)) {
-				this.playerD.y = this.playerB.y + this.playerB.height;
-			}
-		}
+		if (this.playerA.move === DIRECTION.UP) this.playerA.y -= this.playerA.speed;
+		if (this.playerA.move === DIRECTION.DOWN) this.playerA.y += this.playerA.speed;
+		if (this.playerB.move === DIRECTION.UP) this.playerB.y -= this.playerB.speed;
+		if (this.playerB.move === DIRECTION.DOWN) this.playerB.y += this.playerB.speed;
 
 		this.playerA.y = Math.max(0, Math.min(this.canvas.height - this.playerA.height, this.playerA.y));
 		this.playerB.y = Math.max(0, Math.min(this.canvas.height - this.playerB.height, this.playerB.y));
-		this.playerC.y = Math.max(0, Math.min(this.canvas.height - this.playerC.height, this.playerC.y));
-		this.playerD.y = Math.max(0, Math.min(this.canvas.height - this.playerD.height, this.playerD.y));
 	},
 
 	handleBallMovement: function () {
@@ -269,13 +229,11 @@ var Game = {
 			if (!rounds[this.round + 1]) {
 				this.over = true;
 				this.resetBall();
-				setTimeout(() => { this.endGameMenu('Left Side wins!'); }, 10000);
+				setTimeout(() => { this.endGameMenu('Player 1 wins!'); }, 1000);
 			} else {
 				this.playerA.score = this.playerB.score = 0;
 				this.playerA.speed += 1;
 				this.playerB.speed += 1;
-				this.playerC.speed += 1;
-				this.playerD.speed += 1;
 				this.round++;
 				this.resetBall();
 				this.turn = this.playerB;
@@ -287,13 +245,11 @@ var Game = {
 			if (!rounds[this.round + 1]) {
 				this.over = true;
 				this.resetBall();
-				setTimeout(() => { this.endGameMenu('Right Side wins!'); }, 10000);
+				setTimeout(() => { this.endGameMenu('Player 2 wins!'); }, 1000);
 			} else {
 				this.playerA.score = this.playerB.score = 0;
 				this.playerA.speed += 1;
 				this.playerB.speed += 1;
-				this.playerC.speed += 1;
-				this.playerD.speed += 1;
 				this.round++;
 				this.resetBall();
 				this.turn = this.playerA;
@@ -308,10 +264,10 @@ var Game = {
 	},
 
 	resetBall: function () {
+		this.ball.speed = 0;
 		this.ball = Ball.new.call(this);
 		this.ball.moveX = Math.random() > 0.5 ? DIRECTION.RIGHT : DIRECTION.LEFT;
 		this.ball.moveY = Math.random() > 0.5 ? DIRECTION.DOWN : DIRECTION.UP;
-		this.ball.speed = 10;
 	},
 
 	render: function () {
@@ -323,9 +279,7 @@ var Game = {
 		this.context.fillStyle = '#858cee';
 		this.context.fillRect(this.playerA.x, this.playerA.y, this.playerA.width, this.playerA.height);
 		this.context.fillRect(this.playerB.x, this.playerB.y, this.playerB.width, this.playerB.height);
-		this.context.fillRect(this.playerC.x, this.playerC.y, this.playerC.width, this.playerC.height);
-		this.context.fillRect(this.playerD.x, this.playerD.y, this.playerD.width, this.playerD.height);
-
+		
 		this.context.fillRect(this.canvas.width / 2 - 3, 60, 6, this.canvas.height - 120);
 
 		this.context.beginPath();
@@ -335,79 +289,29 @@ var Game = {
 		this.context.closePath();
 
 		this.context.font = '45px Dosis';
-		this.context.fillStyle = '#858cee';
+		this.context.fillStyle = '#7B68EE';
 		this.context.fillText(this.playerA.score, this.canvas.width / 2 - 80, 50);
 		this.context.fillText(this.playerB.score, this.canvas.width / 2 + 70, 50);
 
 		this.context.font = '45px Dosis';
-		this.context.fillStyle = '#858cee';
+		this.context.fillStyle = '#7B68EE';
 		this.context.fillText(`Round: ${this.round + 1} / ${rounds.length}`, this.canvas.width / 2, this.canvas.height - 20);
 	
 		this.context.fillText(`${this.playerA.nickname}: ${this.roundsWonA}`, 0 + 200, 50);
 		this.context.fillText(`${this.playerB.nickname}: ${this.roundsWonB}`, this.canvas.width - 200, 50);
-		this.context.fillText(`${this.playerC.nickname}: ${this.roundsWonA}`, 0 + 200, this.canvas.height - 50);
-		this.context.fillText(`${this.playerD.nickname}: ${this.roundsWonB}`, this.canvas.width - 200, this.canvas.height - 50);
 
 		if (this.pauseGame === true) {
 			this.context.font = '45px Dosis';
 			this.context.fillStyle = this.color;
 			this.context.fillRect(this.canvas.width / 2 - 350, this.canvas.height / 2 - 48, 700, 100);
-			this.context.fillStyle = '#858cee';
+			this.context.fillStyle = '#7B68EE';
 			this.context.fillText('Press "space" to continue', this.canvas.width / 2, this.canvas.height / 2 + 15);
 		}
-		
-	}
+
+	},	
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-	Game.initialize(usernames, nicknames, turns, color);
+	
+	Game.initialize(username1, username2, nickname1, nickname2, turns, match);
 });
-
-
-
-function saveMatch(user1, user2, user3, user4, roundsWonA, roundsWonB) {
-	const data = {
-		user1: user1,
-		user2: user2,
-		user3: user3,
-		user4: user4,
-		score_user1: roundsWonA,
-		score_user3: roundsWonA,
-		score_user2: roundsWonB,
-		score_user4: roundsWonB
-	};
-
-	const csrftoken = getCookie('csrftoken');
-
-	fetch('/match/save_match_ajax_4', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			'X-CSRFToken': csrftoken
-		},
-		body: JSON.stringify(data)
-	})
-	.then(response => response.json())
-	.then(data => {
-		if (data.status === 'success') {
-		} else {
-			console.error('Error saving match:', data.message);
-		}
-	})
-	.catch(error => console.error('Error:', error));
-}
-
-function getCookie(name) {
-	let cookieValue = null;
-	if (document.cookie && document.cookie !== '') {
-		const cookies = document.cookie.split(';');
-		for (let i = 0; i < cookies.length; i++) {
-			const cookie = cookies[i].trim();
-			if (cookie.substring(0, name.length + 1) === (name + '=')) {
-				cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-				break;
-			}
-		}
-	}
-	return cookieValue;
-}

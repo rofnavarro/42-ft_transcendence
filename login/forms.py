@@ -1,16 +1,18 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from users.models import CustomUser
+from django.utils.translation import gettext_lazy as _
+from django.utils.safestring import mark_safe
 
 class	CustomAuthenticationForm(AuthenticationForm):
 	def	confirm_login_allowed(self, user):
 		if not user.is_active:
-			raise forms.ValidationError("This account is inactive.", code='inactive')
+			raise forms.ValidationError(_("This account is inactive."), code='inactive')
 		if user.is_superuser:
-			raise forms.ValidationError("Superuser cannot login from this form.", code='no_superuser')
+			raise forms.ValidationError(_("Superuser cannot login from this form."), code='no_superuser')
 
 	def	get_invalid_login_error(self):
-		return forms.ValidationError("Username or password is incorrect. Please try again.", code='invalid_login')
+		return forms.ValidationError(mark_safe(_("Username or password is incorrect. Please try again. <br>If this is your first login, go back to Home and sign up with 42.")), code='invalid_login')
 
 class	SetEmailForm(forms.ModelForm):
 	class Meta:
@@ -30,5 +32,5 @@ class	SetEmailForm(forms.ModelForm):
 	def clean_email(self):
 		email = self.cleaned_data.get('email')
 		if CustomUser.objects.filter(email=email).exists():
-			raise forms.ValidationError('This e-mail address is already in use.')
+			raise forms.ValidationError(_('This e-mail address is already in use.'))
 		return email

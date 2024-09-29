@@ -14,6 +14,7 @@ SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_SECURE = True
+SESSION_SAVE_EVERY_REQUEST = True
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -46,16 +47,19 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
 	'django.middleware.security.SecurityMiddleware',
 	'django.contrib.sessions.middleware.SessionMiddleware',
+	'django.middleware.locale.LocaleMiddleware',
 	'django.middleware.common.CommonMiddleware',
 	'django.middleware.csrf.CsrfViewMiddleware',
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-	'ft_transcendence.middleware.middlewareJWT.JWTMiddleware',
+	# 'ft_transcendence.middleware.middlewareJWT.JWTMiddleware',
 ]
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_NAME = 'sessionid'
 
 ROOT_URLCONF = 'ft_transcendence.urls'
 
@@ -112,10 +116,15 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Internationalization
-# LANGUAGE_CODE = 'en-us'
-LANGUAGE_CODE = 'pt-br'
+LANGUAGE_CODE = 'en-us'
+
+LANGUAGES = [
+	('en-us', 'English'),
+	('pt-br', 'Português'),
+]
+
 LOCALE_PATHS = [
-    os.path.join(BASE_DIR, 'locale'),
+	os.path.join(BASE_DIR, 'locale'),
 ]
 TIME_ZONE = 'UTC'
 USE_I18N = True

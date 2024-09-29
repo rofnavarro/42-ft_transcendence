@@ -7,34 +7,164 @@
 {% endblock %}
 
 {% block title %}
-	{% trans "Tournament's Pong Game" %}
+{% trans "Tournament's Pong Game" %}
 {% endblock %}
 
 {% block undertitle %}
-	<h1><strong class="gradient-text">{% trans "Tournament's Pong Game" %}</strong></h1>
+<h2><strong class="gradient-text">{% trans "Tournament's Pong Game" %}</strong></h2>
+
+<form id="tournament4-form" method="POST" action="{% url 'match:tournament_final' %}">
+	{% csrf_token %}
+	<div id="resultContainer">
+		<div class="result-content">
+			<span class="close-button" onclick="closeFriendModal()">×</span>
+			<h2><strong class="gradient-text">{% trans "Final Match" %}</strong></h2>
+			<p>{% trans "Prepare yourselves for the final match:" %}</p>
+			<p>Fulano <img src="{% static 'imgs/cross.png' %}" class="versus-small"> Sicrano </p>
+			<button type="button" class="small-button" id="finalButton" onclick="prepareForm(event)">Go to Final!</button>
+		</div>
+	</div>
+	<div class="tournament-first-round">
+		<div>
+			<h3 class="gradient-text">First Match</h3>
+			<p>{{ nicknames.0 }} <img src="{% static 'imgs/cross.png' %}" class="versus-small"> {{ nicknames.1 }}</p>
+			<button type="button" class="small-button" onclick="startMatch('{{ usernames.0 }}', '{{ usernames.1 }}', '{{ nicknames.0 }}', '{{ nicknames.1 }}', '{{ turns }}', '1')">
+				Start Match
+			</button>
+			<div class="match-result">
+				<input type="hidden" id="match-resultA-player" name="match-resultA-player" value="{{ nicknames.0 }}">
+				<input type="hidden" id="match-resultA-score" name="match-resultA-score" placeholder="Score A" value="">
+				<input type="hidden" id="match-resultB-player" name="match-resultB-player" value="{{ nicknames.1 }}">
+				<input type="hidden" id="match-resultB-score" name="match-resultB-score" placeholder="Score B" value="">
+				<input type="hidden" id="winner1" name="winner1" value="">
+			</div>
+		</div>
+		<div>
+		</div>
+		<div>
+		</div>
+		<div>
+			<h3 class="gradient-text">Second Match</h3>
+			<p>{{ nicknames.2 }} <img src="{% static 'imgs/cross.png' %}" class="versus-small"> {{ nicknames.3 }}</p>
+			<button type="button" class="small-button" onclick="startMatch('{{ usernames.2 }}', '{{ usernames.3 }}', '{{ nicknames.2 }}', '{{ nicknames.3 }}', '{{ turns }}', '2')">
+				Start Match
+			</button>
+			<div class="match-result">
+				<input type="hidden" id="match-resultC-player" name="match-resultC-player"value="{{ nicknames.2 }}">
+				<input type="hidden" id="match-resultC-score" name="match-resultC-score" placeholder="Score C" value="">
+				<input type="hidden" id="match-resultD-player" name="match-resultD-player" value="{{ nicknames.3 }}">
+				<input type="hidden" id="match-resultD-score" name="match-resultD-score" placeholder="Score D" value="">
+				<input type="hidden" is="winner2" id="winner2" value="">
+			</div>			
+		</div>
+	</div>
+</form>
 {% endblock %}
 
 {% block content %}
 	<canvas></canvas>
-	<h3><strong class="gradient-text">Instructions:</strong></h3>
-	<p class="game-instructions">
-    <b>{{ nicknames.0 }}:</b> Control the left player using the <strong>W and S keys</strong><br>
-		<b>{{ nicknames.1 }}:</b> Control the right player using the <strong>UP and DOWN arrow keys</strong><br>
-	</p>
+{% endblock %}
+
+{% block content2 %}
+	<style>
+		h2 {
+			margin-bottom: 10px;
+		}
+		
+		.tournament-first-round {
+			display: flex;
+			flex-direction: row;
+			gap: 50px;
+			margin-bottom: 10px;
+		}
+		.match-result {
+			display: flex;
+		}
+		#resultContainer {
+			display: none; /* Inicialmente escondido */
+			position: fixed;
+			z-index: 9999;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgba(0, 0, 0, 0.5);
+		}
+
+		.versus-small {
+		width: 20px;
+		height: 20px;
+		align-items: center;
+		padding: 5px;
+		vertical-align: middle;
+		}
+
+		.result-content {
+			margin-bottom: 10px;
+			background-color: #c3c6f1;
+			margin: 15% auto; /* Margem para centralizar verticalmente */
+			padding: 20px;
+			border: 1px solid #858cee;
+			border-radius: 10px;
+			width: 30%;
+			color: #040c30;
+			position: relative;
+		}
+
+		.close-button {
+			position: absolute;
+			top: 10px;
+			right: 15px;
+			font-size: 28px;
+			font-weight: bold;
+			cursor: pointer;
+		}
+	</style>
 {% endblock %}
 
 {% block scripts %}
-	<script>
-		usernames = [
-			'{{ usernames.0|default:"" }}',
-			'{{ usernames.1|default:"" }}',
-		];
-		nicknames = [
-			'{{ nicknames.0|default:"" }}',
-			'{{ nicknames.1|default:"" }}',
-		];
-		turns = {{ turns }}
-		color = '{{ color }}'
-	</script>
-	<script src="{% static 'js/game.js' %}"></script>
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		document.getElementById('resultContainer').style.display = 'none'
+	})
+
+	let scriptLoaded = false;
+
+	function prepareForm(event) {
+		event.preventDefault();
+		document.getElementById('tournament4-form').submit();
+	}
+	
+	function startMatch(username1, username2, nickname1, nickname2, turns, matchNumber) {
+		checkWinners();
+		if (scriptLoaded) {
+			Game.initialize(username1, username2, nickname1, nickname2, turns, matchNumber);
+			return;
+		}
+		scriptLoaded = true;
+		const script = document.createElement('script');
+		script.src = "{% static 'js/tournament_games.js' %}";
+		script.onload = () => {
+			Game.initialize(username1, username2, nickname1, nickname2, turns, matchNumber);
+		};
+		script.onerror = () => {
+			scriptLoaded = false;
+		};
+		document.body.appendChild(script);
+	}
+
+	function checkWinners() {
+		const winner1 = document.getElementById('winner1').value;
+		const winner2 = document.getElementById('winner2').value;
+	
+		if (winner1 || winner2) {
+			document.getElementById('resultContainer').style.display = 'block';
+		}
+	}
+
+	function closeFriendModal() {
+		document.getElementById('resultContainer').style.display = 'none';
+	}
+</script>
 {% endblock %}
