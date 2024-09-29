@@ -45,7 +45,7 @@
 			<p>{% trans "Choose who is playing with you:" %}</p>
 			<div class="players">
 				<div id="player1" class="player">
-					<h4>{% trans "Player 1 (You)" %}</h4>
+					<h4>{% trans "Player 1" %}</h4>
 					<input type="hidden" id="player1-name" name="player1" value="{{ request.user.username }}">
 					<input type="hidden" id="player1-nickname" name="player1-nickname" value="{{ request.user.nickname }}">
 					<span id="player1-label">{{ request.user.nickname }}</span>
@@ -89,10 +89,9 @@
 				<button class="small-button" onclick="closeFriendModal()">{% trans "Close" %}</button>
 			</div>
 		</div>
-
-			<div class="start-button">
-				<button type="submit" class="small-button" onclick="prepareForm()">{% trans "Start Game!" %}</button>
-			</div>
+		<div class="start-button">
+			<button type="submit" class="small-button" onclick="prepareForm()">{% trans "Start Game!" %}</button>
+		</div>
 	</form>
 {% endblock %}
 

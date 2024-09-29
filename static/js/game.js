@@ -115,10 +115,14 @@ var Game = {
 	},
 
 	startGame: function () {
-		this.timer = setInterval(() => {
+		const gameLoop = () => {
 			this.update();
 			this.render();
-		}, 1000 / 60);
+			if (this.running && !this.over) {
+				requestAnimationFrame(gameLoop);
+			}
+		};
+		requestAnimationFrame(gameLoop);
 	},
 
 	update: function () {
@@ -208,7 +212,6 @@ var Game = {
 				this.playerA.speed += 1;
 				this.playerB.speed += 1;
 				this.round++;
-				this.roundsWonA++;
 				this.resetBall();
 				this.turn = this.playerB;
 			}
@@ -225,7 +228,6 @@ var Game = {
 				this.playerA.speed += 1;
 				this.playerB.speed += 1;
 				this.round++;
-				this.roundsWonB++;
 				this.resetBall();
 				this.turn = this.playerA;
 			}

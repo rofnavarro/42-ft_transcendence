@@ -129,10 +129,15 @@ def tournament_games(request):
 			request.POST.get('player3-nickname'),
 			request.POST.get('player4-nickname'),
 		]
-		turns = request.POST.get('qtd-turnos')
-
+		turns = request.POST.get('turns')
 		return render(request, 'match/tournament_games.html', {'usernames': usernames, 'nicknames': nicknames, 'turns': turns})
 	return render(request, 'tournaments:tournament_4')
+
+def tournament_final(request):
+	if request.method == 'POST':
+		print(request.POST)
+		# return render(request, 'match/tournament_final.html')
+		pass
 
 @login_required
 def history(request, username):

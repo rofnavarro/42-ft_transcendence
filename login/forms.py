@@ -1,16 +1,17 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from users.models import CustomUser
+from django.utils.translation import gettext_lazy
 
 class	CustomAuthenticationForm(AuthenticationForm):
 	def	confirm_login_allowed(self, user):
 		if not user.is_active:
 			raise forms.ValidationError("This account is inactive.", code='inactive')
 		if user.is_superuser:
-			raise forms.ValidationError("Superuser cannot login from this form.", code='no_superuser')
+			raise forms.ValidationError(gettext_lazy("Superuser cannot login from this form."), code='no_superuser')
 
 	def	get_invalid_login_error(self):
-		return forms.ValidationError("Username or password is incorrect. Please try again.", code='invalid_login')
+		return forms.ValidationError(gettext_lazy("Username or password is incorrect. Please try again."), code='invalid_login')
 
 class	SetEmailForm(forms.ModelForm):
 	class Meta:
