@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-29 17:39-0300\n"
+"POT-Creation-Date: 2024-09-29 19:18-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -216,6 +216,13 @@ msgstr "Ganhador"
 msgid "Tournament"
 msgstr "Torneio"
 
+#: match/templates/match/tournament_final.html:10
+#: match/templates/match/tournament_final.html:14
+#, fuzzy
+#| msgid "Tournament's Pong Game"
+msgid "Tournament's Final Game"
+msgstr "Jogo Pong - Torneio"
+
 #: match/templates/match/tournament_games.html:10
 #: match/templates/match/tournament_games.html:14
 msgid "Tournament's Pong Game"
@@ -350,19 +357,6 @@ msgstr "Torneios"
 #: templates/layout.html:87
 msgid "Profile"
 msgstr "Perfil"
-
-#: tournaments/models.py:19
-#, python-format
-msgid "Tournament %(self.id)s - %(self.num_players)s players"
-msgstr "Torneio: Jogadores %(self.id)s - %(self.num_players)s"
-
-#: tournaments/models.py:23
-msgid "The number of players must match the tournament type."
-msgstr "O número de jogadores deve estar de acordo com o tipo de torneio."
-
-#: tournaments/models.py:27
-msgid "All matches must be completed before saving the tournament."
-msgstr "Todas as partidas devem estar completas antes de salvar o torneio."
 
 #: tournaments/templates/tournaments/tournament_4.html:6
 #: tournaments/templates/tournaments/tournament_4.html:10
@@ -575,6 +569,16 @@ msgstr "Jogo local"
 #: users/templates/users/wanna_play.html:23
 msgid "Create game"
 msgstr "Criar jogo"
+
+#, python-format
+#~ msgid "Tournament %(self.id)s - %(self.num_players)s players"
+#~ msgstr "Torneio: Jogadores %(self.id)s - %(self.num_players)s"
+
+#~ msgid "The number of players must match the tournament type."
+#~ msgstr "O número de jogadores deve estar de acordo com o tipo de torneio."
+
+#~ msgid "All matches must be completed before saving the tournament."
+#~ msgstr "Todas as partidas devem estar completas antes de salvar o torneio."
 
 #~ msgid "Instructions:"
 #~ msgstr "Instruções:"

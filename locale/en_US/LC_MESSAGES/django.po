@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-29 17:39-0300\n"
+"POT-Creation-Date: 2024-09-29 19:18-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -205,6 +205,11 @@ msgstr ""
 msgid "Tournament"
 msgstr ""
 
+#: match/templates/match/tournament_final.html:10
+#: match/templates/match/tournament_final.html:14
+msgid "Tournament's Final Game"
+msgstr ""
+
 #: match/templates/match/tournament_games.html:10
 #: match/templates/match/tournament_games.html:14
 msgid "Tournament's Pong Game"
@@ -332,19 +337,6 @@ msgstr ""
 
 #: templates/layout.html:87
 msgid "Profile"
-msgstr ""
-
-#: tournaments/models.py:19
-#, python-format
-msgid "Tournament %(self.id)s - %(self.num_players)s players"
-msgstr ""
-
-#: tournaments/models.py:23
-msgid "The number of players must match the tournament type."
-msgstr ""
-
-#: tournaments/models.py:27
-msgid "All matches must be completed before saving the tournament."
 msgstr ""
 
 #: tournaments/templates/tournaments/tournament_4.html:6
