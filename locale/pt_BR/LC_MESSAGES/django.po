@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-29 03:36-0300\n"
+"POT-Creation-Date: 2024-09-29 17:39-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -166,7 +166,7 @@ msgstr ""
 "\n"
 "Histórico de partidas de %(username)s\n"
 
-#: match/templates/match/history.html:12 users/templates/users/profile.html:89
+#: match/templates/match/history.html:12 users/templates/users/profile.html:112
 msgid "Matches History"
 msgstr "Histórico de Partidas"
 
@@ -221,11 +221,11 @@ msgstr "Torneio"
 msgid "Tournament's Pong Game"
 msgstr "Jogo Pong - Torneio"
 
-#: match/templates/match/tournament_games.html:20
+#: match/templates/match/tournament_games.html:21
 msgid "Final Match"
 msgstr "Final"
 
-#: match/templates/match/tournament_games.html:21
+#: match/templates/match/tournament_games.html:22
 msgid "Prepare yourselves for the final match:"
 msgstr "Preparem-se para a final:"
 
@@ -234,17 +234,17 @@ msgid "User"
 msgstr "Usuário"
 
 #: ranking/templates/ranking/ranking.html:21
-#: users/templates/users/profile.html:71
+#: users/templates/users/profile.html:94
 msgid "Matches"
 msgstr "Partidas"
 
 #: ranking/templates/ranking/ranking.html:22
-#: users/templates/users/profile.html:72
+#: users/templates/users/profile.html:95
 msgid "Wins"
 msgstr "Vitórias"
 
 #: ranking/templates/ranking/ranking.html:23
-#: users/templates/users/profile.html:73
+#: users/templates/users/profile.html:96
 msgid "Losses"
 msgstr "Derrotas"
 
@@ -332,29 +332,29 @@ msgstr "Login com a 42"
 msgid "Login with Username and Password"
 msgstr "Login com Nome de usuário e Senha"
 
-#: templates/layout.html:42
+#: templates/layout.html:65
 msgid "About"
 msgstr "Sobre"
 
-#: templates/layout.html:47 users/templates/users/local_play.html:5
+#: templates/layout.html:70 users/templates/users/local_play.html:5
 #: users/templates/users/tournament_play.html:6
 #: users/templates/users/wanna_play.html:6
 #: users/templates/users/wanna_play.html:10
 msgid "Play"
 msgstr "Jogar"
 
-#: templates/layout.html:54
+#: templates/layout.html:77
 msgid "Tournaments"
 msgstr "Torneios"
 
-#: templates/layout.html:64
+#: templates/layout.html:87
 msgid "Profile"
 msgstr "Perfil"
 
 #: tournaments/models.py:19
 #, python-format
 msgid "Tournament %(self.id)s - %(self.num_players)s players"
-msgstr ""
+msgstr "Torneio: Jogadores %(self.id)s - %(self.num_players)s"
 
 #: tournaments/models.py:23
 msgid "The number of players must match the tournament type."
@@ -405,22 +405,24 @@ msgstr "Jogador 4"
 msgid "Start Game!"
 msgstr "Começar o Jogo!"
 
-#: tournaments/templates/tournaments/tournament_4.html:72
+#: tournaments/templates/tournaments/tournament_4.html:73
 #: users/templates/users/local_play.html:83
 msgid "Invite a Friend"
 msgstr "Convide um Amigo"
 
-#: tournaments/templates/tournaments/tournament_4.html:77
+#: tournaments/templates/tournaments/tournament_4.html:78
 #: users/templates/users/local_play.html:88
+#: users/templates/users/profile.html:130
 msgid "You still don't have any friends."
 msgstr "Você ainda não tem amigos."
 
-#: tournaments/templates/tournaments/tournament_4.html:78
+#: tournaments/templates/tournaments/tournament_4.html:79
 msgid "You Loser!"
 msgstr "Perdedor!"
 
-#: tournaments/templates/tournaments/tournament_4.html:81
+#: tournaments/templates/tournaments/tournament_4.html:82
 #: users/templates/users/local_play.html:91
+#: users/templates/users/profile.html:48
 msgid "Close"
 msgstr "Fechar"
 
@@ -451,11 +453,6 @@ msgstr "O superusuário deve ter o atributo is_staff como verdadeiro."
 #: users/models.py:29
 msgid "Superuser must have is_superuser=True."
 msgstr "O superusuário deve ter o atributo is_superuser como verdadeiro"
-
-#: users/models.py:116
-#, python-format
-msgid "%(self.user1.username)s is friends with %(self.user2.username)s"
-msgstr ""
 
 #: users/templates/users/local_play.html:9
 msgid "Local Match Settings"
@@ -522,34 +519,42 @@ msgstr "Mudar Apelido"
 msgid "Save Changes"
 msgstr "Salvar Alterações"
 
-#: users/templates/users/profile.html:39
+#: users/templates/users/profile.html:34 users/templates/users/profile.html:135
+msgid "Add Friends"
+msgstr "Adicionar Amigos"
+
+#: users/templates/users/profile.html:41 users/templates/users/profile.html:142
+msgid "Add Friend"
+msgstr "Adicionar Amigo"
+
+#: users/templates/users/profile.html:45
+msgid "No users available. You're already friends with everyone!"
+msgstr ""
+
+#: users/templates/users/profile.html:62
 msgid "Delete Profile Photo"
 msgstr "Apagar Foto de Perfil"
 
-#: users/templates/users/profile.html:40
+#: users/templates/users/profile.html:63
 msgid "Update Profile Photo"
 msgstr "Atualizar Foto de Perfil"
 
-#: users/templates/users/profile.html:59
+#: users/templates/users/profile.html:82
 msgid "Change Photo"
 msgstr "Mudar Foto"
 
-#: users/templates/users/profile.html:66
+#: users/templates/users/profile.html:89
 msgid "Statistics"
 msgstr "Estatísticas"
 
-#: users/templates/users/profile.html:74
+#: users/templates/users/profile.html:97
 #, python-format
 msgid "%% Wins"
 msgstr "%% de Vitórias"
 
-#: users/templates/users/profile.html:96
+#: users/templates/users/profile.html:118
 msgid "Friends"
 msgstr "Amigos"
-
-#: users/templates/users/profile.html:117
-msgid "Add Friend"
-msgstr "Adicionar Amigo"
 
 #: users/templates/users/tournament_play.html:10
 msgid "Tournament Settings"

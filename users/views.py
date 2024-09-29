@@ -6,7 +6,10 @@ from django.contrib import messages
 
 def	user_profile(request, username):
 	user = get_object_or_404(CustomUser, username=username)
-	friends = user.friends.all()
+	friends = Friendship.objects.filter(user1=user).select_related('user2')
+	user_friends = Friendship.objects.filter(user1=request.user).values_list('user2', flat=True)
+	list_users = CustomUser.objects.exclude(id__in=user_friends).exclude(id=request.user.id)
+	
 
 	if not request.user.is_anonymous:
 		is_friend = request.user.friends.filter(username=user.username).exists()
@@ -34,6 +37,7 @@ def	user_profile(request, username):
 		return redirect('users:profile', username=username)
 	elif not request.user.is_anonymous:
 		picture_form = ProfilePictureForm(instance=request.user)
+	total_users = CustomUser.objects.all()
 
 	if not request.user.is_anonymous:
 		context = {
@@ -43,7 +47,8 @@ def	user_profile(request, username):
 			'form': form,
 			'picture_form': picture_form,
 			'annonymous': False,
-
+			'list_users': list_users,
+			'total_users': CustomUser.objects.count(),
 		}
 	else:
 		context = {
@@ -84,3 +89,14 @@ def tournament_play(request, username):
 	user = get_object_or_404(CustomUser, username=username)
 	friends = user.friends.all()
 	return render(request, 'users/tournament_play.html', {'user': user, 'friends': friends})
+
+@login_required
+def add_friend_modal(request, username):
+    to_user = get_object_or_404(CustomUser, username=username)
+    
+    # Adiciona o usuário como amigo, lógica similar à função de request existente
+    if request.user != to_user:
+        friendship, created = Friendship.objects.get_or_create(user1=request.user, user2=to_user)
+        if created:
+            Friendship.objects.get_or_create(user1=to_user, user2=request.user)
+    return redirect('users:profile', username=username)

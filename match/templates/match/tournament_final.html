@@ -13,42 +13,24 @@
 {% block undertitle %}
 <h2><strong class="gradient-text">{% trans "Tournament's Final Game" %}</strong></h2>
 
-<form id="tournament4-form" method="POST" action="{% url 'match:tournament_final' %}">
+<form id="final-form" method="POST" action="{% url 'match:finish' %}">
 	{% csrf_token %}
 	<div class="tournament-final">
-		<div>
-			<h3 class="gradient-text">Final Match</h3>
-			<p>{{ nicknames.0 }} <img src="{% static 'imgs/cross.png' %}" class="versus-small"> {{ nicknames.1 }}</p>
-			<button type="button" class="small-button" onclick="startMatch('{{ usernames.0 }}', '{{ usernames.1 }}', '{{ nicknames.0 }}', '{{ nicknames.1 }}', '{{ turns }}', '1')">
-				Start Match
-			</button>
-			<div class="match-result">
-				<input type="hidden" id="match-resultA-player" name="match-resultA-player" value="{{ nicknames.0 }}">
-				<input type="hidden" id="match-resultA-score" name="match-resultA-score" placeholder="Score A" value="">
-				<input type="hidden" id="match-resultB-player" name="match-resultB-player" value="{{ nicknames.1 }}">
-				<input type="hidden" id="match-resultB-score" name="match-resultB-score" placeholder="Score B" value="">
-				<input type="hidden" id="winner1" name="winner1" value="">
-			</div>
-		</div>
-		<div>
-		</div>
-		<div>
-		</div>
-		<div>
-			<h3 class="gradient-text">Second Match</h3>
-			<p>{{ nicknames.2 }} <img src="{% static 'imgs/cross.png' %}" class="versus-small"> {{ nicknames.3 }}</p>
-			<button type="button" class="small-button" onclick="startMatch('{{ usernames.2 }}', '{{ usernames.3 }}', '{{ nicknames.2 }}', '{{ nicknames.3 }}', '{{ turns }}', '2')">
-				Start Match
-			</button>
-			<div class="match-result">
-				<input type="hidden" id="match-resultC-player" name="match-resultC-player"value="{{ nicknames.2 }}">
-				<input type="hidden" id="match-resultC-score" name="match-resultC-score" placeholder="Score C" value="">
-				<input type="hidden" id="match-resultD-player" name="match-resultD-player" value="{{ nicknames.3 }}">
-				<input type="hidden" id="match-resultD-score" name="match-resultD-score" placeholder="Score D" value="">
-				<input type="hidden" is="winner2" id="winner2" value="">
-			</div>			
+		<h3 class="gradient-text">Final Match</h3>
+		<p>{{ user1.nickname }} <img src="{% static 'imgs/cross.png' %}" class="versus-small"> {{ user2.nickname }}</p>
+		<div class="match-result">
+			<input type="hidden" id="match-resultA-player" name="match-resultA-player" value="{{ user1.username}}">
+			<input type="hidden" id="match-resultA-score" name="match-resultA-score" placeholder="Score A" value="">
+			<input type="hidden" id="match-resultB-player" name="match-resultB-player" value="{{ user2.username }}">
+			<input type="hidden" id="match-resultB-score" name="match-resultB-score" placeholder="Score B" value="">
+			<input type="hidden" id="winner1" name="winner1" value="">
+			<input type="hidden" id="tournament" name="tournament" value="{{ id_tournament }}">
 		</div>
 	</div>
+	<button type="button" class="small-button" id="startButton" onclick="startMatch('{{ user1.username }}', '{{ user2.username }}', '{{ user1.nickname }}', '{{ user2.nickname }}', '{{ turns }}', '1')">
+		Start Match
+	</button>
+	<button type="button" class="small-button" id="finalButton" onclick="prepareForm(event)" style="display: none;">SAVE</button>
 </form>
 {% endblock %}
 
@@ -116,19 +98,22 @@
 
 {% block scripts %}
 <script>
-	document.addEventListener('DOMContentLoaded', function() {
-		document.getElementById('resultContainer').style.display = 'none'
-	})
-
 	let scriptLoaded = false;
 
 	function prepareForm(event) {
 		event.preventDefault();
-		document.getElementById('tournament4-form').submit();
+		document.getElementById('final-form').submit();
+
 	}
 	
 	function startMatch(username1, username2, nickname1, nickname2, turns, matchNumber) {
-		checkWinners();
+		const finalButton = document.getElementById('finalButton');
+		finalButton.style.display = 'inline-block';
+
+		const startButton = document.getElementById('startButton');
+		startButton.style.display = 'none';
+
+
 		if (scriptLoaded) {
 			Game.initialize(username1, username2, nickname1, nickname2, turns, matchNumber);
 			return;
@@ -143,19 +128,6 @@
 			scriptLoaded = false;
 		};
 		document.body.appendChild(script);
-	}
-
-	function checkWinners() {
-		const winner1 = document.getElementById('winner1').value;
-		const winner2 = document.getElementById('winner2').value;
-	
-		if (winner1 || winner2) {
-			document.getElementById('resultContainer').style.display = 'block';
-		}
-	}
-
-	function closeFriendModal() {
-		document.getElementById('resultContainer').style.display = 'none';
 	}
 </script>
 {% endblock %}
