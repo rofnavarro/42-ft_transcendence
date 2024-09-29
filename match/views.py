@@ -136,8 +136,8 @@ def tournament_games(request):
 def tournament_final(request):
 	if request.method == 'POST':
 		print(request.POST)
-		# return render(request, 'match/tournament_final.html')
-		pass
+		return render(request, 'match/tournament_final.html')
+	return render(request, 'home')
 
 @login_required
 def history(request, username):

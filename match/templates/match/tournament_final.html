@@ -7,28 +7,17 @@
 {% endblock %}
 
 {% block title %}
-{% trans "Tournament's Pong Game" %}
+{% trans "Tournament's Final Game" %}
 {% endblock %}
 
 {% block undertitle %}
-<h2><strong class="gradient-text">{% trans "Tournament's Pong Game" %}</strong></h2>
+<h2><strong class="gradient-text">{% trans "Tournament's Final Game" %}</strong></h2>
 
 <form id="tournament4-form" method="POST" action="{% url 'match:tournament_final' %}">
 	{% csrf_token %}
-	<div id="resultContainer">
-		<div class="result-content">
-			<span class="close-button" onclick="closeFriendModal()">×</span>
-			<h2><strong class="gradient-text">{% trans "Final Match" %}</strong></h2>
-			<p>{% trans "Prepare yourselves for the final match:" %}</p>
-			<input type="text" id="winner1" class="winner-light" name="winner1" value="">
-			<img src="{% static 'imgs/cross.png' %}" class="versus-small">
-			<input type="text" id="winner2" class="winner-light" name="winner2" value="">
-			<button type="button" class="small-button" id="finalButton" onclick="prepareForm(event)">Go to Final!</button>
-		</div>
-	</div>
-	<div class="tournament-first-round">
+	<div class="tournament-final">
 		<div>
-			<h3 class="gradient-text">First Match</h3>
+			<h3 class="gradient-text">Final Match</h3>
 			<p>{{ nicknames.0 }} <img src="{% static 'imgs/cross.png' %}" class="versus-small"> {{ nicknames.1 }}</p>
 			<button type="button" class="small-button" onclick="startMatch('{{ usernames.0 }}', '{{ usernames.1 }}', '{{ nicknames.0 }}', '{{ nicknames.1 }}', '{{ turns }}', '1')">
 				Start Match
@@ -38,7 +27,7 @@
 				<input type="hidden" id="match-resultA-score" name="match-resultA-score" placeholder="Score A" value="">
 				<input type="hidden" id="match-resultB-player" name="match-resultB-player" value="{{ nicknames.1 }}">
 				<input type="hidden" id="match-resultB-score" name="match-resultB-score" placeholder="Score B" value="">
-				<input type="hidden" id="winner1" class="winner-dark" name="winner1" value="">
+				<input type="hidden" id="winner1" name="winner1" value="">
 			</div>
 		</div>
 		<div>
@@ -56,7 +45,7 @@
 				<input type="hidden" id="match-resultC-score" name="match-resultC-score" placeholder="Score C" value="">
 				<input type="hidden" id="match-resultD-player" name="match-resultD-player" value="{{ nicknames.3 }}">
 				<input type="hidden" id="match-resultD-score" name="match-resultD-score" placeholder="Score D" value="">
-				<input type="hidden" id="winner2" class="winner-dark" name="winner2" value="">
+				<input type="hidden" is="winner2" id="winner2" value="">
 			</div>			
 		</div>
 	</div>
@@ -160,7 +149,7 @@
 		const winner1 = document.getElementById('winner1').value;
 		const winner2 = document.getElementById('winner2').value;
 	
-		if (winner1 !== "" && winner2 !== "") {
+		if (winner1 || winner2) {
 			document.getElementById('resultContainer').style.display = 'block';
 		}
 	}
