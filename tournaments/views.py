@@ -102,7 +102,7 @@ def tournament_4(request):
 		turns = request.POST.get('qtd-turnos')
 		user = get_object_or_404(CustomUser, username=request.user.username)
 		friends = user.friends.all()
-	return render(request, 'tournaments/tournament_4.html', {'user': user, 'friends': friends, 'turns': turns})
+		return render(request, 'tournaments/tournament_4.html', {'user': user, 'friends': friends, 'turns': turns})
 
 
 def tournament_8(request):

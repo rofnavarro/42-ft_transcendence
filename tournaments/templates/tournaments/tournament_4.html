@@ -11,9 +11,10 @@
 {% endblock %}
 
 {% block content %}
-<form id="game-form" method="POST" action="">
+<form id="game-form" method="POST" action="{% url 'match:tournament_games' %}">
 	{% csrf_token %}
 	<div class="tournament-bracket">
+		<input type="hidden" id="turns" name="turns" value="{{ turns }}">
 		<div class="round round-1">
 			<div class="match">
 				<div id="player1" class="player">

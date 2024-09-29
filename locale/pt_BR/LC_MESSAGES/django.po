@@ -462,7 +462,7 @@ msgstr "Escolha quem jogará com você:"
 
 #: users/templates/users/local_play.html:48
 msgid "Player 1 (You)"
-msgstr "Jogador 1 (Você)"
+msgstr "Jogador 1"
 
 #: users/templates/users/profile.html:6
 #, python-format
