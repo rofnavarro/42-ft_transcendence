@@ -441,7 +441,7 @@ canvas {
     display: flex;
     flex-direction: row;
     align-items: center;
-	justify-content: space-between;
+	justify-content: center;
 }
 
 .profile-image-section {
@@ -525,6 +525,19 @@ canvas {
 	max-height: 500px;
 	margin-left: 100px;
 	align-items: center;
+	position: relative;
+}
+
+.friends-section button.small-button,
+.friends-section form button.small-button {
+	margin-top: 20px;
+    display: block;
+    width: auto;
+    max-width: 150px;
+    padding: 8px 16px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .friends-section li {
@@ -829,10 +842,66 @@ input:focus {
 }
 
 .close-button {
-	position: absolute;
-	top: 10px;
-	right: 15px;
-	font-size: 28px;
-	font-weight: bold;
-	cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-modal-button {
+    margin-top: 20px;
+    display: block;
+    width: auto;
+    padding: 8px 16px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.add-friends-modal {
+	display: none; /* Inicialmente escondido */
+	position: fixed;
+	z-index: 9999;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.add-friends-modal-content {
+	background-color: #c3c6f1;
+	margin: 15% auto; /* Margem para centralizar verticalmente */
+	padding: 20px;
+	border: 1px solid #858cee;
+	border-radius: 10px;
+	width: 20%; /* Largura do modal */
+	color: #040c30;
+	position: relative;
+}
+
+.add-friends-modal ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+}
+
+.add-friends-modal li {
+	display: block;
+	margin-bottom: 5px;
+	align-items: center;
+}
+
+.add-friends-modal a {
+	text-decoration: none;
+	color: #252e59;
+}
+
+.add-friends-modal a:hover {
+	color: #9754e9;
+	transition-duration: 0.4s;
 }

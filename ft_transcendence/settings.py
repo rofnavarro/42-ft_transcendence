@@ -54,7 +54,7 @@ MIDDLEWARE = [
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-	# 'ft_transcendence.middleware.middlewareJWT.JWTMiddleware',
+	'ft_transcendence.middleware.middlewareJWT.JWTMiddleware',
 ]
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
