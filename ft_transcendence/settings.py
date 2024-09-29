@@ -142,3 +142,9 @@ EMAIL_HOST_USER = 'transcendencenana@gmail.com'
 EMAIL_HOST_PASSWORD = 'iwpl clet ncyl ycpk'
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# JWEB3
+BOOL_WEB3 = False
+#TODO: adicionar as hash em um models para salvar e manter a persistencia
+TX_HASH = ""
+TX_RECEIPT = []
