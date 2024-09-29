@@ -69,6 +69,7 @@
 </form>
 <div id="friend-modal" class="modal" style="display:none;">
 	<div class="modal-content">
+		<span class="close-button" onclick="closeFriendModal()">×</span>
 		<h3><strong class="gradient-text">{% trans "Invite a Friend" %}</strong></h3>
 		<ul id="friends-list">
 			{% for friend in friends %}

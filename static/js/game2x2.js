@@ -328,8 +328,11 @@ var Game = {
 
 		this.context.fillRect(this.canvas.width / 2 - 3, 60, 6, this.canvas.height - 120);
 
+		this.context.beginPath();
+		this.context.arc(this.ball.x + this.ball.width / 2, this.ball.y + this.ball.height / 2, this.ball.width / 2, 0, Math.PI * 2);
 		this.context.fillStyle = '#ffffff';
-		this.context.fillRect(this.ball.x, this.ball.y, this.ball.width, this.ball.height);
+		this.context.fill();
+		this.context.closePath();
 
 		this.context.font = '45px Dosis';
 		this.context.fillStyle = '#858cee';

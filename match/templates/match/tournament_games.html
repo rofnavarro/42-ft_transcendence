@@ -17,10 +17,11 @@
 	{% csrf_token %}
 	<div id="resultContainer">
 		<div class="result-content">
+			<span class="close-button" onclick="closeFriendModal()">×</span>
 			<h2><strong class="gradient-text">{% trans "Final Match" %}</strong></h2>
 			<p>{% trans "Prepare yourselves for the final match:" %}</p>
-			<p>{{ winner1 }} <img src="{% static 'imgs/cross.png' %}" class="versus-small"> {{ winner2 }} </p>
-			<button type="button" id="finalButton" onclick="prepareForm(event)">Go to Final!</button>
+			<p>Fulano <img src="{% static 'imgs/cross.png' %}" class="versus-small"> Sicrano </p>
+			<button type="button" class="small-button" id="finalButton" onclick="prepareForm(event)">Go to Final!</button>
 		</div>
 	</div>
 	<div class="tournament-first-round">
@@ -106,9 +107,18 @@
 			padding: 20px;
 			border: 1px solid #858cee;
 			border-radius: 10px;
-			width: 40%; /* Largura do modal */
+			width: 30%;
 			color: #040c30;
 			position: relative;
+		}
+
+		.close-button {
+			position: absolute;
+			top: 10px;
+			right: 15px;
+			font-size: 28px;
+			font-weight: bold;
+			cursor: pointer;
 		}
 	</style>
 {% endblock %}
@@ -151,6 +161,10 @@
 		if (winner1 || winner2) {
 			document.getElementById('resultContainer').style.display = 'block';
 		}
+	}
+
+	function closeFriendModal() {
+		document.getElementById('resultContainer').style.display = 'none';
 	}
 </script>
 {% endblock %}
