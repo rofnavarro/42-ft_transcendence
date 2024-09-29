@@ -1,21 +1,23 @@
 {% extends "layout.html" %}
 {% load static %}
+{% load i18n %}
+
 
 {% block title %}
-	Two-Factor Authentication
+	{% trans "Two-Factor Authentication" %}
 {% endblock %}
 
 {% block undertitle %}
-	<h2><strong class="gradient-text">Two-Factor Authentication</strong></h2>
+	<h2><strong class="gradient-text">{% trans "Two-Factor Authentication" %}</strong></h2>
 {% endblock %}
 
 {% block content %}
-	<h3>Inform your 2FA code</h3>
+	<h3>{% trans "Inform your 2FA code" %}</h3>
 	<form method="post" action="{% url 'login:verify2fa' %}" >
 		{% csrf_token %}
-		<label for="code">Type the verification code sent to your e-mail address: </label>
+		<label for="code">{% trans "Type the verification code sent to your e-mail address:" %} </label>
 		<input type="text" name="code" id="code" required>
-		<button class="small-button" type="submit">Verify</button>
+		<button class="small-button" type="submit">{% trans "Verify" %}</button>
 		{% if error %}
 			<p style="color: #4d267d;">{{ error }}</p>
 		{% endif %}

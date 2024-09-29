@@ -1,15 +1,17 @@
 {% extends "layout.html" %}
 {% load static %}
+{% load i18n %}
+
 
 {% block title %}
-	Error
+	{% trans "Error" %}
 {% endblock %}
 
 {% block undertitle %}
-	<h1>Error</h1>
+	<h1>{% trans "Error" %}</h1>
 {% endblock %}
 
 {% block content %}
 	<p>{{ error }}</p>
-	<a href="{% url 'home' %}">Return Home</a>
+	<a href="{% url 'home' %}">{% trans "Return Home" %}</a>
 {% endblock %}

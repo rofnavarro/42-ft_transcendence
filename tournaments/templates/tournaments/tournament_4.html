@@ -1,59 +1,83 @@
 {% extends 'layout.html' %}
+{% load static %}
+{% load i18n %}
 
 {% block title %}
-    Tournament 4 Players
+    {% trans "Tournament 4 Players" %}
 {% endblock %}
 
 {% block undertitle %}
-    <h1>Tournament 4 Players</h1>
+    <h2><strong class="gradient-text">{% trans "Tournament 4 Players" %}</strong></h2>
 {% endblock %}
 
 {% block content %}
-<div class="tournament-bracket">
-    <div class="round round-1">
-        <div class="match">
-			<div id="player1" class="player">
-				<h3>Player 1</h3>
-				<input type="hidden" id="player1-name" name="player1" value="{{ request.user.username }}">
-				<input type="hidden" id="player1-nickname" name="player1-nickname" value="{{ request.user.nickname }}">
-				<span id="player1-label">{{ request.user.nickname }}</span>
+<form id="game-form" method="POST" action="">
+	{% csrf_token %}
+	<div class="tournament-bracket">
+		<div class="round round-1">
+			<div class="match">
+				<div id="player1" class="player">
+					<h4>{% trans "Player 1" %}</h4>
+					<input type="hidden" id="player1-name" name="player1" value="{{ request.user.username }}">
+					<input type="hidden" id="player1-nickname" name="player1-nickname" value="{{ request.user.nickname }}">
+					<span id="player1-label">{{ request.user.nickname }}</span>
+				</div>
+				<img class="versus-small" src="{% static 'imgs/cross.png' %}">
+				<div id="player2" class="player">
+					<h4>{% trans "Player 2" %}</h4>
+					<button type="button" class="small-button" id="invite-btn-2" onclick="openFriendModal(2)">{% trans "Invite Friend" %}</button>
+					<input type="hidden" id="player2-name" name="player2">
+					<input type="hidden" id="player2-nickname" name="player2-nickname">
+					<span id="player2-label"></span>
+				</div>
 			</div>
-			<div id="player2" class="player">
-				<h3>Player 2</h3>
-				<button type="button" id="invite-btn-2" onclick="openFriendModal(2)">Invite Friend</button>
-				<input type="hidden" id="player2-name" name="player2">
-				<input type="hidden" id="player2-nickname" name="player2-nickname">
-				<span id="player2-label"></span>
+			<div class="winner">
+				<h1 class="gradient-text">{% trans "Winner" %}</h1>
+				<p>{% trans "Match 1" %}</p>
 			</div>
-			<div id="player3" class="player">
-				<h3>Player 3</h3>
-				<button type="button" id="invite-btn-3" onclick="openFriendModal(3)">Invite Friend</button>
-				<input type="hidden" id="player3-name" name="player3">
-				<input type="hidden" id="player3-nickname" name="player3-nickname">
-				<span id="player3-label"></span>
+			<div class="match">
+				<img src="{% static 'imgs/championship.png' %}" width="120px" height="120px">
+				<div>{% trans "Champion!" %}</div>
 			</div>
-			<div id="player4" class="player">
-				<h3>Player 4</h3>
-				<button type="button" id="invite-btn-4" onclick="openFriendModal(4)">Invite Friend</button>
-				<input type="hidden" id="player4-name" name="player4">
-				<input type="hidden" id="player4-nickname" name="player4-nickname">
-				<span id="player4-label"></span>
+			<div class="winner">
+				<h1 class="gradient-text">{% trans "Winner" %}</h1>
+				<p>{% trans "Match 2" %}</p>
 			</div>
-        </div>
-    </div>
-</div>
+			<div class="match">
+				<div id="player3" class="player">
+					<h4>{% trans "Player 3" %}</h4>
+					<button type="button" class="small-button" id="invite-btn-3" onclick="openFriendModal(3)">{% trans "Invite Friend" %}</button>
+					<input type="hidden" id="player3-name" name="player3">
+					<input type="hidden" id="player3-nickname" name="player3-nickname">
+					<span id="player3-label"></span>
+				</div>
+				<img class="versus-small" src="{% static 'imgs/cross.png' %}">
+				<div id="player4" class="player">
+					<h4>{% trans "Player 4" %}</h4>
+					<button type="button" class="small-button" id="invite-btn-4" onclick="openFriendModal(4)">{% trans "Invite Friend" %}</button>
+					<input type="hidden" id="player4-name" name="player4">
+					<input type="hidden" id="player4-nickname" name="player4-nickname">
+					<span id="player4-label"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tournament-button">
+		<button type="submit" class="small-button" id="start-game" onclick="prepareForm()">{% trans "Start Game!" %}</button>
+	</div>
+</form>
 <div id="friend-modal" style="display:none;">
 	<div class="modal-content">
-		<h2>Invite a Friend</h2>
+		<h2>{% trans "Invite a Friend" %}</h2>
 		<ul id="friends-list">
 			{% for friend in friends %}
 				<li><a href="#" onclick="selectFriend('{{ friend.username }}', '{{ friend.nickname }}', currentPlayer)"> {{ friend.nickname }} </a></li>
 			{% empty %}
-				<li>You still don't have any friends.</li>
-				<li>You Loser!</li>
+				<li>{% trans "You still don't have any friends." %}</li>
+				<li>{% trans "You Loser!" %}</li>
 			{% endfor %}
 		</ul>
-		<button onclick="closeFriendModal()">Close</button>
+		<button onclick="closeFriendModal()">{% trans "Close" %}</button>
 	</div>
 </div>
 {% endblock %}
@@ -62,30 +86,54 @@
 <style>
     .tournament-bracket {
         width: 100%;
-        padding: 100px;
     }
+
+	.tournament-button {
+		margin-bottom: 50px;
+	}
+
+	.versus-small {
+		width: 20px;
+		height: 20px;
+		align-items: center;	
+	}
 
     .round {
         display: flex;
         flex-direction: row;
-        gap: 50px; /* Aumenta o espaçamento entre as partidas */
+        align: center;
+		justify-content: space-between;
+		gap: 80px;
         align-items: center;
     }
 
     .match {
         display: flex;
-        justify-content: space-around;
+		flex-direction: column;
+        align-items: center;
         width: 100%;
+		margin-bottom: 20px;	
+
     }
+
+	#player1, #player3 {
+		margin-bottom: 20px;
+	}
 
     .player {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 40%;
+        width: 70%;
         padding: 20px;
         text-align: center;
     }
+
+	.winner h1{
+		font-family: 'Dosis', sans-serif;
+		font-weight: bold;
+	}
+
 </style>
 
 <script>

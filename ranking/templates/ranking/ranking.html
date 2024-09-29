@@ -1,4 +1,6 @@
 {% extends "layout.html" %}
+{% load static%}
+{% load i18n%}
 
 {% block title %}
 	Top Bananas
@@ -15,11 +17,11 @@
 			<table class="ranking-table">
 				<thead>
 					<tr>
-						<th>User</th>
-						<th>Matches</th>
-						<th>Wins</th>
-						<th>Losses</th>
-						<th>Win Rate</th>
+						<th>{% trans "User" %}</th>
+						<th>{% trans "Matches" %}</th>
+						<th>{% trans "Wins" %}</th>
+						<th>{% trans "Losses" %}</th>
+						<th>{% trans "Win Rate" %}</th>
 					</tr>
 				</thead>
 				<tbody>

@@ -94,7 +94,7 @@ def tournament(request):
 	except Exception as e:
 		print("WEB3 Fail:", e)
 		#TODO: dar um render em uma pagina de erro caso o container da blockchain nao suba
-		return render(request, 'tournaments/tournaments.html', {'tournament': tournaments})
+	return render(request, 'tournaments/tournaments.html', {'tournament': tournaments})
 	
 
 def tournament_4(request):
