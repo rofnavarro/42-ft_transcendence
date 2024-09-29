@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-29 01:47+0000\n"
+"POT-Creation-Date: 2024-09-29 03:36-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,14 +17,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-
-#: ft_transcendence/settings.py:119
-msgid "English"
-msgstr ""
-
-#: ft_transcendence/settings.py:120
-msgid "Português"
-msgstr ""
 
 #: login/forms.py:10
 msgid "This account is inactive."
@@ -194,13 +186,13 @@ msgid "Date"
 msgstr "Data"
 
 #: match/templates/match/history.html:31
-#: tournaments/templates/tournaments/tournament_4.html:20
+#: tournaments/templates/tournaments/tournament_4.html:21
 #: users/templates/users/local_play.html:49
 msgid "Player 1"
 msgstr "Jogador 1"
 
 #: match/templates/match/history.html:32
-#: tournaments/templates/tournaments/tournament_4.html:27
+#: tournaments/templates/tournaments/tournament_4.html:28
 #: users/templates/users/local_play.html:55
 msgid "Player 2"
 msgstr "Jogador 2"
@@ -214,8 +206,8 @@ msgid "Score Player 2"
 msgstr "Pontos Jogador 2"
 
 #: match/templates/match/history.html:35
-#: tournaments/templates/tournaments/tournament_4.html:35
-#: tournaments/templates/tournaments/tournament_4.html:43
+#: tournaments/templates/tournaments/tournament_4.html:36
+#: tournaments/templates/tournaments/tournament_4.html:44
 msgid "Winner"
 msgstr "Ganhador"
 
@@ -228,6 +220,14 @@ msgstr "Torneio"
 #: match/templates/match/tournament_games.html:14
 msgid "Tournament's Pong Game"
 msgstr "Jogo Pong - Torneio"
+
+#: match/templates/match/tournament_games.html:20
+msgid "Final Match"
+msgstr "Final"
+
+#: match/templates/match/tournament_games.html:21
+msgid "Prepare yourselves for the final match:"
+msgstr "Preparem-se para a final:"
 
 #: ranking/templates/ranking/ranking.html:20
 msgid "User"
@@ -332,22 +332,22 @@ msgstr "Login com a 42"
 msgid "Login with Username and Password"
 msgstr "Login com Nome de usuário e Senha"
 
-#: templates/layout.html:63
+#: templates/layout.html:42
 msgid "About"
 msgstr "Sobre"
 
-#: templates/layout.html:68 users/templates/users/local_play.html:5
+#: templates/layout.html:47 users/templates/users/local_play.html:5
 #: users/templates/users/tournament_play.html:6
 #: users/templates/users/wanna_play.html:6
 #: users/templates/users/wanna_play.html:10
 msgid "Play"
 msgstr "Jogar"
 
-#: templates/layout.html:75
+#: templates/layout.html:54
 msgid "Tournaments"
 msgstr "Torneios"
 
-#: templates/layout.html:85
+#: templates/layout.html:64
 msgid "Profile"
 msgstr "Perfil"
 
@@ -369,58 +369,58 @@ msgstr "Todas as partidas devem estar completas antes de salvar o torneio."
 msgid "Tournament 4 Players"
 msgstr "Torneio com 4 Jogadores"
 
-#: tournaments/templates/tournaments/tournament_4.html:28
-#: tournaments/templates/tournaments/tournament_4.html:49
-#: tournaments/templates/tournaments/tournament_4.html:57
+#: tournaments/templates/tournaments/tournament_4.html:29
+#: tournaments/templates/tournaments/tournament_4.html:50
+#: tournaments/templates/tournaments/tournament_4.html:58
 #: users/templates/users/local_play.html:56
 #: users/templates/users/local_play.html:65
 #: users/templates/users/local_play.html:72
 msgid "Invite Friend"
 msgstr "Convidar Amigo"
 
-#: tournaments/templates/tournaments/tournament_4.html:36
+#: tournaments/templates/tournaments/tournament_4.html:37
 msgid "Match 1"
 msgstr "Partida 1"
 
-#: tournaments/templates/tournaments/tournament_4.html:40
+#: tournaments/templates/tournaments/tournament_4.html:41
 msgid "Champion!"
 msgstr "Campeão!"
 
-#: tournaments/templates/tournaments/tournament_4.html:44
+#: tournaments/templates/tournaments/tournament_4.html:45
 msgid "Match 2"
 msgstr "Partida 2"
 
-#: tournaments/templates/tournaments/tournament_4.html:48
+#: tournaments/templates/tournaments/tournament_4.html:49
 #: users/templates/users/local_play.html:64
 msgid "Player 3"
 msgstr "Jogador 3"
 
-#: tournaments/templates/tournaments/tournament_4.html:56
+#: tournaments/templates/tournaments/tournament_4.html:57
 #: users/templates/users/local_play.html:71
 msgid "Player 4"
 msgstr "Jogador 4"
 
-#: tournaments/templates/tournaments/tournament_4.html:66
+#: tournaments/templates/tournaments/tournament_4.html:67
 #: users/templates/users/local_play.html:95
 msgid "Start Game!"
 msgstr "Começar o Jogo!"
 
-#: tournaments/templates/tournaments/tournament_4.html:71
-#: users/templates/users/local_play.html:82
+#: tournaments/templates/tournaments/tournament_4.html:72
+#: users/templates/users/local_play.html:83
 msgid "Invite a Friend"
 msgstr "Convide um Amigo"
 
-#: tournaments/templates/tournaments/tournament_4.html:76
-#: users/templates/users/local_play.html:87
+#: tournaments/templates/tournaments/tournament_4.html:77
+#: users/templates/users/local_play.html:88
 msgid "You still don't have any friends."
 msgstr "Você ainda não tem amigos."
 
-#: tournaments/templates/tournaments/tournament_4.html:77
+#: tournaments/templates/tournaments/tournament_4.html:78
 msgid "You Loser!"
 msgstr "Perdedor!"
 
-#: tournaments/templates/tournaments/tournament_4.html:80
-#: users/templates/users/local_play.html:90
+#: tournaments/templates/tournaments/tournament_4.html:81
+#: users/templates/users/local_play.html:91
 msgid "Close"
 msgstr "Fechar"
 

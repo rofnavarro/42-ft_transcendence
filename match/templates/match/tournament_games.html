@@ -11,18 +11,23 @@
 {% endblock %}
 
 {% block undertitle %}
-<h1><strong class="gradient-text">{% trans "Tournament's Pong Game" %}</strong></h1>
+<h2><strong class="gradient-text">{% trans "Tournament's Pong Game" %}</strong></h2>
 
 <form id="tournament4-form" method="POST" action="{% url 'match:tournament_final' %}">
 	{% csrf_token %}
 	<div id="resultContainer">
-		<button type="button" id="finalButton" onclick="prepareForm(event)">Final</button>
+		<div class="result-content">
+			<h2><strong class="gradient-text">{% trans "Final Match" %}</strong></h2>
+			<p>{% trans "Prepare yourselves for the final match:" %}</p>
+			<p>{{ winner1 }} <img src="{% static 'imgs/cross.png' %}" class="versus-small"> {{ winner2 }} </p>
+			<button type="button" id="finalButton" onclick="prepareForm(event)">Go to Final!</button>
+		</div>
 	</div>
 	<div class="tournament-first-round">
 		<div>
-			<h2>First Match</h2>
-			<p>{{ nicknames.0 }} VS {{ nicknames.1 }}</p>
-			<button type="button" onclick="startMatch('{{ usernames.0 }}', '{{ usernames.1 }}', '{{ nicknames.0 }}', '{{ nicknames.1 }}', '{{ turns }}', '1')">
+			<h3 class="gradient-text">First Match</h3>
+			<p>{{ nicknames.0 }} <img src="{% static 'imgs/cross.png' %}" class="versus-small"> {{ nicknames.1 }}</p>
+			<button type="button" class="small-button" onclick="startMatch('{{ usernames.0 }}', '{{ usernames.1 }}', '{{ nicknames.0 }}', '{{ nicknames.1 }}', '{{ turns }}', '1')">
 				Start Match
 			</button>
 			<div class="match-result">
@@ -38,9 +43,9 @@
 		<div>
 		</div>
 		<div>
-			<h2>Second Match</h2>
-			<p>{{ nicknames.2 }} VS {{ nicknames.3 }}</p>
-			<button type="button" onclick="startMatch('{{ usernames.2 }}', '{{ usernames.3 }}', '{{ nicknames.2 }}', '{{ nicknames.3 }}', '{{ turns }}', '2')">
+			<h3 class="gradient-text">Second Match</h3>
+			<p>{{ nicknames.2 }} <img src="{% static 'imgs/cross.png' %}" class="versus-small"> {{ nicknames.3 }}</p>
+			<button type="button" class="small-button" onclick="startMatch('{{ usernames.2 }}', '{{ usernames.3 }}', '{{ nicknames.2 }}', '{{ nicknames.3 }}', '{{ turns }}', '2')">
 				Start Match
 			</button>
 			<div class="match-result">
@@ -61,16 +66,49 @@
 
 {% block content2 %}
 	<style>
+		h2 {
+			margin-bottom: 10px;
+		}
+		
 		.tournament-first-round {
 			display: flex;
 			flex-direction: row;
 			gap: 50px;
+			margin-bottom: 10px;
 		}
 		.match-result {
 			display: flex;
 		}
 		#resultContainer {
-			position: absolute;
+			display: none; /* Inicialmente escondido */
+			position: fixed;
+			z-index: 9999;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgba(0, 0, 0, 0.5);
+		}
+
+		.versus-small {
+		width: 20px;
+		height: 20px;
+		align-items: center;
+		padding: 5px;
+		vertical-align: middle;
+		}
+
+		.result-content {
+			margin-bottom: 10px;
+			background-color: #c3c6f1;
+			margin: 15% auto; /* Margem para centralizar verticalmente */
+			padding: 20px;
+			border: 1px solid #858cee;
+			border-radius: 10px;
+			width: 40%; /* Largura do modal */
+			color: #040c30;
+			position: relative;
 		}
 	</style>
 {% endblock %}

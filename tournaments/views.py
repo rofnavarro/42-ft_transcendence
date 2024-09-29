@@ -87,10 +87,10 @@ def tournament(request):
 			set_tournament(web3, deployed_contract, str(tournaments[i]))
 
 		#TIPS: GET pode ser feito nas visualizações dos torneios desde que haja um settings.TX_HASH
-		values = get_tournament(web3, deployed_contract)#TODO: set precisa ser feito ao final de um torneio
-		for i in range(len(tournaments)):
+		# values = get_tournament(web3, deployed_contract)#TODO: set precisa ser feito ao final de um torneio
+		# for i in range(len(tournaments)):
 
-		return render(request, 'tournaments/tournaments.html', {'tournament': values})
+		# return render(request, 'tournaments/tournaments.html', {'tournament': values})
 	except Exception as e:
 		print("WEB3 Fail:", e)
 		#TODO: dar um render em uma pagina de erro caso o container da blockchain nao suba
