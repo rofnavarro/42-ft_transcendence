@@ -187,11 +187,17 @@ def tournament_final(request):
 			return render(request, 'home.html')
 
 		return render(request, 'match/tournament_final.html', {'id_tournament': t, 'turns': turns, 'user1': winner1, 'user2': winner2})
-	return render(request, 'home')
+	user = get_object_or_404(CustomUser, username=user1)
+	return render(request, 'users/wanna_play.html', {'user': user})
 
 def finish_tournament(request):
-	print(request.POST)
-	return render(request, 'home')
+	username = request.user
+	user = get_object_or_404(CustomUser, username=username)
+	if request.method == 'POST':
+	
+		# print(request.POST)
+		return render(request, 'users/wanna_play.html', {'user': user})
+	return render(request, 'users/wanna_play.html', {'user': user})
 
 @login_required
 def history(request, username):
