@@ -137,8 +137,6 @@ def tournament_games(request):
 
 def tournament_final(request):
 	if request.method == 'POST':
-		print(request.POST)
-
 		user1 = request.POST.get('match-resultA-player')
 		user1 = CustomUser.objects.get(username=user1)
 		
@@ -166,6 +164,7 @@ def tournament_final(request):
 		winner2 = request.POST.getlist('winner2')
 		winner2 = [winner for winner in winner2 if winner]
 
+
 		winner1_nickname = winner1[0]
 		winner1 = CustomUser.objects.get(nickname=winner1_nickname)
 
@@ -174,16 +173,24 @@ def tournament_final(request):
 
 		owner = CustomUser.objects.get(username=user1)
 
+		turns = int(request.POST.get('turns'))
+
+		t = None
 		try:
 			with transaction.atomic():
 				tournament = Tournament.objects.create(owner=owner)
 				tournament.matches.add(match1, match2)
 				tournament.save()
+				t = tournament
+
 		except Exception as e:
-			print(f"Erro ao criar torneio: {e}")
 			return render(request, 'home.html')
 
-		return render(request, 'match/tournament_final.html', {'match1': match1, 'match2': match2, 'user1': winner1, 'user2': winner2})
+		return render(request, 'match/tournament_final.html', {'id_tournament': t, 'turns': turns, 'user1': winner1, 'user2': winner2})
+	return render(request, 'home')
+
+def finish_tournament(request):
+	print(request.POST)
 	return render(request, 'home')
 
 @login_required

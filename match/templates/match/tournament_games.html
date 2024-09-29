@@ -23,6 +23,7 @@
 			<input type="text" id="winner1" class="winner-light" name="winner1" value="">
 			<img src="{% static 'imgs/cross.png' %}" class="versus-small">
 			<input type="text" id="winner2" class="winner-light" name="winner2" value="">
+			<input type="hidden" id="turns" class="turns" name="turns" value="{{ turns }}">
 			<button type="button" class="small-button" id="finalButton" onclick="prepareForm(event)">Go to Final!</button>
 		</div>
 	</div>
