@@ -670,19 +670,6 @@ input:focus {
 	color: #9754e9
 }
 
-/* #nickname-popup {
-	display: none;
-	position: fixed;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	background-color: #c3c6f1;
-	border: 1px solid #c3c6f1;
-	border-radius: 10px;
-	padding: 20px;
-	z-index: 9999;
-	color: #040c30
-} */
-
 .popup {
     display: none;
     position: fixed;
@@ -716,21 +703,6 @@ input:focus {
 	color: #040c30;
 	position: relative;
 }
-
-/* #profile-picture-popup {
-	display: none;
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	background-color: #c3c6f1;
-	border: 1px solid #c3c6f1;
-	border-radius: 10px;
-	padding: 20px;
-	z-index: 9999;
-	color: #040c30
-} */
-
 
 .close-button {
 	position: absolute;
@@ -904,4 +876,40 @@ input:focus {
 .add-friends-modal a:hover {
 	color: #9754e9;
 	transition-duration: 0.4s;
+}
+
+.winner-light {
+	width: auto;
+	font-family: "Dosis", sans-serif;
+	font-size: 20px;
+	color: #040c30;
+	background-color: transparent;
+	border: none;
+	padding: 5px;
+	text-align: center;
+	outline: none;
+	border: none;
+}
+
+.winner-light:focus {
+	outline: none;
+	border: none;
+}
+
+.winner-dark {
+	width: auto;
+	font-family: "Dosis", sans-serif;
+	font-size: 20px;
+	color: #858cee;
+	background-color: transparent;
+	border: none;
+	padding: 5px;
+	text-align: center;
+	outline: none;
+	border: none;
+}
+
+.winner-dark:focus {
+	outline: none;
+	border: none;
 }
