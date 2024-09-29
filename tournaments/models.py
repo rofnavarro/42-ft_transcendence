@@ -10,7 +10,7 @@ class	Tournament(models.Model):
 	winner = models.ForeignKey(CustomUser, null=True, blank=True, on_delete=models.CASCADE,  related_name='won_tournaments')
 
 	def __str__(self):
-		return f"{_('Tournament')} {self.id}"
+		return f"{self.id}"
 
 	def save(self, *args, **kwargs):
 		super(Tournament, self).save(*args, **kwargs)

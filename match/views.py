@@ -194,8 +194,26 @@ def finish_tournament(request):
 	username = request.user
 	user = get_object_or_404(CustomUser, username=username)
 	if request.method == 'POST':
-	
-		# print(request.POST)
+		user1 = request.POST.get('match-resultA-player')
+		user1 = CustomUser.objects.get(username=user1)
+		
+		user2 =	request.POST.get('match-resultB-player')
+		user2 = CustomUser.objects.get(username=user2)
+		
+		score_user1 = int(request.POST.get('match-resultA-score'))
+		score_user2 = int(request.POST.get('match-resultB-score'))
+
+		match1 = Match.objects.create(user1=user1, user2=user2, score_user1=score_user1, score_user2=score_user2, is_tournament=True)
+
+		t = request.POST.get('tournament')
+		try:
+			with transaction.atomic():
+				tournament = Tournament.objects.get(id=t)
+				tournament.matches.add(match1)
+				tournament.save()
+		except Exception as e:
+			print(e)
+			return render(request, 'home.html')
 		return render(request, 'users/wanna_play.html', {'user': user})
 	return render(request, 'users/wanna_play.html', {'user': user})
 

@@ -150,7 +150,6 @@ var Game = {
 	},
 
 	update: function () {
-		console.log(this.ball.speed);
 		if (!this.over && !this.pauseGame) {
 			this.handleBallCollisions();
 			this.handlePlayerMovements();
