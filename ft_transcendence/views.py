@@ -11,7 +11,3 @@ def	aboutpage(request):
 def	errorpage(request):
 	return render(request, '404.html')
 
-def set_language(request, language):
-	translation.activate(language)
-	request.session[translation.LANGUAGE_SESSION_KEY] = language
-	return redirect('home')
