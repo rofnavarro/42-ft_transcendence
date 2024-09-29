@@ -23,6 +23,7 @@
 			</div>
 			<div id="qtd-turnos">
 				<h3><strong class="gradient-text">{% trans "Rounds" %}</strong></h3>
+				<p>{% trans "Choose the number of rounds:" %}</p>
 				<input type="radio" name="qtd-turnos" value="1" checked>
 				<label>1</label>
 				<input type="radio" name="qtd-turnos" value="3">
@@ -76,8 +77,9 @@
 			</div>
 		</div>
 
-		<div id="friend-modal" style="display:none;">
+		<div id="friend-modal" class="modal" style="display:none;">
 			<div class="modal-content">
+				<span class="close-button" onclick="closeFriendModal()">×</span>
 				<h3><strong class="gradient-text">{% trans "Invite a Friend" %}</strong></h3>
 				<ul id="friends-list">
 					{% for friend in friends %}
@@ -128,5 +130,27 @@
 			document.getElementById(`invite-btn-${playerId}`).style.display = 'none';
 			closeFriendModal();
 		}
+
+		function prepareForm() {
+			const player1 = document.getElementById('player1-name').value;
+            const player2 = document.getElementById('player2-name').value;
+            const player3 = document.getElementById('player3-name').value;
+            const player4 = document.getElementById('player4-name').value;
+
+            const turns = document.querySelector('input[name="qtd-turnos"]:checked').value;
+
+            const color = document.querySelector('input[name="background"]:checked').value;
+
+            const players = [player1, player2];
+            if (document.getElementById('player3').style.display !== 'none') players.push(player3);
+            if (document.getElementById('player4').style.display !== 'none') players.push(player4);
+
+            const validPlayers = players.filter(player => player !== '');
+
+            if (validPlayers.length < 2) {
+                alert('Need at last 2 players.');
+                event.preventDefault();
+		}
+	}
 	</script>
 {% endblock %}

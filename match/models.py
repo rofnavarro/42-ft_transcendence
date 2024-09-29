@@ -1,16 +1,16 @@
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.utils.translation import gettext_lazy
+from django.utils.translation import gettext_lazy as _
 from users.models import CustomUser
 
 class	Match(models.Model):
 	user1 = models.ForeignKey(CustomUser, related_name='matches_as_user1', on_delete=models.CASCADE)
 	user2 = models.ForeignKey(CustomUser, related_name='matches_as_user2', on_delete=models.CASCADE)
 
-	date = models.DateTimeField(gettext_lazy('date'), auto_now_add=True)
+	date = models.DateTimeField('date', auto_now_add=True)
 
-	score_user1 = models.IntegerField(gettext_lazy('score player 1'), default=0)
-	score_user2 = models.IntegerField(gettext_lazy('score player 2'), default=0)
+	score_user1 = models.IntegerField('score player 1', default=0)
+	score_user2 = models.IntegerField('score player 2', default=0)
 
 	is_tournament = models.BooleanField(default=False)
 
@@ -24,7 +24,7 @@ class	Match(models.Model):
 
 	def	clean(self):
 		if self.user1 == self.user2:
-			raise ValidationError("Player 1 and Player 2 must be different users.")
+			raise ValidationError(_("Player 1 and Player 2 must be different users."))
 
 	def	save(self, *args, **kwargs):
 		self.clean()

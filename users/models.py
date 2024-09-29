@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
-from django.utils.translation import gettext_lazy
+from django.utils.translation import gettext_lazy as _
 
 import os
 
@@ -13,7 +13,7 @@ def	user_profile_picture_path(instance, filename):
 class	CustomUserManager(BaseUserManager):
 	def	create_user(self, email, username, password=None, **extra_fields):
 		if not username:
-			raise ValueError(gettext_lazy('A username is needed.'))
+			raise ValueError(_('A username is needed.'))
 		email = self.normalize_email(email)
 		user = self.model(email=email, username=username, nickname=username, **extra_fields)
 		user.set_unusable_password()
@@ -24,30 +24,30 @@ class	CustomUserManager(BaseUserManager):
 		extra_fields.setdefault('is_staff', True)
 		extra_fields.setdefault('is_superuser', True)
 		if extra_fields.get('is_staff') is not True:
-			raise ValueError(gettext_lazy('Superuser must have is_staff=True.'))
+			raise ValueError(_('Superuser must have is_staff=True.'))
 		if extra_fields.get('is_superuser') is not True:
-			raise ValueError(gettext_lazy('Superuser must have is_superuser=True.'))
+			raise ValueError(_('Superuser must have is_superuser=True.'))
 		return self.create_user(email, username, password, **extra_fields)
 
 class	CustomUser(AbstractBaseUser, PermissionsMixin):
 	username = models.CharField(max_length=20, unique=True)
 	nickname = models.CharField(max_length=20,unique=True, null=True, blank=True)
-	email = models.EmailField(gettext_lazy('email address'), unique=True)
+	email = models.EmailField('email address', unique=True)
 
 	token = models.CharField(max_length=300, blank=True, null=True)
 
-	first_name = models.CharField(gettext_lazy('first name'), max_length=30, blank=True)
-	last_name = models.CharField(gettext_lazy('last name'), max_length=30, blank=True)
+	first_name = models.CharField('first name', max_length=30, blank=True)
+	last_name = models.CharField('last name', max_length=30, blank=True)
 	profile_picture = models.ImageField(upload_to=user_profile_picture_path, blank=True, null=True)
 
-	verification_code = models.IntegerField(gettext_lazy('2fa_code'), blank=True, null=True)
-	is_verified = models.BooleanField(gettext_lazy('verified status'), default=False)
+	verification_code = models.IntegerField('2fa_code', blank=True, null=True)
+	is_verified = models.BooleanField('verified status', default=False)
 
-	date_joined = models.DateTimeField(gettext_lazy('date joined'), default=timezone.now)
-	is_active = models.BooleanField(gettext_lazy('active'), default=True)
+	date_joined = models.DateTimeField('date joined', default=timezone.now)
+	is_active = models.BooleanField('active', default=True)
 	
-	is_staff = models.BooleanField(gettext_lazy('staff status'), default=False)
-	is_superuser = models.BooleanField(gettext_lazy('superuser status'), default=False)
+	is_staff = models.BooleanField('staff status', default=False)
+	is_superuser = models.BooleanField('superuser status', default=False)
 
 	is_online = models.BooleanField(default=False)
 	last_online = models.DateTimeField(default=timezone.now)
@@ -61,8 +61,8 @@ class	CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 	class	Meta:
-		verbose_name = gettext_lazy('user')
-		verbose_name_plural = gettext_lazy('users')
+		verbose_name = ('user')
+		verbose_name_plural = ('users')
 
 	def	__str__(self):
 		return self.username
@@ -113,4 +113,4 @@ class	Friendship(models.Model):
 		unique_together = ('user1', 'user2')
 
 	def	__str__(self):
-		return f"{self.user1.username} is friends with {self.user2.username}"
+		return _(f"%(self.user1.username)s is friends with %(self.user2.username)s") % {'self.user1.username': self.user1.username, 'self.user2.username': self.user2.username}

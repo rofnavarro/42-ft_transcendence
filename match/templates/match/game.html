@@ -32,7 +32,7 @@
 		usernames = [
 			'{{ usernames.0|default:"" }}',
 			'{{ usernames.1|default:"" }}',
-			{% if players|length > 2 %}
+			{% if players|length > 2 %},
 			'{{ usernames.2|default:"" }}',
 			'{{ usernames.3|default:"" }}'
 			{% endif %}

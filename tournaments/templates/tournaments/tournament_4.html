@@ -38,7 +38,7 @@
 			</div>
 			<div class="match">
 				<img src="{% static 'imgs/championship.png' %}" width="120px" height="120px">
-				<div>{% trans "Champion!" %}</div>
+				<div><h2><strong class="gradient-text">{% trans "Champion!" %}</strong></h2></div>
 			</div>
 			<div class="winner">
 				<h1 class="gradient-text">{% trans "Winner" %}</h1>
@@ -67,9 +67,9 @@
 		<button type="submit" class="small-button" id="start-game" onclick="prepareForm()">{% trans "Start Game!" %}</button>
 	</div>
 </form>
-<div id="friend-modal" style="display:none;">
+<div id="friend-modal" class="modal" style="display:none;">
 	<div class="modal-content">
-		<h2>{% trans "Invite a Friend" %}</h2>
+		<h3><strong class="gradient-text">{% trans "Invite a Friend" %}</strong></h3>
 		<ul id="friends-list">
 			{% for friend in friends %}
 				<li><a href="#" onclick="selectFriend('{{ friend.username }}', '{{ friend.nickname }}', currentPlayer)"> {{ friend.nickname }} </a></li>
@@ -78,7 +78,7 @@
 				<li>{% trans "You Loser!" %}</li>
 			{% endfor %}
 		</ul>
-		<button onclick="closeFriendModal()">{% trans "Close" %}</button>
+		<button class="small-button" onclick="closeFriendModal()">{% trans "Close" %}</button>
 	</div>
 </div>
 {% endblock %}
