@@ -1,0 +1,135 @@
+{% extends "layout.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block token_head %}
+	<meta name="csrf-token" content="{{ csrf_token }}">
+{% endblock %}
+
+{% block title %}
+{% trans "Tournament's Final Game" %}
+{% endblock %}
+
+{% block undertitle %}
+<h2><strong class="gradient-text">{% trans "Tournament's Final Game" %}</strong></h2>
+
+<form id="final-form" method="POST" action="{% url 'match:finish' %}">
+	{% csrf_token %}
+	<div class="tournament-final">
+		<div>
+			<h3 class="gradient-text">Final Match</h3>
+			<p>{{ user1.nickname }} <img src="{% static 'imgs/cross.png' %}" class="versus-small"> {{ user2.nickname }}</p>
+			<div class="match-result">
+				<input type="hidden" id="match-resultA-player" name="match-resultA-player" value="{{ user1.username}}">
+				<input type="hidden" id="match-resultA-score" name="match-resultA-score" placeholder="Score A" value="">
+				<input type="hidden" id="match-resultB-player" name="match-resultB-player" value="{{ user2.username }}">
+				<input type="hidden" id="match-resultB-score" name="match-resultB-score" placeholder="Score B" value="">
+				<input type="hidden" id="winner1" name="winner1" value="">
+				<input type="hidden" id="tournament" name="tournament" value="{{ id_tournament }}">
+			</div>
+		</div>
+	</div>
+	<button type="button" class="small-button" id="finalButton" onclick="prepareForm(event)" style="display: none;">SAVE</button>
+</form>
+<button type="button" class="small-button" id="startButton" onclick="startMatch('{{ user1.username }}', '{{ user2.username }}', '{{ user1.nickname }}', '{{ user2.nickname }}', '{{ turns }}', '1')">
+	Start Match
+</button>
+{% endblock %}
+
+{% block content %}
+	<canvas></canvas>
+{% endblock %}
+
+{% block content2 %}
+	<style>
+		h2 {
+			margin-bottom: 10px;
+		}
+		
+		.tournament-first-round {
+			display: flex;
+			flex-direction: row;
+			gap: 50px;
+			margin-bottom: 10px;
+		}
+		.match-result {
+			display: flex;
+		}
+		#resultContainer {
+			display: none; /* Inicialmente escondido */
+			position: fixed;
+			z-index: 9999;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgba(0, 0, 0, 0.5);
+		}
+
+		.versus-small {
+		width: 20px;
+		height: 20px;
+		align-items: center;
+		padding: 5px;
+		vertical-align: middle;
+		}
+
+		.result-content {
+			margin-bottom: 10px;
+			background-color: #c3c6f1;
+			margin: 15% auto; /* Margem para centralizar verticalmente */
+			padding: 20px;
+			border: 1px solid #858cee;
+			border-radius: 10px;
+			width: 30%;
+			color: #040c30;
+			position: relative;
+		}
+
+		.close-button {
+			position: absolute;
+			top: 10px;
+			right: 15px;
+			font-size: 28px;
+			font-weight: bold;
+			cursor: pointer;
+		}
+	</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+	let scriptLoaded = false;
+
+	function prepareForm(event) {
+		event.preventDefault();
+		document.getElementById('final-form').submit();
+
+	}
+	
+	function startMatch(username1, username2, nickname1, nickname2, turns, matchNumber) {
+		const finalButton = document.getElementById('finalButton');
+		finalButton.style.display = 'inline-block';
+
+		const startButton = document.getElementById('startButton');
+		startButton.style.display = 'none';
+
+
+		if (scriptLoaded) {
+			Game.initialize(username1, username2, nickname1, nickname2, turns, matchNumber);
+			return;
+		}
+		scriptLoaded = true;
+		const script = document.createElement('script');
+		script.src = "{% static 'js/tournament_games.js' %}";
+		script.onload = () => {
+			Game.initialize(username1, username2, nickname1, nickname2, turns, matchNumber);
+		};
+		script.onerror = () => {
+			scriptLoaded = false;
+		};
+		document.body.appendChild(script);
+	}
+</script>
+{% endblock %}

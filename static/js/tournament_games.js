@@ -92,9 +92,9 @@ var Game = {
 		this.context.fillText(text, this.canvas.width / 2, this.canvas.height / 2 + 15);
 	
 		if (this.match === '1'){
-			document.getElementById('match-resultA-player').value = `${this.playerA.nickname}`;
+			document.getElementById('match-resultA-player').value = `${this.playerA.username}`;
 			document.getElementById('match-resultA-score').value = `${this.roundsWonA}`;
-			document.getElementById('match-resultB-player').value = `${this.playerB.nickname}`;
+			document.getElementById('match-resultB-player').value = `${this.playerB.username}`;
 			document.getElementById('match-resultB-score').value = `${this.roundsWonB}`;
 			const winner1 = document.getElementById('winner1');
 			if (winner1) {
@@ -102,9 +102,9 @@ var Game = {
 			}
 		}
 		else if (this.match === '2'){
-			document.getElementById('match-resultC-player').value = `${this.playerA.nickname}`;
+			document.getElementById('match-resultC-player').value = `${this.playerA.username}`;
 			document.getElementById('match-resultC-score').value = `${this.roundsWonA}`;
-			document.getElementById('match-resultD-player').value = `${this.playerB.nickname}`;
+			document.getElementById('match-resultD-player').value = `${this.playerB.username}`;
 			document.getElementById('match-resultD-score').value = `${this.roundsWonB}`;
 			const winner2 = document.getElementById('winner2');
 			if (winner2) {

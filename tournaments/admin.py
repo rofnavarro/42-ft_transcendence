@@ -2,11 +2,10 @@ from django.contrib import admin
 from .models import Tournament
 
 class TournamentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'owner', 'get_players')  # 'id' já exibe o ID do torneio
-    filter_horizontal = ('players',)
+    list_display = ('id', 'owner', 'display_matches')
+    
+    def display_matches(self, obj):
+        return ", ".join(str(match) for match in obj.matches.all())
 
-    def get_players(self, obj):
-        return ", ".join([player.username for player in obj.players.all()])
-    get_players.short_description = 'Players'
-
+    display_matches.short_description = 'Matches'
 admin.site.register(Tournament, TournamentAdmin)
