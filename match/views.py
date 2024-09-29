@@ -3,8 +3,10 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.db.models import Q
 from users.models import CustomUser
+from tournaments.models import Tournament
 from .models import Match
 import json
+from django.db import transaction
 
 
 def save_match_ajax(request):
@@ -136,7 +138,52 @@ def tournament_games(request):
 def tournament_final(request):
 	if request.method == 'POST':
 		print(request.POST)
-		return render(request, 'match/tournament_final.html')
+
+		user1 = request.POST.get('match-resultA-player')
+		user1 = CustomUser.objects.get(username=user1)
+		
+		user2 =	request.POST.get('match-resultB-player')
+		user2 = CustomUser.objects.get(username=user2)
+		
+		score_user1 = int(request.POST.get('match-resultA-score'))
+		score_user2 = int(request.POST.get('match-resultB-score'))
+
+		match1 = Match.objects.create(user1=user1, user2=user2, score_user1=score_user1, score_user2=score_user2, is_tournament=True)
+
+		user3 =	request.POST.get('match-resultC-player')
+		user3 = CustomUser.objects.get(username=user3)
+		
+		user4 =	request.POST.get('match-resultD-player')
+		user4 = CustomUser.objects.get(username=user4)
+
+		score_user3 = int(request.POST.get('match-resultC-score'))
+		score_user4 = int(request.POST.get('match-resultD-score'))
+
+		match2 = Match.objects.create(user1=user3, user2=user4, score_user1=score_user3, score_user2=score_user4, is_tournament=True)
+		
+		winner1 = request.POST.getlist('winner1')
+		winner1 = [winner for winner in winner1 if winner]
+		winner2 = request.POST.getlist('winner2')
+		winner2 = [winner for winner in winner2 if winner]
+
+		winner1_nickname = winner1[0]
+		winner1 = CustomUser.objects.get(nickname=winner1_nickname)
+
+		winner2_nickname = winner2[0]
+		winner2 = CustomUser.objects.get(nickname=winner2_nickname)
+
+		owner = CustomUser.objects.get(username=user1)
+
+		try:
+			with transaction.atomic():
+				tournament = Tournament.objects.create(owner=owner)
+				tournament.matches.add(match1, match2)
+				tournament.save()
+		except Exception as e:
+			print(f"Erro ao criar torneio: {e}")
+			return render(request, 'home.html')
+
+		return render(request, 'match/tournament_final.html', {'match1': match1, 'match2': match2, 'user1': winner1, 'user2': winner2})
 	return render(request, 'home')
 
 @login_required

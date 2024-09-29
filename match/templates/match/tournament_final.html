@@ -18,14 +18,14 @@
 	<div class="tournament-final">
 		<div>
 			<h3 class="gradient-text">Final Match</h3>
-			<p>{{ nicknames.0 }} <img src="{% static 'imgs/cross.png' %}" class="versus-small"> {{ nicknames.1 }}</p>
+			<p>{{ winner1 }} <img src="{% static 'imgs/cross.png' %}" class="versus-small"> {{ winner2 }}</p>
 			<button type="button" class="small-button" onclick="startMatch('{{ usernames.0 }}', '{{ usernames.1 }}', '{{ nicknames.0 }}', '{{ nicknames.1 }}', '{{ turns }}', '1')">
 				Start Match
 			</button>
 			<div class="match-result">
-				<input type="hidden" id="match-resultA-player" name="match-resultA-player" value="{{ nicknames.0 }}">
+				<input type="hidden" id="match-resultA-player" name="match-resultA-player" value="{{ username.0 }}">
 				<input type="hidden" id="match-resultA-score" name="match-resultA-score" placeholder="Score A" value="">
-				<input type="hidden" id="match-resultB-player" name="match-resultB-player" value="{{ nicknames.1 }}">
+				<input type="hidden" id="match-resultB-player" name="match-resultB-player" value="{{ username.1 }}">
 				<input type="hidden" id="match-resultB-score" name="match-resultB-score" placeholder="Score B" value="">
 				<input type="hidden" id="winner1" name="winner1" value="">
 			</div>
@@ -41,9 +41,9 @@
 				Start Match
 			</button>
 			<div class="match-result">
-				<input type="hidden" id="match-resultC-player" name="match-resultC-player"value="{{ nicknames.2 }}">
+				<input type="hidden" id="match-resultC-player" name="match-resultC-player"value="{{ username.2 }}">
 				<input type="hidden" id="match-resultC-score" name="match-resultC-score" placeholder="Score C" value="">
-				<input type="hidden" id="match-resultD-player" name="match-resultD-player" value="{{ nicknames.3 }}">
+				<input type="hidden" id="match-resultD-player" name="match-resultD-player" value="{{ username.3 }}">
 				<input type="hidden" id="match-resultD-score" name="match-resultD-score" placeholder="Score D" value="">
 				<input type="hidden" is="winner2" id="winner2" value="">
 			</div>			
