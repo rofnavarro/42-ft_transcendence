@@ -29,11 +29,11 @@
 			</div>
 		</div>
 	</div>
+	<button type="button" class="small-button" id="startButton" onclick="startMatch('{{ user1.username }}', '{{ user2.username }}', '{{ user1.nickname }}', '{{ user2.nickname }}', '{{ turns }}', '1')">
+		Start Match
+	</button>
 	<button type="button" class="small-button" id="finalButton" onclick="prepareForm(event)" style="display: none;">SAVE</button>
 </form>
-<button type="button" class="small-button" id="startButton" onclick="startMatch('{{ user1.username }}', '{{ user2.username }}', '{{ user1.nickname }}', '{{ user2.nickname }}', '{{ turns }}', '1')">
-	Start Match
-</button>
 {% endblock %}
 
 {% block content %}
