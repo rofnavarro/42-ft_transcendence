@@ -104,13 +104,13 @@ class	CustomUser(AbstractBaseUser, PermissionsMixin):
 			return f"{win_rate:.2f}%"
 		return "N/A"
 
-class	Friendship(models.Model):
-	user1 = models.ForeignKey(CustomUser, related_name='friendships', on_delete=models.CASCADE)
-	user2 = models.ForeignKey(CustomUser, related_name='+', on_delete=models.CASCADE)
-	created_at = models.DateTimeField(auto_now_add=True)
+class Friendship(models.Model):
+	user1 = models.ForeignKey(CustomUser, related_name='friends_initiated', on_delete=models.CASCADE)
+	user2 = models.ForeignKey(CustomUser, related_name='friends_received', on_delete=models.CASCADE)
+	created = models.DateTimeField(auto_now_add=True)
 
 	class	Meta:
 		unique_together = ('user1', 'user2')
 
 	def	__str__(self):
-		return _(f"%(self.user1.username)s is friends with %(self.user2.username)s") % {'self.user1.username': self.user1.username, 'self.user2.username': self.user2.username}
+		return f"{self.user1} is friends with {self.user2}"

@@ -28,7 +28,30 @@
 			</div>
 		</div>
 
-
+		<div id="add-friends-modal" class="add-friends-modal" style="display:none;">
+			<div class="add-friends-modal-content">
+				<span class="close-button">&times;</span> <!-- Botão de fechar no canto superior direito -->
+				<h2><strong class="gradient-text">{% trans "Add Friends" %}</strong></h2>
+				<ul>
+					{% for user in list_users %}
+						<li>
+							<a href="{% url 'users:profile' user.username %}">{{ user.nickname }}</a>
+							<form method="post" action="{% url 'users:add_friend_modal' user.username %}">
+								{% csrf_token %}
+								<button type="submit" class="small-button">{% trans "Add Friend" %}</button>
+							</form>
+						</li>
+					{% empty %}
+						<li>{% trans "No users available. You're already friends with everyone!" %}</li>
+					{% endfor %}
+				</ul>
+				<button class="small-button close-modal-button">{% trans "Close" %}</button> <!-- Botão "Close" -->
+			</div>
+		</div>
+		
+		
+		
+	
 		<!-- Popup de alteração de foto de perfil -->
 		<div id="profile-picture-popup" class="popup" style="display:none;">
 			<div class="photo-popup-content">
@@ -90,33 +113,38 @@
 			</div>
 		</div>
 
-		<!-- Seção de Amigos -->
-		{% if annonymous == False and request.user.is_verified %}
-			<div class="friends-section">
-        <h2><strong>{% trans "Friends" %}</strong></h2>
-				<ul>
-					{% for friend in friends %}
-						<li>
-							<a href="{% url 'users:profile' friend.username %}">{{ friend.nickname }}</a>
-							{% if friend.is_online %}
-								<span class="online-status online">● Online</span>
-							{% else %}
-								<span class="online-status offline">● Offline</span>
-							{% endif %}
-						</li>
-					{% endfor %}
-				</ul>
-			</div>
-		{% endif %}
-	</div>
+{% if annonymous == False and request.user.is_verified %}
+<div class="friends-section">
+	<h2><strong>{% trans "Friends" %}</strong></h2>
+	<ul>
+		{% for friend in friends %}
+			<li>
+				<a href="{% url 'users:profile' friend.user2.username %}">{{ friend.user2.nickname }}</a>
+				{% if friend.user2.is_online %}
+					<span class="online-status online">● Online</span>
+				{% else %}
+					<span class="online-status offline">● Offline</span>
+				{% endif %}
+			</li>
+		{% empty %}
+			<li>{% trans "You still don't have any friends." %}</li>
+		{% endfor %}
+	</ul>
+
+	{% if user_info == request.user %}
+		<button class="small-button" id="open-add-friends-modal">{% trans "Add Friends" %}</button>
+	{% endif %}
 
 	<!-- Seção de Ação de Adicionar Amigo -->
 	{% if user_info != request.user and not is_friend and annonymous == False and request.user.is_verified %}
-		<form method="post" action="{% url 'users:send_friend_request' user_info.username %}">
-			{% csrf_token %}
-			<button type="submit" class="small-button">{% trans "Add Friend" %}</button>
-		</form>
-	{% endif %}
+	<form method="post" action="{% url 'users:send_friend_request' user_info.username %}">
+		{% csrf_token %}
+		<button type="submit" class="small-button">{% trans "Add Friend" %}</button>
+	</form>
+{% endif %}
+
+</div>
+{% endif %}
 {% endblock %}
 
 {% block scripts %}
@@ -151,6 +179,61 @@
 			window.addEventListener('click', function(event) {
 				if (event.target === profilePicturePopup) {
 					profilePicturePopup.style.display = 'none';
+				}
+			});
+		});
+	</script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			const changePictureButton = document.getElementById('change-picture-button');
+			const profilePicturePopup = document.getElementById('profile-picture-popup');
+			const closeProfilePicturePopup = profilePicturePopup.querySelector('.close-button');
+	
+			// Abrir e fechar o popup de foto de perfil
+			changePictureButton.addEventListener('click', function() {
+				profilePicturePopup.style.display = 'block';
+			});
+	
+			closeProfilePicturePopup.addEventListener('click', function() {
+				profilePicturePopup.style.display = 'none';
+			});
+	
+			window.addEventListener('click', function(event) {
+				if (event.target === profilePicturePopup) {
+					profilePicturePopup.style.display = 'none';
+				}
+			});
+	
+			// Abrir e fechar o modal de adicionar amigos
+			const openModalButton = document.getElementById("open-add-friends-modal");
+			const addFriendsModal = document.getElementById("add-friends-modal");
+			const closeAddFriendsModalButton = addFriendsModal.querySelector(".close-button"); // Fechar via X
+			const closeModalButton = document.querySelector(".close-modal-button"); // Fechar via botão "Close"
+	
+			if (openModalButton) {
+				openModalButton.addEventListener("click", function() {
+					addFriendsModal.style.display = "block";
+				});
+			}
+	
+			// Fechar o modal ao clicar no botão X
+			if (closeAddFriendsModalButton) {
+				closeAddFriendsModalButton.addEventListener("click", function() {
+					addFriendsModal.style.display = "none";
+				});
+			}
+	
+			// Fechar o modal ao clicar no botão "Close"
+			if (closeModalButton) {
+				closeModalButton.addEventListener("click", function() {
+					addFriendsModal.style.display = "none";
+				});
+			}
+	
+			// Fechar o modal ao clicar fora dele
+			window.addEventListener("click", function(event) {
+				if (event.target === addFriendsModal) {
+					addFriendsModal.style.display = "none";
 				}
 			});
 		});

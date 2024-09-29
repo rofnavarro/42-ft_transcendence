@@ -46,7 +46,7 @@ class JWTMiddleware:
 		return request
 
 	def process_view(self, request, view_func, view_args, view_kwargs):
-		paths = ['/admin/', '/login/', '/about/', '/ranking/']
+		paths = ['/admin/', '/login/', '/about/', '/ranking/', '/set_language']
 
 		if request.path == '/' or request.path.startswith(tuple(paths)):
 			pass
