@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block undertitle %}
-	<h1>{% trans "Tournament Settings" %}</h1>
+	<h2><strong class="gradient-text">{% trans "Tournament Settings" %}</strong></h2>
 {% endblock %}
 
 {% block content %}
@@ -15,14 +15,16 @@
 		{% csrf_token %}
 		<div class="tournament-play">
 			<div id="qtd-jogadores">
-				<h2>{% trans "Players" %}</h2>
+				<h3><strong class="gradient-text">{% trans "Number of Players" %}</strong></h3>
+				<p>{% trans "Choose the number of players:" %}</p>
 				<input type="radio" name="qtd-jogadores" value="4" checked>
 				<label>4</label>
 				<input type="radio" name="qtd-jogadores" value="8">
 				<label>8</label>
 			</div>
 			<div id="qtd-turnos">
-				<h2>{% trans "Rounds" %}</h2>
+				<h3><strong class="gradient-text">{% trans "Rounds" %}</strong></h3>
+				<p>{% trans "Choose the number of rounds:" %}</p>
 				<input type="radio" name="qtd-turnos" value="1" checked>
 				<label>1</label>
 				<input type="radio" name="qtd-turnos" value="3">

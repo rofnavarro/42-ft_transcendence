@@ -23,6 +23,7 @@
 			</div>
 			<div id="qtd-turnos">
 				<h3><strong class="gradient-text">{% trans "Rounds" %}</strong></h3>
+				<p>{% trans "Choose the number of rounds:" %}</p>
 				<input type="radio" name="qtd-turnos" value="1" checked>
 				<label>1</label>
 				<input type="radio" name="qtd-turnos" value="3">
@@ -45,7 +46,7 @@
 			<p>{% trans "Choose who is playing with you:" %}</p>
 			<div class="players">
 				<div id="player1" class="player">
-					<h4>{% trans "Player 1 (You)" %}</h4>
+					<h4>{% trans "Player 1" %}</h4>
 					<input type="hidden" id="player1-name" name="player1" value="{{ request.user.username }}">
 					<input type="hidden" id="player1-nickname" name="player1-nickname" value="{{ request.user.nickname }}">
 					<span id="player1-label">{{ request.user.nickname }}</span>
