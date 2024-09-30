@@ -12,6 +12,14 @@ echo	"Applying database migrations..."
 python	manage.py makemigrations
 python	manage.py migrate
 
+python3 manage.py shell -c "\
+from users.models import CustomUser;\
+user = CustomUser(username='banana', email='transcendencenana@gmail.com', is_staff=True, is_superuser=True);\
+user.save();\
+user.set_password('bananateam');\
+user.save();\
+exit();"
+
 
 # Inicializa o servidor do Django
 echo	"Starting Django server..."
