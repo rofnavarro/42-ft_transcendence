@@ -158,3 +158,8 @@ TX_HASH = os.getenv('HASH_NANA')
 TX_ADDRESS = os.getenv('ADDRESS_NANA')
 TX_RECEIPT = []
 DEPLOYED_CONTRACT = None
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://localhost:5000/*',
+    'https://localhost:8000/*',
+]

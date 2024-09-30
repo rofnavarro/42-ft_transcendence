@@ -11,7 +11,7 @@ done
 echo	"Applying database migrations..."
 python	manage.py makemigrations
 python	manage.py migrate
-gunicorn ft_transcendence.wsgi:application --env DJANGO_SETTINGS_MODULE=ft_transcendence.settings --bind 0.0.0.0:8000
+gunicorn --bind 0.0.0.0:8000 ft_transcendence.wsgi
 
 python3 manage.py shell -c "\
 from users.models import CustomUser;\

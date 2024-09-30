@@ -20,6 +20,10 @@ COPY	./media /var/www/html/media
 
 RUN		chmod 755 /var/www/html
 
+RUN		chmod 644 /etc/nginx/ssl/certs/localhost.crt
+RUN		chmod 644 /etc/nginx/ssl/private/localhost.key
+
+
 RUN		chown -R www-data:www-data /var/www/html
 
-CMD [ "nginx", "-g", "daemon off;" ]
+CMD		[ "nginx", "-g", "daemon off;" ]
