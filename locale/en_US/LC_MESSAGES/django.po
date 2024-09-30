@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-29 17:39-0300\n"
+"POT-Creation-Date: 2024-09-30 03:00-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -205,17 +205,49 @@ msgstr ""
 msgid "Tournament"
 msgstr ""
 
+#: match/templates/match/tournament_final.html:10
+#: match/templates/match/tournament_final.html:14
+msgid "Tournament's Final Game"
+msgstr ""
+
+#: match/templates/match/tournament_final.html:20
+#: match/templates/match/tournament_games.html:21
+msgid "Final Match"
+msgstr ""
+
+#: match/templates/match/tournament_final.html:33
+#: match/templates/match/tournament_games.html:35
+#: match/templates/match/tournament_games.html:51
+msgid "Start Match"
+msgstr ""
+
+#: match/templates/match/tournament_final.html:35
+msgid "Save"
+msgstr ""
+
 #: match/templates/match/tournament_games.html:10
 #: match/templates/match/tournament_games.html:14
 msgid "Tournament's Pong Game"
 msgstr ""
 
-#: match/templates/match/tournament_games.html:21
-msgid "Final Match"
-msgstr ""
-
 #: match/templates/match/tournament_games.html:22
 msgid "Prepare yourselves for the final match:"
+msgstr ""
+
+#: match/templates/match/tournament_games.html:27
+msgid "Go to Final!"
+msgstr ""
+
+#: match/templates/match/tournament_games.html:32
+msgid "First Match"
+msgstr ""
+
+#: match/templates/match/tournament_games.html:48
+msgid "Second Match"
+msgstr ""
+
+#: match/templates/match/tournament_games.html:65
+msgid "See results"
 msgstr ""
 
 #: ranking/templates/ranking/ranking.html:20
@@ -332,19 +364,6 @@ msgstr ""
 
 #: templates/layout.html:87
 msgid "Profile"
-msgstr ""
-
-#: tournaments/models.py:19
-#, python-format
-msgid "Tournament %(self.id)s - %(self.num_players)s players"
-msgstr ""
-
-#: tournaments/models.py:23
-msgid "The number of players must match the tournament type."
-msgstr ""
-
-#: tournaments/models.py:27
-msgid "All matches must be completed before saving the tournament."
 msgstr ""
 
 #: tournaments/templates/tournaments/tournament_4.html:6
