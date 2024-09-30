@@ -23,4 +23,4 @@ exit();"
 
 # Inicializa o servidor do Django
 echo	"Starting Django server..."
-exec	python manage.py runserver 0.0.0.0:8000
+exec	python manage.py runsslserver --certificate ./localhost.crt --key ./localhost.key
