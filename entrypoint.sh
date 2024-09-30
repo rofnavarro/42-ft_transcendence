@@ -11,6 +11,7 @@ done
 echo	"Applying database migrations..."
 python	manage.py makemigrations
 python	manage.py migrate
+gunicorn ft_transcendence.wsgi:application --env DJANGO_SETTINGS_MODULE=ft_transcendence.settings --bind 0.0.0.0:8000
 
 python3 manage.py shell -c "\
 from users.models import CustomUser;\
@@ -23,4 +24,4 @@ exit();"
 
 # Inicializa o servidor do Django
 echo	"Starting Django server..."
-exec	python manage.py runsslserver --certificate ./localhost.crt --key ./localhost.key
+exec	python manage.py runserver

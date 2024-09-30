@@ -8,7 +8,6 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-LOGIN_URL = '/login'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
@@ -27,7 +26,7 @@ SECRET_KEY = 'django-insecure-6waaegtj9iw2dh7plax#^2w+e$s(ig$by=v9zdrvavq9u5hf8^
 # SECURITY WARNING: don't run with debug turned on in production!
 # TODO: trocar para o ip da maquina que vai rodar o servidor e mudar o DEBUG para False
 DEBUG = False
-ALLOWED_HOSTS = ['*', 'localhost', '0.0.0.0']
+ALLOWED_HOSTS = ['*', 'localhost', '0.0.0.0', '127.0.0.1']
 
 # Application definition
 INSTALLED_APPS = [
@@ -38,13 +37,13 @@ INSTALLED_APPS = [
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
 
-	'sslserver',
-
+	'users',
 	'login',
 	'match',
+	'tournaments',
 	'ranking',
-	'users',
-	'tournaments'
+
+	'sslserver',
 ]
 
 MIDDLEWARE = [
@@ -60,7 +59,6 @@ MIDDLEWARE = [
 	'ft_transcendence.middleware.middlewareJWT.JWTMiddleware',
 ]
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_NAME = 'sessionid'
 

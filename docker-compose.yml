@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3'
 
 services:
   db:
@@ -28,6 +28,8 @@ services:
       - media_volume:/ft_transcendence/media
     env_file:
       - .env
+    environment:
+      - DJANGO_SETTINGS_MODULE=ft_transcendence.settings
     depends_on:
       - db
       - hardhat
@@ -42,6 +44,21 @@ services:
       - transcendence
     ports:
       - "8545:8545"
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
+    container_name: nginx
+    image: nginx:transcendence
+    volumes:
+      - media_volume:/var/www/html/media
+    depends_on:
+      - django
+    networks:
+      - transcendence
+    ports:
+      - 5000:5000
 
 networks:
   transcendence:
