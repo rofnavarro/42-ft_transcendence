@@ -80,9 +80,7 @@ body {
 	font-style: normal;
 	color: #858cee;
 	font-size: 20px;
-	/* background-image: linear-gradient(145deg, #03021d 0%, #050e3b 55%, #4d267d 100%); */
 	background-color: #040c30;
-	/* background-image: url(../imgs/background-banana.png); */
 	background-size: cover;
 	text-align: center;
 	justify-content: center;
@@ -231,7 +229,6 @@ main {
 	height: 100%;
 }
 
-/* TODO: classe feia */
 .play-container {
 	display: flex;
 	flex-wrap: wrap;
@@ -370,8 +367,6 @@ main {
 	margin-bottom: 20px;
 }
 
-/* FIM */
-
 h1 {
 	font-family: "Play", sans-serif;
 	font-optical-sizing: auto;
@@ -464,7 +459,6 @@ canvas {
 } 
 
 .stats-table {
-    /* width: 100%; */
     border-collapse: collapse;
 	min-width: 400px;
 	min-height: 100px;
@@ -791,7 +785,7 @@ input:focus {
 }
 
 .modal {
-	display: none; /* Inicialmente escondido */
+	display: none;
 	position: fixed;
 	z-index: 9999;
 	left: 0;
@@ -804,11 +798,11 @@ input:focus {
 
 .modal-content {
 	background-color: #c3c6f1;
-	margin: 15% auto; /* Margem para centralizar verticalmente */
+	margin: 15% auto;
 	padding: 20px;
 	border: 1px solid #858cee;
 	border-radius: 10px;
-	width: 15%; /* Largura do modal */
+	width: 15%;
 	color: #040c30;
 	position: relative;
 }
@@ -833,7 +827,7 @@ input:focus {
 }
 
 .add-friends-modal {
-	display: none; /* Inicialmente escondido */
+	display: none;
 	position: fixed;
 	z-index: 9999;
 	left: 0;
@@ -846,11 +840,11 @@ input:focus {
 
 .add-friends-modal-content {
 	background-color: #c3c6f1;
-	margin: 15% auto; /* Margem para centralizar verticalmente */
+	margin: 15% auto;
 	padding: 20px;
 	border: 1px solid #858cee;
 	border-radius: 10px;
-	width: 20%; /* Largura do modal */
+	width: 20%;
 	color: #040c30;
 	position: relative;
 }

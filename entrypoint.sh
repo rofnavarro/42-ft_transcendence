@@ -11,7 +11,6 @@ done
 echo	"Applying database migrations..."
 python	manage.py makemigrations
 python	manage.py migrate
-gunicorn --bind 0.0.0.0:8000 ft_transcendence.wsgi
 
 python3 manage.py shell -c "\
 from users.models import CustomUser;\

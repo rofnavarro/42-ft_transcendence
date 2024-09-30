@@ -45,23 +45,6 @@ services:
     ports:
       - "8545:8545"
 
-  nginx:
-    build:
-      context: .
-      dockerfile: ./nginx/Dockerfile
-    container_name: nginx
-    image: nginx:transcendence
-    volumes:
-      - media_volume:/var/www/html/media
-      - static_volume:/var/www/html/static
-    depends_on:
-      - django
-    networks:
-      - transcendence
-    ports:
-      - "5000:5000"
-      - "5001:443"
-
 networks:
   transcendence:
     name: transcendence

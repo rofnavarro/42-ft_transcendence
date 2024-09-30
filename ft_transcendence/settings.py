@@ -20,9 +20,11 @@ SESSION_SAVE_EVERY_REQUEST = True
 SECURE_SSL_REDIRECT = True
 
 
-# SECURITY WARNING: keep the secret key used in production secret!
+
 SECRET_KEY = os.getenv('JWT_SECRET_KEY')
-# SECURITY WARNING: don't run with debug turned on in production!
+USER_ID = os.getenv('USER_ID')
+API_KEY = os.getenv('API_KEY')
+
 DEBUG = True
 ALLOWED_HOSTS = ['*', 'localhost', '0.0.0.0']
 
