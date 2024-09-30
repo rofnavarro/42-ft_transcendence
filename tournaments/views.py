@@ -11,11 +11,10 @@ import json
 
 
 def get_contract():
-	with open('/home/femoyo/Documents/transcendence/blockchain/hardhat/artifacts/contracts/Tournaments.sol/Tournament.json') as f:
+	with open('/home/rferrero/Desktop/transcendence/blockchain/hardhat/artifacts/contracts/Tournaments.sol/Tournament.json') as f:
 		contract = json.load(f)
 	return contract
 
-#TODO: achar uma forma de executar apenas 1x o web3_init
 def web3_init():
 	contract = get_contract()
 	web3Instance = Web3(Web3.HTTPProvider('http://localhost:8545/'))
