@@ -5,9 +5,7 @@ from django.conf import settings
 from users.models import CustomUser
 import datetime
 import json
-import os
 
-#Imports the web3 module
 from web3 import Web3
 import json
 
@@ -56,7 +54,6 @@ def serialize_queryset(queryset: QuerySet) -> dict:
 def set_tournament(tournament_id):
 	tour = Tournament.objects.get(id=tournament_id)
 
-	
 	all_matches = tour.matches.all()
 
 	object_match = []
@@ -82,9 +79,7 @@ def set_tournament(tournament_id):
 	}
 
 	object_var = json.dumps(tournament_data)
-
 	web3 = web3_init()
-
 	try:
 		transact = settings.DEPLOYED_CONTRACT.functions.addMatch(object_var).transact({'from': web3.eth.accounts[0]})
 		settings.TX_RECEIPT.append(transact)
@@ -115,8 +110,10 @@ def get_tournament(web3):
 	return values
 
 
-def tournament(request):
-	pass
+def tournaments(request):
+	tournaments = Tournament.objects.all().order_by('-date')
+	return render(request, 'tournaments/tournaments.html', { 'tournaments': tournaments })
+
 	
 
 def tournament_4(request):
@@ -125,10 +122,3 @@ def tournament_4(request):
 		user = get_object_or_404(CustomUser, username=request.user.username)
 		friends = user.friends.all()
 		return render(request, 'tournaments/tournament_4.html', {'user': user, 'friends': friends, 'turns': turns})
-
-
-def tournament_8(request):
-	if request.method == 'POST':
-		total_players = request.POST.get('qtd-jogadores')
-		turns = request.POST.get('qtd-turnos')
-	return render(request, 'home.html')

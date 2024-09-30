@@ -16,7 +16,7 @@
 <form id="tournament4-form" method="POST" action="{% url 'match:tournament_final' %}">
 	{% csrf_token %}
 	<div id="resultContainer">
-		<div class="result-content">
+		<div class="result-content" id="resultContent">
 			<span class="close-button" onclick="closeFriendModal()">×</span>
 			<h2><strong class="gradient-text">{% trans "Final Match" %}</strong></h2>
 			<p>{% trans "Prepare yourselves for the final match:" %}</p>
@@ -31,7 +31,7 @@
 		<div>
 			<h3 class="gradient-text">First Match</h3>
 			<p>{{ nicknames.0 }} <img src="{% static 'imgs/cross.png' %}" class="versus-small"> {{ nicknames.1 }}</p>
-			<button type="button" class="small-button" onclick="startMatch('{{ usernames.0 }}', '{{ usernames.1 }}', '{{ nicknames.0 }}', '{{ nicknames.1 }}', '{{ turns }}', '1')">
+			<button type="button" id="first-match-button" class="small-button" onclick="startMatch('{{ usernames.0 }}', '{{ usernames.1 }}', '{{ nicknames.0 }}', '{{ nicknames.1 }}', '{{ turns }}', '1')">
 				Start Match
 			</button>
 			<div class="match-result">
@@ -44,12 +44,14 @@
 		</div>
 		<div>
 		</div>
-		<div>
+		<div class="see-results">
+			{% comment %} <button type="button" id="see-results" class="small-button">{% trans See Results%}</button> {% endcomment %}
+			<button type="button" id="see-results" class="small-button">See Results</button>
 		</div>
 		<div>
 			<h3 class="gradient-text">Second Match</h3>
 			<p>{{ nicknames.2 }} <img src="{% static 'imgs/cross.png' %}" class="versus-small"> {{ nicknames.3 }}</p>
-			<button type="button" class="small-button" onclick="startMatch('{{ usernames.2 }}', '{{ usernames.3 }}', '{{ nicknames.2 }}', '{{ nicknames.3 }}', '{{ turns }}', '2')">
+			<button type="button" id="second-match-button" class="small-button" onclick="startMatch('{{ usernames.2 }}', '{{ usernames.3 }}', '{{ nicknames.2 }}', '{{ nicknames.3 }}', '{{ turns }}', '2')">
 				Start Match
 			</button>
 			<div class="match-result">
@@ -70,6 +72,18 @@
 
 {% block content2 %}
 	<style>
+		#see-results {
+			display: none;
+			justify-content: center;
+			align-items: center;
+			margin: 0 auto;
+			}
+			
+		.see-results {
+			display: flex;
+			justify-content: center;
+		}
+
 		h2 {
 			margin-bottom: 10px;
 		}
@@ -129,8 +143,33 @@
 {% block scripts %}
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
-		document.getElementById('resultContainer').style.display = 'none'
-	})
+		document.getElementById('resultContainer').style.display = 'none';
+	
+		const first_match = document.getElementById('first-match-button');
+		const second_match = document.getElementById('second-match-button');
+
+		const see_results = document.getElementById('see-results');
+	
+		first_match.addEventListener('click', function() {
+			first_match.style.display = 'none';
+			checkButtons();
+		});
+	
+		second_match.addEventListener('click', function() {
+			second_match.style.display = 'none';
+			checkButtons();
+		});
+	
+		function checkButtons() {
+			if (first_match.style.display === 'none' && second_match.style.display === 'none') {
+				see_results.style.display = 'block';
+			}
+		}
+		see_results.addEventListener('click', function() {
+			document.getElementById('resultContent').style.display = 'block';
+			document.getElementById('resultContainer').style.display = 'block';
+		});
+	});
 
 	let scriptLoaded = false;
 
@@ -140,7 +179,6 @@
 	}
 	
 	function startMatch(username1, username2, nickname1, nickname2, turns, matchNumber) {
-		checkWinners();
 		if (scriptLoaded) {
 			Game.initialize(username1, username2, nickname1, nickname2, turns, matchNumber);
 			return;
@@ -155,19 +193,6 @@
 			scriptLoaded = false;
 		};
 		document.body.appendChild(script);
-	}
-
-	function checkWinners() {
-		const winner1 = document.getElementById('winner1').value;
-		const winner2 = document.getElementById('winner2').value;
-	
-		if (winner1 !== "" && winner2 !== "") {
-			document.getElementById('resultContainer').style.display = 'block';
-		}
-	}
-
-	function closeFriendModal() {
-		document.getElementById('resultContainer').style.display = 'none';
 	}
 </script>
 {% endblock %}

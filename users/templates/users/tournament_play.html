@@ -19,8 +19,6 @@
 				<p>{% trans "Choose the number of players:" %}</p>
 				<input type="radio" name="qtd-jogadores" value="4" checked>
 				<label>4</label>
-				<input type="radio" name="qtd-jogadores" value="8">
-				<label>8</label>
 			</div>
 			<div id="qtd-turnos">
 				<h3><strong class="gradient-text">{% trans "Rounds" %}</strong></h3>
@@ -43,13 +41,7 @@
 	<script>
 		function prepareForm() {
 			const form = document.getElementById('tournament-form');
-			const selectedPlayers = document.querySelector('input[name="qtd-jogadores"]:checked').value;
-
-			if (selectedPlayers === '4') {
-				form.action = "{% url 'tournaments:tournament_4' %}";
-			} else if (selectedPlayers === '8') {
-				form.action = "{% url 'tournaments:tournament_8' %}";
-			}
+			form.action = "{% url 'tournaments:tournament_4' %}";
 		}
 	</script>
 {% endblock %}

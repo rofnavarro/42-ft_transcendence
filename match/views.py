@@ -213,10 +213,9 @@ def finish_tournament(request):
 				tournament.matches.add(match1)
 				if (score_user1 > score_user2):
 					tournament.winner = user1
-				else:
+				elif (score_user1 < score_user2):
 					tournament.winner = user2
 				tournament.save()
-				print(tournament)
 				set_tournament(tournament.id)
 		except Exception as e:
 			print(e)

@@ -14,9 +14,7 @@
 	{% if user_info == request.user %}
 	<button id="change-nickname-button" class="small-button">{% trans "Change Nickname" %}</button>
 	{% endif %}
-
 	{% if user_info == request.user and request.user.is_verified == True  %}
-		<!-- Popup de alteração de nickname -->
 		<div id="nickname-popup" class="popup" style="display:none;">
 			<div class="popup-content">
 				<span class="close-button">&times;</span>
@@ -27,10 +25,9 @@
 				</form>
 			</div>
 		</div>
-
 		<div id="add-friends-modal" class="add-friends-modal" style="display:none;">
 			<div class="add-friends-modal-content">
-				<span class="close-button">&times;</span> <!-- Botão de fechar no canto superior direito -->
+				<span class="close-button">&times;</span>
 				<h2><strong class="gradient-text">{% trans "Add Friends" %}</strong></h2>
 				<ul>
 					{% for user in list_users %}
@@ -45,14 +42,9 @@
 						<li>{% trans "No users available. You're already friends with everyone!" %}</li>
 					{% endfor %}
 				</ul>
-				<button class="small-button close-modal-button">{% trans "Close" %}</button> <!-- Botão "Close" -->
+				<button class="small-button close-modal-button">{% trans "Close" %}</button>
 			</div>
 		</div>
-		
-		
-		
-	
-		<!-- Popup de alteração de foto de perfil -->
 		<div id="profile-picture-popup" class="popup" style="display:none;">
 			<div class="photo-popup-content">
 				<span class="close-button">&times;</span>
@@ -69,8 +61,6 @@
 
 {% block content %}
 	<div class="rpg-profile-container">
-		
-		<!-- Seção da Imagem de Perfil -->
 		<div class="profile-image-section">
 			{% if user_info.profile_picture %}
 				<img src="{{ user_info.profile_picture.url }}" alt="Profile Picture" class="profile-image">
@@ -82,8 +72,6 @@
 				<button id="change-picture-button" class="small-button">{% trans "Change Photo" %}</button>
 			{% endif %}
 		</div>
-
-		<!-- Seção das Estatísticas do Usuário -->
 		<div class="profile-header">
 			<div class="profile-stats-section">
 				<h2><b>{% trans "Statistics" %}</b></h2>
@@ -112,7 +100,6 @@
 				<button class="small-button" onclick="window.location.href='{% url 'match:history' user_info.username %}'">{% trans "Matches History" %}</button>
 			</div>
 		</div>
-
 {% if annonymous == False and request.user.is_verified %}
 <div class="friends-section">
 	<h2><strong>{% trans "Friends" %}</strong></h2>
@@ -134,21 +121,17 @@
 	{% if user_info == request.user %}
 		<button class="small-button" id="open-add-friends-modal">{% trans "Add Friends" %}</button>
 	{% endif %}
-
-	<!-- Seção de Ação de Adicionar Amigo -->
 	{% if user_info != request.user and not is_friend and annonymous == False and request.user.is_verified %}
 	<form method="post" action="{% url 'users:send_friend_request' user_info.username %}">
 		{% csrf_token %}
 		<button type="submit" class="small-button">{% trans "Add Friend" %}</button>
 	</form>
 {% endif %}
-
 </div>
 {% endif %}
 {% endblock %}
 
 {% block scripts %}
-	<!-- Script para popups --> 
 	<script>
 		const changeNicknameButton = document.getElementById('change-nickname-button');
 		const nicknamePopup = document.getElementById('nickname-popup');
@@ -189,7 +172,6 @@
 			const profilePicturePopup = document.getElementById('profile-picture-popup');
 			const closeProfilePicturePopup = profilePicturePopup.querySelector('.close-button');
 	
-			// Abrir e fechar o popup de foto de perfil
 			changePictureButton.addEventListener('click', function() {
 				profilePicturePopup.style.display = 'block';
 			});
@@ -204,11 +186,10 @@
 				}
 			});
 	
-			// Abrir e fechar o modal de adicionar amigos
 			const openModalButton = document.getElementById("open-add-friends-modal");
 			const addFriendsModal = document.getElementById("add-friends-modal");
-			const closeAddFriendsModalButton = addFriendsModal.querySelector(".close-button"); // Fechar via X
-			const closeModalButton = document.querySelector(".close-modal-button"); // Fechar via botão "Close"
+			const closeAddFriendsModalButton = addFriendsModal.querySelector(".close-button");
+			const closeModalButton = document.querySelector(".close-modal-button");
 	
 			if (openModalButton) {
 				openModalButton.addEventListener("click", function() {
@@ -216,21 +197,18 @@
 				});
 			}
 	
-			// Fechar o modal ao clicar no botão X
 			if (closeAddFriendsModalButton) {
 				closeAddFriendsModalButton.addEventListener("click", function() {
 					addFriendsModal.style.display = "none";
 				});
 			}
 	
-			// Fechar o modal ao clicar no botão "Close"
 			if (closeModalButton) {
 				closeModalButton.addEventListener("click", function() {
 					addFriendsModal.style.display = "none";
 				});
 			}
 	
-			// Fechar o modal ao clicar fora dele
 			window.addEventListener("click", function(event) {
 				if (event.target === addFriendsModal) {
 					addFriendsModal.style.display = "none";
