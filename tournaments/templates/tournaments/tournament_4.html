@@ -139,6 +139,7 @@
 </style>
 
 <script>
+	let selectedPlayers = [];
 
 	function openFriendModal(playerId) {
 		currentPlayer = playerId;
@@ -150,11 +151,31 @@
 	}
 
 	function selectFriend(username, nickname, playerId) {
+		if (selectedPlayers.includes(username)) {
+			alert('This user was already selected for another match.');
+			return;
+		}
+
+		selectedPlayers.push(username);
+		
 		document.getElementById(`player${playerId}-name`).value = username;
 		document.getElementById(`player${playerId}-nickname`).value = nickname;
 		document.getElementById(`player${playerId}-label`).innerText = nickname;
 		document.getElementById(`invite-btn-${playerId}`).style.display = 'none';
+
+		removeFriendFromList(username);
+
 		closeFriendModal();
+	}
+
+	function removeFriendFromList(username) {
+		const friendListItems = document.querySelectorAll('#friends-list li a');
+
+		friendListItems.forEach(item => {
+			if (item.getAttribute('onclick').includes(username)) {
+				item.parentElement.remove();
+			}
+		});
 	}
 </script>
 {% endblock %}
