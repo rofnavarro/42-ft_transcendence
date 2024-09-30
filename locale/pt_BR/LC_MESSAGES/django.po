@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-30 03:00-0300\n"
+"POT-Creation-Date: 2024-09-30 05:26-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -157,7 +157,7 @@ msgstr "Jogo Pong"
 msgid "Pong Contest"
 msgstr "Campeonato Pong"
 
-#: match/templates/match/history.html:6
+#: match/templates/match/history.html:7
 #, python-format
 msgid ""
 "\n"
@@ -166,11 +166,11 @@ msgstr ""
 "\n"
 "Histórico de partidas de %(username)s\n"
 
-#: match/templates/match/history.html:12 users/templates/users/profile.html:112
+#: match/templates/match/history.html:13 users/templates/users/profile.html:100
 msgid "Matches History"
 msgstr "Histórico de Partidas"
 
-#: match/templates/match/history.html:21
+#: match/templates/match/history.html:22
 #, python-format
 msgid ""
 "\n"
@@ -181,37 +181,39 @@ msgstr ""
 "\t\tHistórico de %(username)s\n"
 "\t\t"
 
-#: match/templates/match/history.html:30
+#: match/templates/match/history.html:31
+#: tournaments/templates/tournaments/tournaments.html:25
 msgid "Date"
 msgstr "Data"
 
-#: match/templates/match/history.html:31
+#: match/templates/match/history.html:32
 #: tournaments/templates/tournaments/tournament_4.html:21
 #: users/templates/users/local_play.html:49
 msgid "Player 1"
 msgstr "Jogador 1"
 
-#: match/templates/match/history.html:32
+#: match/templates/match/history.html:33
 #: tournaments/templates/tournaments/tournament_4.html:28
 #: users/templates/users/local_play.html:55
 msgid "Player 2"
 msgstr "Jogador 2"
 
-#: match/templates/match/history.html:33
+#: match/templates/match/history.html:34
 msgid "Score Player 1"
 msgstr "Pontos Jogador 1"
 
-#: match/templates/match/history.html:34
+#: match/templates/match/history.html:35
 msgid "Score Player 2"
 msgstr "Pontos Jogador 2"
 
-#: match/templates/match/history.html:35
+#: match/templates/match/history.html:36
 #: tournaments/templates/tournaments/tournament_4.html:36
 #: tournaments/templates/tournaments/tournament_4.html:44
+#: tournaments/templates/tournaments/tournaments.html:26
 msgid "Winner"
 msgstr "Ganhador"
 
-#: match/templates/match/history.html:36
+#: match/templates/match/history.html:37
 #: users/templates/users/wanna_play.html:22
 msgid "Tournament"
 msgstr "Torneio"
@@ -266,17 +268,17 @@ msgid "User"
 msgstr "Usuário"
 
 #: ranking/templates/ranking/ranking.html:21
-#: users/templates/users/profile.html:94
+#: users/templates/users/profile.html:82
 msgid "Matches"
 msgstr "Partidas"
 
 #: ranking/templates/ranking/ranking.html:22
-#: users/templates/users/profile.html:95
+#: users/templates/users/profile.html:83
 msgid "Wins"
 msgstr "Vitórias"
 
 #: ranking/templates/ranking/ranking.html:23
-#: users/templates/users/profile.html:96
+#: users/templates/users/profile.html:84
 msgid "Losses"
 msgstr "Derrotas"
 
@@ -327,20 +329,35 @@ msgid "Now, the team:"
 msgstr "Agora, o time:"
 
 #: templates/about.html:33
-msgid "A really nice text about Clarissa with lots of blablabla."
-msgstr "Um texto muito legal sobre a Clarissa com um monte de blablabla."
+msgid ""
+"Natural of São Paulo, Clarissa is a cadet at 42 São Paulo since February "
+"2021."
+msgstr "Natural de São Paulo, Clarissa é uma cadete na 42 São Paulo desde fevereiro "
+"de 2021."
 
-#: templates/about.html:34 templates/about.html:63 templates/about.html:92
-msgid "Blablabla whiskas sachê, blablabla, blablabla, blablabla."
-msgstr "Blablabla whiskas sachê, blablabla, blablabla, blablabla."
+#: templates/about.html:34
+msgid "It is rumored she was a diplomat in another life #diplomatique."
+msgstr " Há rumores de que ela foi uma diplomata em vidas passadas #diplomatique."
 
 #: templates/about.html:62
-msgid "A really nice text about Felipe with lots of blablabla."
-msgstr "Um texto muito legal sobre o Felipe com um monte de blablabla."
+msgid "Natural of São Paulo, Felipe is a cadet at 42 São Paulo since May 2021."
+msgstr "Natural de São Paulo, Felipe é um cadete na 42 São Paulo desde maio de 2021."
+
+#: templates/about.html:63
+msgid "He is a very good friend of the worldly famous Mike Migrations."
+msgstr "Ele é um amigo bem próximo do mundialmente famoso Mike Migrations."
 
 #: templates/about.html:91
-msgid "A really nice text about Rodrigo with lots of blablabla."
-msgstr "Um texto muito legal sobre o Rodrigo com um monte de blablabla."
+msgid ""
+"Natural from Santos, Rodrigo is a cadet at 42 São Paulo since July 2021."
+msgstr ""
+"Natural de Santos, Rodrigo é um cadete na 42 São Paulo desde julho de 2021."
+
+#: templates/about.html:92
+msgid ""
+"He can only code well if he listens to Careless Whisper by George Michael."
+msgstr ""
+"Ele só consegue codar direito se ouvir Careless Whisper do George Michaell."
 
 #: templates/home.html:6
 msgid "Welcome to Transcendencenana!"
@@ -431,7 +448,7 @@ msgstr "Convide um Amigo"
 
 #: tournaments/templates/tournaments/tournament_4.html:78
 #: users/templates/users/local_play.html:88
-#: users/templates/users/profile.html:130
+#: users/templates/users/profile.html:117
 msgid "You still don't have any friends."
 msgstr "Você ainda não tem amigos."
 
@@ -441,25 +458,17 @@ msgstr "Perdedor!"
 
 #: tournaments/templates/tournaments/tournament_4.html:82
 #: users/templates/users/local_play.html:91
-#: users/templates/users/profile.html:48
+#: users/templates/users/profile.html:45
 msgid "Close"
 msgstr "Fechar"
 
-#: tournaments/templates/tournaments/tournaments.html:18
-msgid "Tournaments History"
-msgstr "Histórico de Torneios"
+#: tournaments/templates/tournaments/tournaments.html:23
+msgid "Id"
+msgstr ""
 
 #: tournaments/templates/tournaments/tournaments.html:24
-msgid "Name"
-msgstr "Nome"
-
-#: tournaments/templates/tournaments/tournaments.html:25
-msgid "Start"
-msgstr "Início"
-
-#: tournaments/templates/tournaments/tournaments.html:26
-msgid "End"
-msgstr "Fim"
+msgid "Owner"
+msgstr ""
 
 #: users/models.py:16
 msgid "A username is needed."
@@ -488,12 +497,12 @@ msgid "Choose the number of players:"
 msgstr "Escolha o número de jogadores:"
 
 #: users/templates/users/local_play.html:25
-#: users/templates/users/tournament_play.html:26
+#: users/templates/users/tournament_play.html:24
 msgid "Rounds"
 msgstr "Rodadas"
 
 #: users/templates/users/local_play.html:26
-#: users/templates/users/tournament_play.html:27
+#: users/templates/users/tournament_play.html:25
 msgid "Choose the number of rounds:"
 msgstr "Escolha o número de rodadas:"
 
@@ -534,44 +543,44 @@ msgstr ""
 msgid "Change Nickname"
 msgstr "Mudar Apelido"
 
-#: users/templates/users/profile.html:26
+#: users/templates/users/profile.html:24
 msgid "Save Changes"
 msgstr "Salvar Alterações"
 
-#: users/templates/users/profile.html:34 users/templates/users/profile.html:135
+#: users/templates/users/profile.html:31 users/templates/users/profile.html:122
 msgid "Add Friends"
 msgstr "Adicionar Amigos"
 
-#: users/templates/users/profile.html:41 users/templates/users/profile.html:142
+#: users/templates/users/profile.html:38 users/templates/users/profile.html:127
 msgid "Add Friend"
 msgstr "Adicionar Amigo"
 
-#: users/templates/users/profile.html:45
+#: users/templates/users/profile.html:42
 msgid "No users available. You're already friends with everyone!"
 msgstr "Não há usuários disponíveis. Você já é amigo de todos!"
 
-#: users/templates/users/profile.html:62
+#: users/templates/users/profile.html:54
 msgid "Delete Profile Photo"
 msgstr "Apagar Foto de Perfil"
 
-#: users/templates/users/profile.html:63
+#: users/templates/users/profile.html:55
 msgid "Update Profile Photo"
 msgstr "Atualizar Foto de Perfil"
 
-#: users/templates/users/profile.html:82
+#: users/templates/users/profile.html:72
 msgid "Change Photo"
 msgstr "Mudar Foto"
 
-#: users/templates/users/profile.html:89
+#: users/templates/users/profile.html:77
 msgid "Statistics"
 msgstr "Estatísticas"
 
-#: users/templates/users/profile.html:97
+#: users/templates/users/profile.html:85
 #, python-format
 msgid "%% Wins"
 msgstr "%% de Vitórias"
 
-#: users/templates/users/profile.html:118
+#: users/templates/users/profile.html:105
 msgid "Friends"
 msgstr "Amigos"
 
@@ -579,7 +588,7 @@ msgstr "Amigos"
 msgid "Tournament Settings"
 msgstr "Configurações de Torneio"
 
-#: users/templates/users/tournament_play.html:37
+#: users/templates/users/tournament_play.html:35
 msgid "Invite Players!"
 msgstr "Convide Jogadores!"
 
@@ -594,6 +603,30 @@ msgstr "Jogo local"
 #: users/templates/users/wanna_play.html:23
 msgid "Create game"
 msgstr "Criar jogo"
+
+#~ msgid "A really nice text about Clarissa with lots of blablabla."
+#~ msgstr "Um texto muito legal sobre a Clarissa com um monte de blablabla."
+
+#~ msgid "Blablabla whiskas sachê, blablabla, blablabla, blablabla."
+#~ msgstr "Blablabla whiskas sachê, blablabla, blablabla, blablabla."
+
+#~ msgid "A really nice text about Felipe with lots of blablabla."
+#~ msgstr "Um texto muito legal sobre o Felipe com um monte de blablabla."
+
+#~ msgid "A really nice text about Rodrigo with lots of blablabla."
+#~ msgstr "Um texto muito legal sobre o Rodrigo com um monte de blablabla."
+
+#~ msgid "Tournaments History"
+#~ msgstr "Histórico de Torneios"
+
+#~ msgid "Name"
+#~ msgstr "Nome"
+
+#~ msgid "Start"
+#~ msgstr "Início"
+
+#~ msgid "End"
+#~ msgstr "Fim"
 
 #, python-format
 #~ msgid "Tournament %(self.id)s - %(self.num_players)s players"

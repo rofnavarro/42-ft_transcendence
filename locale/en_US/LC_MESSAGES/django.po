@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-30 03:00-0300\n"
+"POT-Creation-Date: 2024-09-30 05:25-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -151,18 +151,18 @@ msgstr ""
 msgid "Pong Contest"
 msgstr ""
 
-#: match/templates/match/history.html:6
+#: match/templates/match/history.html:7
 #, python-format
 msgid ""
 "\n"
 "%(username)s's Matches History\n"
 msgstr ""
 
-#: match/templates/match/history.html:12 users/templates/users/profile.html:112
+#: match/templates/match/history.html:13 users/templates/users/profile.html:100
 msgid "Matches History"
 msgstr ""
 
-#: match/templates/match/history.html:21
+#: match/templates/match/history.html:22
 #, python-format
 msgid ""
 "\n"
@@ -170,37 +170,39 @@ msgid ""
 "\t\t"
 msgstr ""
 
-#: match/templates/match/history.html:30
+#: match/templates/match/history.html:31
+#: tournaments/templates/tournaments/tournaments.html:25
 msgid "Date"
 msgstr ""
 
-#: match/templates/match/history.html:31
+#: match/templates/match/history.html:32
 #: tournaments/templates/tournaments/tournament_4.html:21
 #: users/templates/users/local_play.html:49
 msgid "Player 1"
 msgstr ""
 
-#: match/templates/match/history.html:32
+#: match/templates/match/history.html:33
 #: tournaments/templates/tournaments/tournament_4.html:28
 #: users/templates/users/local_play.html:55
 msgid "Player 2"
 msgstr ""
 
-#: match/templates/match/history.html:33
+#: match/templates/match/history.html:34
 msgid "Score Player 1"
 msgstr ""
 
-#: match/templates/match/history.html:34
+#: match/templates/match/history.html:35
 msgid "Score Player 2"
 msgstr ""
 
-#: match/templates/match/history.html:35
+#: match/templates/match/history.html:36
 #: tournaments/templates/tournaments/tournament_4.html:36
 #: tournaments/templates/tournaments/tournament_4.html:44
+#: tournaments/templates/tournaments/tournaments.html:26
 msgid "Winner"
 msgstr ""
 
-#: match/templates/match/history.html:36
+#: match/templates/match/history.html:37
 #: users/templates/users/wanna_play.html:22
 msgid "Tournament"
 msgstr ""
@@ -255,17 +257,17 @@ msgid "User"
 msgstr ""
 
 #: ranking/templates/ranking/ranking.html:21
-#: users/templates/users/profile.html:94
+#: users/templates/users/profile.html:82
 msgid "Matches"
 msgstr ""
 
 #: ranking/templates/ranking/ranking.html:22
-#: users/templates/users/profile.html:95
+#: users/templates/users/profile.html:83
 msgid "Wins"
 msgstr ""
 
 #: ranking/templates/ranking/ranking.html:23
-#: users/templates/users/profile.html:96
+#: users/templates/users/profile.html:84
 msgid "Losses"
 msgstr ""
 
@@ -311,19 +313,31 @@ msgid "Now, the team:"
 msgstr ""
 
 #: templates/about.html:33
-msgid "A really nice text about Clarissa with lots of blablabla."
+msgid ""
+"Natural of São Paulo, Clarissa is a cadet at 42 São Paulo since February "
+"2021."
 msgstr ""
 
-#: templates/about.html:34 templates/about.html:63 templates/about.html:92
-msgid "Blablabla whiskas sachê, blablabla, blablabla, blablabla."
+#: templates/about.html:34
+msgid "It is rumored she was a diplomat in another life #diplomatique."
 msgstr ""
 
 #: templates/about.html:62
-msgid "A really nice text about Felipe with lots of blablabla."
+msgid "Natural of São Paulo, Felipe is a cadet at 42 São Paulo since May 2021."
+msgstr ""
+
+#: templates/about.html:63
+msgid "He is a very good friend of the worldly famous Mike Migrations."
 msgstr ""
 
 #: templates/about.html:91
-msgid "A really nice text about Rodrigo with lots of blablabla."
+msgid ""
+"Natural from Santos, Rodrigo is a cadet at 42 São Paulo since July 2021."
+msgstr ""
+
+#: templates/about.html:92
+msgid ""
+"He can only code well if he listens to Careless Whisper by George Michael."
 msgstr ""
 
 #: templates/home.html:6
@@ -414,7 +428,7 @@ msgstr ""
 
 #: tournaments/templates/tournaments/tournament_4.html:78
 #: users/templates/users/local_play.html:88
-#: users/templates/users/profile.html:130
+#: users/templates/users/profile.html:117
 msgid "You still don't have any friends."
 msgstr ""
 
@@ -424,24 +438,16 @@ msgstr ""
 
 #: tournaments/templates/tournaments/tournament_4.html:82
 #: users/templates/users/local_play.html:91
-#: users/templates/users/profile.html:48
+#: users/templates/users/profile.html:45
 msgid "Close"
 msgstr ""
 
-#: tournaments/templates/tournaments/tournaments.html:18
-msgid "Tournaments History"
+#: tournaments/templates/tournaments/tournaments.html:23
+msgid "Id"
 msgstr ""
 
 #: tournaments/templates/tournaments/tournaments.html:24
-msgid "Name"
-msgstr ""
-
-#: tournaments/templates/tournaments/tournaments.html:25
-msgid "Start"
-msgstr ""
-
-#: tournaments/templates/tournaments/tournaments.html:26
-msgid "End"
+msgid "Owner"
 msgstr ""
 
 #: users/models.py:16
@@ -471,12 +477,12 @@ msgid "Choose the number of players:"
 msgstr ""
 
 #: users/templates/users/local_play.html:25
-#: users/templates/users/tournament_play.html:26
+#: users/templates/users/tournament_play.html:24
 msgid "Rounds"
 msgstr ""
 
 #: users/templates/users/local_play.html:26
-#: users/templates/users/tournament_play.html:27
+#: users/templates/users/tournament_play.html:25
 msgid "Choose the number of rounds:"
 msgstr ""
 
@@ -515,44 +521,44 @@ msgstr ""
 msgid "Change Nickname"
 msgstr ""
 
-#: users/templates/users/profile.html:26
+#: users/templates/users/profile.html:24
 msgid "Save Changes"
 msgstr ""
 
-#: users/templates/users/profile.html:34 users/templates/users/profile.html:135
+#: users/templates/users/profile.html:31 users/templates/users/profile.html:122
 msgid "Add Friends"
 msgstr ""
 
-#: users/templates/users/profile.html:41 users/templates/users/profile.html:142
+#: users/templates/users/profile.html:38 users/templates/users/profile.html:127
 msgid "Add Friend"
 msgstr ""
 
-#: users/templates/users/profile.html:45
+#: users/templates/users/profile.html:42
 msgid "No users available. You're already friends with everyone!"
 msgstr ""
 
-#: users/templates/users/profile.html:62
+#: users/templates/users/profile.html:54
 msgid "Delete Profile Photo"
 msgstr ""
 
-#: users/templates/users/profile.html:63
+#: users/templates/users/profile.html:55
 msgid "Update Profile Photo"
 msgstr ""
 
-#: users/templates/users/profile.html:82
+#: users/templates/users/profile.html:72
 msgid "Change Photo"
 msgstr ""
 
-#: users/templates/users/profile.html:89
+#: users/templates/users/profile.html:77
 msgid "Statistics"
 msgstr ""
 
-#: users/templates/users/profile.html:97
+#: users/templates/users/profile.html:85
 #, python-format
 msgid "%% Wins"
 msgstr ""
 
-#: users/templates/users/profile.html:118
+#: users/templates/users/profile.html:105
 msgid "Friends"
 msgstr ""
 
@@ -560,7 +566,7 @@ msgstr ""
 msgid "Tournament Settings"
 msgstr ""
 
-#: users/templates/users/tournament_play.html:37
+#: users/templates/users/tournament_play.html:35
 msgid "Invite Players!"
 msgstr ""
 
