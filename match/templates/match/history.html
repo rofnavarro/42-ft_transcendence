@@ -47,9 +47,9 @@
 						<td>{{ match.score_user2 }}</td>
 						<td><a href="{% url 'users:profile' match.winner %}">{{ match.winner.nickname }}</a></td>
 						{% if match.is_tournament is True %}
-						<td><img src="../../../static/imgs/check.png" width="30" height="30" alt="yes" title="yes"></img></td>
+						<td><img src="{% static 'imgs/check.png' %}" width="30" height="30" alt="yes" title="yes"></img></td>
 						{% else %}
-						<td><img src="../../../static/imgs/cross.png" width="20" height="20" alt="no" title="no"></img></td>
+						<td><img src="{% static 'imgs/cross.png' %}" width="20" height="20" alt="no" title="no"></img></td>
 						{% endif %}
 					</tr>
 					{% endfor %}

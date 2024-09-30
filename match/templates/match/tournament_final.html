@@ -16,21 +16,23 @@
 <form id="final-form" method="POST" action="{% url 'match:finish' %}">
 	{% csrf_token %}
 	<div class="tournament-final">
-		<h3 class="gradient-text">Final Match</h3>
-		<p>{{ user1.nickname }} <img src="{% static 'imgs/cross.png' %}" class="versus-small"> {{ user2.nickname }}</p>
-		<div class="match-result">
-			<input type="hidden" id="match-resultA-player" name="match-resultA-player" value="{{ user1.username}}">
-			<input type="hidden" id="match-resultA-score" name="match-resultA-score" placeholder="Score A" value="">
-			<input type="hidden" id="match-resultB-player" name="match-resultB-player" value="{{ user2.username }}">
-			<input type="hidden" id="match-resultB-score" name="match-resultB-score" placeholder="Score B" value="">
-			<input type="hidden" id="winner1" name="winner1" value="">
-			<input type="hidden" id="tournament" name="tournament" value="{{ id_tournament }}">
+		<div>
+			<h3 class="gradient-text">{% trans "Final Match" %}</h3>
+			<p>{{ user1.nickname }} <img src="{% static 'imgs/cross.png' %}" class="versus-small"> {{ user2.nickname }}</p>
+			<div class="match-result">
+				<input type="hidden" id="match-resultA-player" name="match-resultA-player" value="{{ user1.username}}">
+				<input type="hidden" id="match-resultA-score" name="match-resultA-score" placeholder="Score A" value="">
+				<input type="hidden" id="match-resultB-player" name="match-resultB-player" value="{{ user2.username }}">
+				<input type="hidden" id="match-resultB-score" name="match-resultB-score" placeholder="Score B" value="">
+				<input type="hidden" id="winner1" name="winner1" value="">
+				<input type="hidden" id="tournament" name="tournament" value="{{ id_tournament }}">
+			</div>
 		</div>
 	</div>
 	<button type="button" class="small-button" id="startButton" onclick="startMatch('{{ user1.username }}', '{{ user2.username }}', '{{ user1.nickname }}', '{{ user2.nickname }}', '{{ turns }}', '1')">
-		Start Match
+		{% trans "Start Match" %}
 	</button>
-	<button type="button" class="small-button" id="finalButton" onclick="prepareForm(event)" style="display: none;">SAVE</button>
+	<button type="button" class="small-button" id="finalButton" onclick="prepareForm(event)" style="display: none;">{% trans "Save" %}</button>
 </form>
 {% endblock %}
 

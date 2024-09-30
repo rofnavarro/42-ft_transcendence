@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-29 17:39-0300\n"
+"POT-Creation-Date: 2024-09-30 03:00-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -216,18 +216,50 @@ msgstr "Ganhador"
 msgid "Tournament"
 msgstr "Torneio"
 
+#: match/templates/match/tournament_final.html:10
+#: match/templates/match/tournament_final.html:14
+msgid "Tournament's Final Game"
+msgstr "Partida Final - Torneio"
+
+#: match/templates/match/tournament_final.html:20
+#: match/templates/match/tournament_games.html:21
+msgid "Final Match"
+msgstr "Final"
+
+#: match/templates/match/tournament_final.html:33
+#: match/templates/match/tournament_games.html:35
+#: match/templates/match/tournament_games.html:51
+msgid "Start Match"
+msgstr "Iniciar Partida"
+
+#: match/templates/match/tournament_final.html:35
+msgid "Save"
+msgstr "Salvar"
+
 #: match/templates/match/tournament_games.html:10
 #: match/templates/match/tournament_games.html:14
 msgid "Tournament's Pong Game"
 msgstr "Jogo Pong - Torneio"
 
-#: match/templates/match/tournament_games.html:21
-msgid "Final Match"
-msgstr "Final"
-
 #: match/templates/match/tournament_games.html:22
 msgid "Prepare yourselves for the final match:"
 msgstr "Preparem-se para a final:"
+
+#: match/templates/match/tournament_games.html:27
+msgid "Go to Final!"
+msgstr "Ir para a Final!"
+
+#: match/templates/match/tournament_games.html:32
+msgid "First Match"
+msgstr "Primeira Partida"
+
+#: match/templates/match/tournament_games.html:48
+msgid "Second Match"
+msgstr "Segunda Partida"
+
+#: match/templates/match/tournament_games.html:65
+msgid "See results"
+msgstr "Ver resultados"
 
 #: ranking/templates/ranking/ranking.html:20
 msgid "User"
@@ -350,19 +382,6 @@ msgstr "Torneios"
 #: templates/layout.html:87
 msgid "Profile"
 msgstr "Perfil"
-
-#: tournaments/models.py:19
-#, python-format
-msgid "Tournament %(self.id)s - %(self.num_players)s players"
-msgstr "Torneio: Jogadores %(self.id)s - %(self.num_players)s"
-
-#: tournaments/models.py:23
-msgid "The number of players must match the tournament type."
-msgstr "O número de jogadores deve estar de acordo com o tipo de torneio."
-
-#: tournaments/models.py:27
-msgid "All matches must be completed before saving the tournament."
-msgstr "Todas as partidas devem estar completas antes de salvar o torneio."
 
 #: tournaments/templates/tournaments/tournament_4.html:6
 #: tournaments/templates/tournaments/tournament_4.html:10
@@ -529,7 +548,7 @@ msgstr "Adicionar Amigo"
 
 #: users/templates/users/profile.html:45
 msgid "No users available. You're already friends with everyone!"
-msgstr ""
+msgstr "Não há usuários disponíveis. Você já é amigo de todos!"
 
 #: users/templates/users/profile.html:62
 msgid "Delete Profile Photo"
@@ -575,6 +594,16 @@ msgstr "Jogo local"
 #: users/templates/users/wanna_play.html:23
 msgid "Create game"
 msgstr "Criar jogo"
+
+#, python-format
+#~ msgid "Tournament %(self.id)s - %(self.num_players)s players"
+#~ msgstr "Torneio: Jogadores %(self.id)s - %(self.num_players)s"
+
+#~ msgid "The number of players must match the tournament type."
+#~ msgstr "O número de jogadores deve estar de acordo com o tipo de torneio."
+
+#~ msgid "All matches must be completed before saving the tournament."
+#~ msgstr "Todas as partidas devem estar completas antes de salvar o torneio."
 
 #~ msgid "Instructions:"
 #~ msgstr "Instruções:"
