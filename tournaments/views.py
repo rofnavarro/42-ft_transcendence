@@ -11,13 +11,13 @@ import json
 
 
 def get_contract():
-	with open('../blockchain/hardhat/artifacts/contracts/Tournaments.sol/Tournament.json') as f:
+	with open('./blockchain/hardhat/artifacts/contracts/Tournaments.sol/Tournament.json') as f:
 		contract = json.load(f)
 	return contract
 
 def web3_init():
 	contract = get_contract()
-	web3Instance = Web3(Web3.HTTPProvider('http://localhost:8545/'))
+	web3Instance = Web3(Web3.HTTPProvider('http://hardhat:8545/'))
 	Tournament = web3Instance.eth.contract(abi=contract['abi'], bytecode=contract['bytecode'])
 	account = web3Instance.eth.accounts[0]
 	if settings.BOOL_WEB3 == False:

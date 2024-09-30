@@ -9,7 +9,7 @@ done
 
 # Aplica as migrações do Django
 echo	"Applying database migrations..."
-python	manage.pu makemigrations
+python	manage.py makemigrations
 python	manage.py migrate
 
 
