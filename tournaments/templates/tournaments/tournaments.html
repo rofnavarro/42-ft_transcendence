@@ -7,36 +7,37 @@
 {% endblock %}
 
 {% block undertitle %}
-	<h2><strong class="gradient-text">{% trans Tournaments %}</strong></h2>
+	<img src="{% static 'imgs/trophy.png'%}" class="ranking-image"></img><br>
+	<h1><strong class="gradient-text">Tournaments History</strong></h1>
 {% endblock %}
 
 {% block content %}
-	
 {% endblock %}
 
 {% block content2 %}
-	<h2><strong class="gradient-text">{% trans "Tournaments History" %}</strong></h2>
 	<section>
 		<div class="history">
 			<table class="history-table">
 				<thead>
 					<tr>
-						<th>{% trans "Name" %}</th>
-						<th>{% trans "Start" %}</th>
-						<th>{% trans "End" %}</th>
+						<th>{% trans "Id" %}</th>
+						<th>{% trans "Owner" %}</th>
+						<th>{% trans "Date" %}</th>
+						<th>{% trans "Winner" %}</th>
 					</tr>
 				</thead>
 				<tbody>
-					{% for name in tournament %}
+					{% for tournament in tournaments %}
 					<tr>
-						<td>{{ name.name }}</td>
-						<td>{{ name.start_date }}</td>
-						<td>{{ name.end.date }}</td>
+						<td>{{ tournament.id }}</td>
+						<td>{{ tournament.owner }}</td>
+						<td>{{ tournament.date }}</td>
+						<td>{{ tournament.winner }}</td>
 					</tr>
 					{% endfor %}
 				</tbody>
-	</table>
-	</div>
+			</table>
+		</div>
 	</section>
 {% endblock %}
 

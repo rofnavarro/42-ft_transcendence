@@ -30,8 +30,18 @@ services:
       - .env
     depends_on:
       - db
+      - hardhat
     ports:
       - "8000:8000"
+
+  hardhat:
+    build: ./hardhat
+    image: hardhat:transcendence
+    container_name: hardhat
+    networks:
+      - transcendence
+    ports:
+      - "8545:8545"
 
 networks:
   transcendence:

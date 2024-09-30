@@ -1,6 +1,9 @@
 import os
 from pathlib import Path
 from datetime import timedelta
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -155,5 +158,7 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # JWEB3
 BOOL_WEB3 = False
 #TODO: adicionar as hash em um models para salvar e manter a persistencia
-TX_HASH = ""
+TX_HASH = os.getenv('HASH_NANA')
+TX_ADDRESS = os.getenv('ADDRESS_NANA')
 TX_RECEIPT = []
+DEPLOYED_CONTRACT = None

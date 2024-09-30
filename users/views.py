@@ -79,9 +79,9 @@ def wanna_play(request, username):
 
 @login_required
 def local_play(request, username):
-    user = get_object_or_404(CustomUser, username=username)
-    friends = user.friends.all()
-    return render(request, 'users/local_play.html', {'user': user, 'friends': friends})
+	user = get_object_or_404(CustomUser, username=username)
+	friends = user.friends.all()
+	return render(request, 'users/local_play.html', {'user': user, 'friends': friends})
 
 
 @login_required
@@ -92,11 +92,9 @@ def tournament_play(request, username):
 
 @login_required
 def add_friend_modal(request, username):
-    to_user = get_object_or_404(CustomUser, username=username)
-    
-    # Adiciona o usuário como amigo, lógica similar à função de request existente
-    if request.user != to_user:
-        friendship, created = Friendship.objects.get_or_create(user1=request.user, user2=to_user)
-        if created:
-            Friendship.objects.get_or_create(user1=to_user, user2=request.user)
-    return redirect('users:profile', username=username)
+	to_user = get_object_or_404(CustomUser, username=username)
+	if request.user != to_user:
+		friendship, created = Friendship.objects.get_or_create(user1=request.user, user2=to_user)
+		if created:
+			Friendship.objects.get_or_create(user1=to_user, user2=request.user)
+	return redirect('users:profile', username=username)

@@ -15,12 +15,12 @@
 	<div class="play-container">
 		<div class="play-column">
 			<h3>Casual</h3>
-				<a href="{% url 'users:local_play' user.username %}" class="btn-play">{% trans "Local game" %}</a>
+			<a href="{% url 'users:local_play' user.username %}" class="btn-play">{% trans "Local game" %}</a>
 		</div>
 		<div id="play-torneio">
 			<div class="play-column">
 			<h3>{% trans "Tournament" %}</h3>
-				<a href="{% url 'users:tournament_play' user.username %}" class="btn-play">{% trans "Create game" %}</a>
+			<a href="{% url 'users:tournament_play' user.username %}" class="btn-play">{% trans "Create game" %}</a>
 			</div>
 		</div>
 	</div>
