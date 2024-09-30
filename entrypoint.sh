@@ -14,7 +14,7 @@ python	manage.py migrate
 
 python3 manage.py shell -c "\
 from users.models import CustomUser;\
-user = CustomUser(username='$SUPER_USER', email='$SUPER_MAIL', is_staff=True, is_superuser=True);\
+user = CustomUser(username='$SUPER_USER', nickname='$SUPER_NICK', email='$SUPER_MAIL', is_staff=True, is_superuser=True);\
 user.save();\
 user.set_password('$SUPER_PASSWORD');\
 user.save();\

@@ -17,9 +17,7 @@ def update_player_stats(user):
     CustomUser = apps.get_model('users', 'CustomUser')
     user = CustomUser.objects.get(pk=user.pk)
 
-    total_matches_played = user.total_matches_played
     total_wins = user.total_wins
     total_loses = user.total_loses
 
-    user.total_matches_played += 1
     user.save()
