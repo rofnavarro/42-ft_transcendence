@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.db.models import Q
 from users.models import CustomUser
 from tournaments.models import Tournament
+from tournaments.views import set_tournament
 from .models import Match
 import json
 from django.db import transaction
@@ -210,7 +211,13 @@ def finish_tournament(request):
 			with transaction.atomic():
 				tournament = Tournament.objects.get(id=t)
 				tournament.matches.add(match1)
+				if (score_user1 > score_user2):
+					tournament.winner = user1
+				else:
+					tournament.winner = user2
 				tournament.save()
+				print(tournament)
+				set_tournament(tournament.id)
 		except Exception as e:
 			print(e)
 			return render(request, 'home.html')
