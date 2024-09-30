@@ -14,13 +14,13 @@ python	manage.py migrate
 
 python3 manage.py shell -c "\
 from users.models import CustomUser;\
-user = CustomUser(username='banana', email='transcendencenana@gmail.com', is_staff=True, is_superuser=True);\
+user = CustomUser(username='$SUPER_USER', email='$SUPER_MAIL', is_staff=True, is_superuser=True);\
 user.save();\
-user.set_password('bananateam');\
+user.set_password('$SUPER_PASSWORD');\
 user.save();\
 exit();"
 
 
 # Inicializa o servidor do Django
 echo	"Starting Django server..."
-exec	python manage.py runsslserver --certificate ./localhost.crt --key ./localhost.key
+exec	python manage.py runserver

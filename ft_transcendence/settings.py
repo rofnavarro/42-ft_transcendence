@@ -21,11 +21,8 @@ SESSION_SAVE_EVERY_REQUEST = True
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# Felipe Notas: estou usando esta key para o jwt por 0 motivos
-SECRET_KEY = 'django-insecure-6waaegtj9iw2dh7plax#^2w+e$s(ig$by=v9zdrvavq9u5hf8^'
-
+SECRET_KEY = os.getenv('JWT_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-# TODO: trocar para o ip da maquina que vai rodar o servidor e mudar o DEBUG para False
 DEBUG = False
 ALLOWED_HOSTS = ['*', 'localhost', '0.0.0.0']
 
@@ -155,7 +152,6 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # JWEB3
 BOOL_WEB3 = False
-#TODO: adicionar as hash em um models para salvar e manter a persistencia
 TX_HASH = os.getenv('HASH_NANA')
 TX_ADDRESS = os.getenv('ADDRESS_NANA')
 TX_RECEIPT = []

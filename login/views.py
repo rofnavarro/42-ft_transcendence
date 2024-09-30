@@ -18,7 +18,6 @@ import random
 import requests
 import os
 
-# from django.utils import timezone
 import datetime
 from login.jwt import create_jwt
 
@@ -180,7 +179,6 @@ def	verify_2fa_code_email(request):
 				request.user.is_online = True
 				request.user.is_verified = True
 				request.user.verification_code = None
-				# TODO: JWT token
 
 				current_time = (datetime.datetime.now() + datetime.timedelta(minutes=100)).timestamp()
 				payload = {

@@ -16,4 +16,4 @@ fclean: down cleanv
 
 re: fclean all
 
-.PHONY: all up down flean re cleanv
+.PHONY: all up down fclean re cleanv
