@@ -15,13 +15,13 @@ gunicorn --bind 0.0.0.0:8000 ft_transcendence.wsgi
 
 python3 manage.py shell -c "\
 from users.models import CustomUser;\
-user = CustomUser(username='banana', email='transcendencenana@gmail.com', is_staff=True, is_superuser=True);\
+user = CustomUser(username='$SUPER_USER', email='$SUPER_MAIL', is_staff=True, is_superuser=True);\
 user.save();\
-user.set_password('bananateam');\
+user.set_password('$SUPER_PASSWORD');\
 user.save();\
 exit();"
 
 
 # Inicializa o servidor do Django
 echo	"Starting Django server..."
-exec	python manage.py runserver
+exec	python manage.py runserver_plus --cert-file ./localhost.crt --key-file ./localhost.key 0.0.0.0:8000
