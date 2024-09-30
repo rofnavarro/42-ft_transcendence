@@ -10,7 +10,6 @@ down:
 
 cleanv:
 	docker volume rm ${ALLVOL}
-	sudo rm -rf /home/${LOGIN}
 
 fclean: down cleanv
 	docker system prune --all --force --volumes

@@ -11,7 +11,7 @@ import json
 
 
 def get_contract():
-	with open('/home/rferrero/Desktop/transcendence/blockchain/hardhat/artifacts/contracts/Tournaments.sol/Tournament.json') as f:
+	with open('../blockchain/hardhat/artifacts/contracts/Tournaments.sol/Tournament.json') as f:
 		contract = json.load(f)
 	return contract
 

@@ -9,11 +9,9 @@ done
 
 # Aplica as migrações do Django
 echo	"Applying database migrations..."
+python	manage.pu makemigrations
 python	manage.py migrate
-python	manage.pu makemigrations login
-python	manage.pu makemigrations ranking
-python	manage.pu makemigrations users
-python	manage.py migrate
+
 
 # Inicializa o servidor do Django
 echo	"Starting Django server..."

@@ -24,8 +24,8 @@ services:
     networks:
       - transcendence
     volumes:
-      - static_volume:/ft_transcendece/static
-      - media_volume:/ft_transcendece/media
+      - static_volume:/ft_transcendence/static
+      - media_volume:/ft_transcendence/media
     env_file:
       - .env
     depends_on:
@@ -35,7 +35,7 @@ services:
       - "8000:8000"
 
   hardhat:
-    build: ./hardhat
+    build: ./blockchain
     image: hardhat:transcendence
     container_name: hardhat
     networks:
