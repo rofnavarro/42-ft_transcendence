@@ -31,7 +31,7 @@ class	CustomUserManager(BaseUserManager):
 
 class	CustomUser(AbstractBaseUser, PermissionsMixin):
 	username = models.CharField(max_length=20, unique=True)
-	nickname = models.CharField(max_length=20,unique=True, null=True, blank=True)
+	nickname = models.CharField(max_length=20,unique=True, null=True, blank=True, default=username)
 	email = models.EmailField('email address', unique=True)
 
 	token = models.CharField(max_length=300, blank=True, null=True)

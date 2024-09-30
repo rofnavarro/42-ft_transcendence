@@ -21,9 +21,9 @@ import os
 import datetime
 from login.jwt import create_jwt
 
-USER_ID = 'u-s4t2ud-a782b48361e73b59a6d5cbec76768c8aafa00b43e48aea014b90da7efb556ce5'
-API_KEY = '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'
-REDIRECT_URI = 'http://localhost:8000/login/callback'
+USER_ID = 'u-s4t2ud-af4a89766c2e466107abf4462801d218fc0a53d5c4d8a4559300e7017132cd2a'
+API_KEY = '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'
+REDIRECT_URI = 'https://localhost:8000/login/callback'
 
 def	login_user(request):
 	url = f'https://api.intra.42.fr/oauth/authorize?client_id={USER_ID}&redirect_uri={REDIRECT_URI}&response_type=code'

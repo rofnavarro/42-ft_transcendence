@@ -18,12 +18,13 @@ SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_SECURE = True
 SESSION_SAVE_EVERY_REQUEST = True
+SECURE_SSL_REDIRECT = True
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('JWT_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['*', 'localhost', '0.0.0.0']
 
 # Application definition
@@ -34,6 +35,7 @@ INSTALLED_APPS = [
 	'django.contrib.sessions',
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
+	'django_extensions',
 
 	'sslserver',
 
@@ -132,10 +134,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')]
+print(STATICFILES_DIRS)
 
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+print(STATICFILES_DIRS)
+
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
