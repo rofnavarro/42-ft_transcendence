@@ -228,7 +228,7 @@ var Game = {
 			if (!rounds[this.round + 1]) {
 				this.over = true;
 				this.resetBall();
-				setTimeout(() => { this.endGameMenu('Player 1 wins!'); }, 1000);
+				setTimeout(() => { this.endGameMenu(`${this.playerA.nickname} wins!`); }, 1000);
 			} else {
 				this.playerA.score = this.playerB.score = 0;
 				this.playerA.speed += 1;
@@ -244,7 +244,7 @@ var Game = {
 			if (!rounds[this.round + 1]) {
 				this.over = true;
 				this.resetBall();
-				setTimeout(() => { this.endGameMenu('Player 2 wins!'); }, 1000);
+				setTimeout(() => { this.endGameMenu(`${this.playerB.nickname} wins!`); }, 1000);
 			} else {
 				this.playerA.score = this.playerB.score = 0;
 				this.playerA.speed += 1;

@@ -100,6 +100,7 @@ var Game = {
 			if (event.key === 'w') this.playerA.move = DIRECTION.UP;
 			if (event.key === 's') this.playerA.move = DIRECTION.DOWN;
 			if (event.key === ' ' ) {
+				event.preventDefault();
 				this.pauseGame = false;
 			}
 			if (!this.running && !this.over) {
@@ -206,7 +207,7 @@ var Game = {
 			if (!rounds[this.round + 1]) {
 				this.over = true;
 				this.resetBall();
-				setTimeout(() => { this.endGameMenu('Player 1 wins!'); }, 10000);
+				setTimeout(() => { this.endGameMenu(`${this.playerA.nickname} wins!`); }, 10000);
 			} else {
 				this.playerA.score = this.playerB.score = 0;
 				this.playerA.speed += 1;
@@ -222,7 +223,7 @@ var Game = {
 			if (!rounds[this.round + 1]) {
 				this.over = true;
 				this.resetBall();
-				setTimeout(() => { this.endGameMenu('Player 2 wins!'); }, 10000);
+				setTimeout(() => { this.endGameMenu(`%{this.playerB.nickname} wins!`); }, 10000);
 			} else {
 				this.playerA.score = this.playerB.score = 0;
 				this.playerA.speed += 1;
