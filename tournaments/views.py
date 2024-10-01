@@ -9,6 +9,15 @@ import json
 from web3 import Web3
 import json
 
+def get_hashs():
+	with open('./blockchain/config.json', 'r') as file:
+		data = json.load(file)
+		print(data)
+		return data
+
+def set_hashs(data):
+	with open('./blockchain/config.json', 'w') as file:
+		son.dump(data, file, indent=4)
 
 def get_contract():
 	with open('./blockchain/hardhat/artifacts/contracts/Tournaments.sol/Tournament.json') as f:
@@ -22,14 +31,23 @@ def web3_init():
 	account = web3Instance.eth.accounts[0]
 	if settings.BOOL_WEB3 == False:
 		try:
-			if settings.TX_HASH == "BANANA1":
+			data = get_hashs()
+			if data.get("HASH_NANA") == "":
 				settings.TX_HASH = (Tournament.constructor().transact({'from': account}))
-			
-			if settings.TX_ADDRESS == "BANANA2":
+				data["HASH_NANA"] = str(settings.TX_HASH)
+			else:
+				settings.TX_HASH = data.get("HASH_NANA")
+
+			if data.get("ADDRESS_NANA") == "":
 				settings.TX_RECEIPT.append(web3Instance.eth.wait_for_transaction_receipt(settings.TX_HASH))
 				settings.TX_ADDRESS = settings.TX_RECEIPT[0].contractAddress
+				data["ADDRESS_NANA"] = settings.TX_ADDRESS
+			else:
+				settings.TX_ADDRESS = data.get("ADDRESS_NANA")
 
-			settings.BOOL_WEB3 = True
+			if data.get("HASH_NANA") != "" and data.get("ADDRESS_NANA") != "":
+				set_hashs(data)
+				settings.BOOL_WEB3 = True
 		except Exception as e:
 			print(e)
 			pass
@@ -44,11 +62,11 @@ def deploy_contract(web3):
 #---------------------------------------------
 
 def serialize_queryset(queryset: QuerySet) -> dict:
-    def default(obj):
-        if isinstance(obj, datetime.datetime):
-            return obj.isoformat()
-        raise TypeError(f"Object of type '{obj.__class__.__name__}' is not JSON serializable")
-    return json.loads(json.dumps(list(queryset), default=default))
+	def default(obj):
+		if isinstance(obj, datetime.datetime):
+			return obj.isoformat()
+		raise TypeError(f"Object of type '{obj.__class__.__name__}' is not JSON serializable")
+	return json.loads(json.dumps(list(queryset), default=default))
 
 def set_tournament(tournament_id):
 	tour = Tournament.objects.get(id=tournament_id)
