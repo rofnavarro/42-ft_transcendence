@@ -3,54 +3,54 @@
 {% load i18n %}
 
 {% block token_head %}
-	<meta name="csrf-token" content="{{ csrf_token }}">
+    <meta name="csrf-token" content="{{ csrf_token }}">
 {% endblock %}
 
 {% block title %}
-	{% trans "Pong Game" %}
+    {% trans "Pong Game" %}
 {% endblock %}
 
 {% block undertitle %}
-	<h1><strong class="gradient-text">{% trans "Pong Contest" %}</strong></h1>
+    <h1><strong class="gradient-text">{% trans "Pong Contest" %}</strong></h1>
 {% endblock %}
 
 {% block content %}
-	<canvas></canvas>
-	<h3><strong class="gradient-text">Instructions:</strong></h3>
-	<p class="game-instructions">
+    <canvas></canvas>
+    <h3><strong class="gradient-text">Instructions:</strong></h3>
+    <p class="game-instructions">
     <b>{{ nicknames.0 }}:</b> Control the left player using the <strong>W and S keys</strong><br>
-		<b>{{ nicknames.1 }}:</b> Control the right player using the <strong>UP and DOWN arrow keys</strong><br>
-		{% if players|length > 2 %}
+        <b>{{ nicknames.1 }}:</b> Control the right player using the <strong>UP and DOWN arrow keys</strong><br>
+        {% if nicknames|length > 2 %}
     <b>{{ nicknames.2 }}:</b> Control the left player using the <strong>Q and A keys</strong><br>
     <b>{{ nicknames.3 }}:</b> Control the right player using the <strong>I and K keys</strong><br>
-		{% endif %}
-	</p>
+        {% endif %}
+    </p>
 {% endblock %}
 
 {% block scripts %}
-	<script>
-		usernames = [
-			'{{ usernames.0|default:"" }}',
-			'{{ usernames.1|default:"" }}',
-			{% if players|length > 2 %},
-			'{{ usernames.2|default:"" }}',
-			'{{ usernames.3|default:"" }}'
-			{% endif %}
-		];
-		nicknames = [
-			'{{ nicknames.0|default:"" }}',
-			'{{ nicknames.1|default:"" }}',
-			{% if players|length > 2 %}
-			'{{ nicknames.2|default:"" }}',
-			'{{ nicknames.3|default:"" }}'
-			{% endif %}
-		];
-		turns = {{ turns }}
-		color = '{{ color }}'
-	</script>
-	{% if usernames|length == 2 %}
-		<script src="{% static 'js/game.js' %}"></script>
-	{% elif usernames|length == 4 %}
-		<script src="{% static 'js/game2x2.js' %}"></script>
-	{% endif %}
+    <script>
+        usernames = [
+            '{{ usernames.0|default:"" }}',
+            '{{ usernames.1|default:"" }}',
+            {% if nicknames|length > 2 %},
+            '{{ usernames.2|default:"" }}',
+            '{{ usernames.3|default:"" }}'
+            {% endif %}
+        ];
+        nicknames = [
+            '{{ nicknames.0|default:"" }}',
+            '{{ nicknames.1|default:"" }}',
+            {% if nicknames|length > 2 %}
+            '{{ nicknames.2|default:"" }}',
+            '{{ nicknames.3|default:"" }}'
+            {% endif %}
+        ];
+        turns = {{ turns }}
+        color = '{{ color }}'
+    </script>
+    {% if nicknames|length == 2 %}
+        <script src="{% static 'js/game.js' %}"></script>
+    {% elif nicknames|length == 4 %}
+        <script src="{% static 'js/game2x2.js' %}"></script>
+    {% endif %}
 {% endblock %}
